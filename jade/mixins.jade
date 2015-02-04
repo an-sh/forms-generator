@@ -1,0 +1,182 @@
+
+//- ----------------------------------------------------------------------------
+//- utils
+//- ----------------------------------------------------------------------------
+
+mixin _insertHelper(elem, data, suffix, position)
+  -var elemSel = elem.id + suffix + position
+  -if(data && (elemSel in data))
+    -var insertData = data[elemSel]
+      -if(insertData instanceof Array)
+        -var name = insertData[0], args = insertData.slice(1)
+          +#{name}(args)
+      -else
+        | !{insertData}
+
+mixin _BE(elem, data, suffix)
+  +_insertHelper(elem, data, suffix, "::before")
+
+mixin _AE(elem, data, suffix)
+  +_insertHelper(elem, data, suffix, "::after")
+
+//- translation helper
+mixin TR(str)
+  span #{__(str)}
+
+
+//- ----------------------------------------------------------------------------
+//- Menu generation
+//- ----------------------------------------------------------------------------
+
+mixin _makeEntryData(item, data)
+  +_BE(item, data, "--link")
+  a(id=item.id + "--link", href=item.url)
+    +_BE(item, data, "--text")
+    span(id=item.id + "--text")
+      | #{item.content}
+    +_AE(item, data, "--text")
+  +_AE(item, data, "--link")
+
+mixin _menuRec(items, data)
+  for item in items
+    li(id=item.id)&attributes(item.attrs)
+      +_makeEntryData(item, data)
+      if(item instanceof Array)
+        +_BE(item, data, "--list")
+        ul(id=item.id + "--list")
+          +_menuRec(item, data)
+        +_AE(item, data, "--list")
+
+//- menu generation interface mixin
+mixin Menu(menuData, data)
+  ul(id=menuData.id)&attributes(menuData.attrs)
+    +_menuRec(menuData, data)
+
+
+//- ----------------------------------------------------------------------------
+//- Form generation
+//- ----------------------------------------------------------------------------
+
+
+mixin _formInputEntry(entry, data, label)
+  +_BE(entry, data, "")
+  input(id=entry.id)&attributes(entry.attrs)
+  +_AE(entry, data, "")
+  if label
+    +_BE(entry, data, "--label")
+    label(id=entry.id + "--label", for=entry.id, class="fgElementLabel")
+      | #{label}
+    +_AE(entry, data, "--label")
+
+
+mixin _formInput(field, data)
+  if field.entrydata
+    +_BE(field, data, "")
+    for entry in field.entrydata
+      +_BE(entry, data, "--wrapper")
+      -var cls = entry["class"] ? entry["class"] + " fgEntryWrapper" : "fgEntryWrapper"
+      -var stl = entry["style"] ? entry["style"]  : undefined
+        div(id=entry.id + "--wrapper", class=cls, style=stl)
+          +_formInputEntry(entry, data, entry.content)
+      +_AE(entry, data, "--wrapper")
+    +_AE(field, data, "")
+  else
+    +_formInputEntry(field, data, false)
+
+
+mixin _formSelectRec(field, data)
+  for entry in field.entrydata
+    if entry.entrydata
+      optgroup(id=entry.id, label=entry.content)&attributes(entry.attrs)
+        +_formSelectRec(entry, data)
+    else
+      option(id=entry.id)&attributes(entry.attrs)
+        | #{entry.content}
+
+mixin _formSelect(field, data)
+  +_BE(field, data, "")
+  select(id=field.id)&attributes(field.attrs)
+    +_formSelectRec(field, data)
+  +_AE(field, data, "")
+
+
+mixin _formTextArea(field, data)
+  +_BE(field, data, "")
+  textarea(id=field.id)&attributes(field.attrs)
+    | #{field.content}
+  +_AE(field, data, "")
+
+
+mixin _formDataList(field, data)
+  +_BE(field, data, "")
+  input(id=field.id, list=field.id + "--datalist")&attributes(field.attrs)
+  datalist(id=field.id + "--datalist")
+    for entry in field.entrydata
+      option/(value=entry.content)&attributes(entry.attrs)
+  +_AE(field, data, "")
+
+
+mixin _formField(field, data)
+  +_BE(field, data, "--wrapper")
+  -var cls = field["class"] ? field["class"] + " fgFieldWrapper" : "fgFieldWrapper"
+  -var stl = field["style"] ? field["style"]  : undefined
+    div(id=field.id + "--wrapper", class=cls, style=stl)
+      if(field.singleEntry)
+        +_formInputEntry(field, data, field.label)
+      else
+        if field.label
+          +_BE(field, data, "--name")
+          div(id=field.id + "--name", class="fgFieldName")
+            | #{field.label}
+          +_AE(field, data, "--name")
+        case field.type
+          when "select"
+            +_formSelect(field, data)
+          when "textarea"
+            +_formTextArea(field, data)
+          when "datalist"
+            +_formDataList(field, data)
+          default
+            +_formInput(field, data)
+  +_AE(field, data, "--wrapper")
+
+
+mixin _fieldSet(fieldset, data)
+  +_BE(fieldset, data, "")
+  fieldset(id=fieldset.id)&attributes(fieldset.attrs)
+    legend(id=fieldset.id + "--legend")
+      | #{fieldset.label}
+    +_fieldRec(fieldset.fields, data)
+  +_AE(fieldset, data, "")
+
+mixin _divSet(divset, data)
+  +_BE(divset, data, "")
+  if(divset.id)
+    div(id=divset.id)&attributes(divset.attrs)
+      +_fieldRec(divset.fields, data)
+  else
+    div&attributes(divset.attrs)
+      +_fieldRec(divset.fields, data)
+  +_AE(divset, data, "")
+
+
+mixin _fieldRec(fields, data)
+  for field in fields
+    case field.type
+      when "fieldset"
+        +_fieldSet(field, data)
+      when "div"
+        +_divSet(field, data)
+      default
+        +_formField(field, data)
+
+
+//- form generation interface mixin
+mixin Form(formData, data)
+  div(id=formData.id + "--wrapper")
+    if(formData.attrs.target)
+      iframe(id=formData.attrs.target, onload=formData.id + "Onload()", name=formData.attrs.target, width=0, height=0, tabindex=-1, hidden)
+    +_BE(formData, data, "")
+    form(id=formData.id)&attributes(formData.attrs)
+      +_fieldRec(formData.fields, data)
+    +_AE(formData, data, "")

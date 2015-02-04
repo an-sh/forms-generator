@@ -1,0 +1,32 @@
+{
+  "name": "forms-generator",
+  "version": "0.5.0",
+  "description": "A library that helps with HTML forms",
+  "author": {
+    "name": "Andrey Sharapov"
+  },
+  "private": false,
+  "main": "lib/forms-generator.js",
+  "dependencies": {
+    "multiparty": "^4.1.0",
+    "async": "~0.9.0"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "vows --spec tests/*.js"
+  },
+  "keywords": [
+    "form",
+    "forms"
+  ],
+  "devDependencies": {
+    "vows": "~0.9.0",
+    "i18n": "~0.5.0",
+    "jade": "^1.8.0",
+    "jsdom": "^2.0.0",
+    "dom-compare": "0.2.0"
+  },
+  "license": "MIT"
+}

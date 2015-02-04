@@ -1,0 +1,29 @@
+
+include ../../jade/mixins.jade
+
+mixin testInsert()
+  p
+    i
+      +TR("Inserted HTML")
+
+mixin testArgument(args)
+  -var title=args[0]
+    h3
+      +TR(title)
+
+extends layout
+block page
+  +Menu(langMenu)
+  hr
+  h1
+    +TR("Menu")
+  +Menu(mainMenu)
+  hr
+  h1
+    +TR("Form")
+  p
+  +Form(simpleForm, {
+    "TForm-nonInput::before" : "<p><i><span>Inserted HTML</span></i></p>",
+    "TForm-buttons::after" : [ "testInsert" ],
+    "TForm-errors::before" : [ "testArgument", "Server response" ] } )
+  hr
