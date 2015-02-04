@@ -1,5 +1,5 @@
 
-#Forms Generator
+# Forms Generator
 
 Forms Generator is a library for Node.js that helps with HTML forms
 and lists (menus), including simple definitions, translation, data
@@ -7,7 +7,7 @@ transmission and validation.
 
 
 
-#Description
+# Description
 
 The main interface consists of `Form` and `Menu` classes, for forms
 and menus definitions respectively. These definition classes could be
@@ -21,7 +21,7 @@ production dependencies, but rather they are expected by some methods
 as arguments. `Jade` should be compatible with version `1.8.0` and
 `i18n` with version `0.5.0`.
 
-###Identifiers or IDs
+### Identifiers or IDs
 
 Each form field and menu item should have an id that is used for
 several purposes. All ids should match `/^[a-zA-Z_][a-zA-Z0-9_]*$/`
@@ -47,7 +47,7 @@ as ids. Also radio, select and checkbox field values will contain
 values matching respective ids. Look at `getExpectedValues` and
 `hasField` methods.
 
-###Form parsing and validation
+### Form parsing and validation
 
 By default no any validation is performed. User supplied asynchronous
 functions can be used for validation, set by `setValidator` and
@@ -59,7 +59,7 @@ data. All data should be in Multiparty parser(which is provided by
 `validate` method, or execute just one validator with `runValidatator`
 and `runGlobalValidatator` methods.
 
-###Fields definitions
+### Fields definitions
 
 - fields = field | fields
 - field(`array`) =  id , type , [ attributes , ( entries | fields ) ]
@@ -93,7 +93,7 @@ styled. `"radio"` and `"checkbox"` entries styles are applied to a div
 wrapper too.
 
 
-###Items definitions
+### Items definitions
 
 - items = item | items
 - item(`array`) =  id , url , [ attributes , items ]
@@ -101,7 +101,7 @@ wrapper too.
 - url = `string`
 - attributes = `object`
 
-###HTML insertions
+### HTML insertions
 
 It is possible to insert html into generated forms and menus. The
 special js object must be used. Key are the following selectors
@@ -114,17 +114,17 @@ array argument. Also mixins should be defined on a global scope.
 
 
 
-###Example
+### Example
 
 A complete Express 4 application is in `example` directory.
 
 
 
-#API
+# API
 
 ---
 
-###Form(id, options, attributes, ...fields)
+### Form(id, options, attributes, ...fields)
 
 _Constructor_
 
@@ -144,7 +144,7 @@ ids, `false` by default.
 
 ---
 
-###Form.setFormRoute(router, callback)
+### Form.setFormRoute(router, callback)
 
 _Method_
 
@@ -157,7 +157,7 @@ __Arguments:__
 
 ---
 
-###Form.validate(fields, files, i18n, callbackPass, callbackFail)
+### Form.validate(fields, files, i18n, callbackPass, callbackFail)
 
 _Method_ ___[async]___
 
@@ -184,7 +184,7 @@ __Arguments:__
 
 ---
 
-###Form.runValidatator(fieldID, data, i18n, callback)
+### Form.runValidatator(fieldID, data, i18n, callback)
 
 _Method_ ___[async]___
 
@@ -201,7 +201,7 @@ __Arguments:__
 
 ---
 
-###Form.runGlobalValidatator(fields, files, i18n, callback)
+### Form.runGlobalValidatator(fields, files, i18n, callback)
 
 _Method_ ___[async]___
 
@@ -219,7 +219,7 @@ __Arguments:__
 
 ---
 
-###Form.getExpectedValues(fieldID)
+### Form.getExpectedValues(fieldID)
 
 _Method_
 
@@ -237,7 +237,7 @@ __Returns:__
 
 ---
 
-###Form.hasField(fieldID)
+### Form.hasField(fieldID)
 
 _Method_
 
@@ -254,7 +254,7 @@ __Returns:__
 
 ---
 
-###Form.setValidator(fieldID, validator)
+### Form.setValidator(fieldID, validator)
 
 _Method_ ___[mutable]___
 
@@ -273,7 +273,7 @@ __Arguments:__
 
 ---
 
-###Form.setGlobalValidator(globalValidator)
+### Form.setGlobalValidator(globalValidator)
 
 _Method_ ___[mutable]___
 
@@ -293,7 +293,7 @@ __Arguments:__
 
 ---
 
-###Form.getContent(i18n)
+### Form.getContent(i18n)
 
 _Method_ ___[caches results]___
 
@@ -309,7 +309,7 @@ __Returns:__
 
 ---
 
-###Form.render(jade, jadeMixinsPath, i18n, insertionsObject)
+### Form.render(jade, jadeMixinsPath, i18n, insertionsObject)
 
 _Method_
 
@@ -328,7 +328,7 @@ __Returns:__
 
 ---
 
-###FormParser(options)
+### FormParser(options)
 
 _Constructor_
 
@@ -337,7 +337,7 @@ results format could be used.
 
 ---
 
-###Menu(id, options, attributes, ...items)
+### Menu(id, options, attributes, ...items)
 
 _Constructor_
 
@@ -357,7 +357,7 @@ ids, `false` by default.
 
 ---
 
-###Menu.getContent(i18n)
+### Menu.getContent(i18n)
 
 _Method_ ___[caches results]___
 
@@ -373,7 +373,7 @@ __Returns:__
 
 ---
 
-###Menu.render(jade, jadeMixinsPath, i18n, insertionsObject)
+### Menu.render(jade, jadeMixinsPath, i18n, insertionsObject)
 
 _Method_
 
@@ -392,7 +392,7 @@ __Returns:__
 
 ---
 
-###__(str)
+### __(str)
 
 _Function_
 
@@ -408,7 +408,7 @@ __Returns:__
 
 ---
 
-###__n(str)
+### __n(str)
 
 _Function_
 
@@ -424,7 +424,7 @@ __Returns:__
 
 ---
 
-###nTP(id)
+### nTP(id)
 
 _Function_
 
@@ -440,7 +440,7 @@ __Returns:__
 
 ---
 
-###pathJade
+### pathJade
 
 _Constant_
 
