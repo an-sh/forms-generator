@@ -1,6 +1,6 @@
 {
   "name": "forms-generator",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A library that helps with HTML forms",
   "author": {
     "name": "Andrey Sharapov"
