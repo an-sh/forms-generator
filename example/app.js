@@ -116,7 +116,12 @@ simpleForm.setValidator(
 
 simpleForm.setGlobalValidator(
   function(fields, files, i18n, cb) {
-    cb(false);
+    var data = fields["field2"];
+    if(!data || !validator.isLength(data[0], 8, 20)) {
+      cb(i18n.__("short_pw_error"));
+    } else {
+      cb(false);
+    }
   }
 );
 
@@ -129,11 +134,11 @@ simpleForm.setFormRoute(router, function(req, res, next) {
     } else {
       res.send(JSON.stringify(formError));
     }
-  }
+  };
 
   var cbOK = function(fields, files) {
     res.send(JSON.stringify(null));
-  }
+  };
 
   var urlParts = url.parse(req.headers.referer, true);
   var query = urlParts.query;

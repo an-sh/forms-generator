@@ -34,16 +34,16 @@ var data3 = {
 
 function fieldValidatorA(data, i18n, cb) {
   if(data[0] === "OK")
-    process.nextTick( function() { cb(null, data); } );
+    process.nextTick( function() { cb(false); } );
   else
-    process.nextTick( function() { cb(i18n.__("field_error"), null); } );
+    process.nextTick( function() { cb(i18n.__("field_error")); } );
 }
 
 function formValidatorA(fields, files, i18n, cb) {
   if(fields.field3[0] === "OK")
-    process.nextTick( function() { cb(null, fields, files); } );
+    process.nextTick( function() { cb(false); } );
   else
-    process.nextTick( function() { cb(i18n.__("form_error"), null, null); } );
+    process.nextTick( function() { cb(i18n.__("form_error")); } );
 }
 
 
@@ -88,9 +88,8 @@ vows.describe("Form validation")
         f.setValidator("field1", fieldValidatorA);
         f.runValidatator("field1", [ 'OK' ], i18n, this.callback);
       },
-      "results" : function(error, data) {
-        assert.isNull(error);
-        assert.deepEqual(data, ['OK'] );
+      "results" : function(data) {
+        assert.isFalse(data);
       }
     },
     "Run global validator" : {
