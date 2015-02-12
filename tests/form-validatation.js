@@ -61,8 +61,8 @@ vows.describe("Form validation")
         return f;
       },
       "functions" : function (f) {
-        assert.strictEqual(f.validators.fields["field1"], fieldValidatorA);
-        assert.strictEqual(f.validators.fields["field2"], fieldValidatorA);
+        assert.strictEqual(f.validators.fields.field1, fieldValidatorA);
+        assert.strictEqual(f.validators.fields.field2, fieldValidatorA);
         assert.strictEqual(f.globalValidator, formValidatorA);
       },
     },

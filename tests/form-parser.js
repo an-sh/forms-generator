@@ -24,7 +24,7 @@ vows.describe("Form definitions parser")
         assert.strictEqual(form.skel.attrs.name, "TForm");
       },
       "validators" : function (form) {
-        assert.isNull(form.validators.fields["field"]);
+        assert.isNull(form.validators.fields.field);
         assert.isNull(form.globalValidator);
       },
       "fields" : function (form) {
@@ -386,7 +386,7 @@ vows.describe("Form definitions parser")
       "select sub optgroups" : function() {
         assert.throws(function() { new fg.Form("TForm", null, "text",
                                                [ "field1", "select", null,
-                                                 [ "grp1", null, "s1" [ "grp2", null, "s2" ] ] ]);
+                                                 [ "grp1", null, "s1", [ "grp2", null, "s2" ] ] ]);
                                  },
                       Error);
       }

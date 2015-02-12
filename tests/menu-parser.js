@@ -136,31 +136,31 @@ vows.describe("Menu definitions parser")
       "duplicate ids" : function() {
         assert.throws(function() { new fg.Menu("TMenu", null, null,
                                                [ "menu1" , "/url1" ],
-                                               [ "menu1" , "/url1" ])},
+                                               [ "menu1" , "/url1" ]);},
                       Error);
         assert.throws(function() { new fg.Menu("TMenu", null, null,
                                                [ "menu1" , "/url1", null,
-                                                 [ "menu1" , "/url1" ]])},
+                                                 [ "menu1" , "/url1" ]]);},
                       Error);
       },
       "non-string ids" : function() {
         assert.throws(function() { new fg.Menu( 1 , null, null,
-                                                [ "menu1" , "/url1" ])},
+                                                [ "menu1" , "/url1" ]);},
                       Error);
         assert.throws(function() { new fg.Menu("TMenu", null, null,
-                                               [ 1 , "/url1" ])},
+                                               [ 1 , "/url1" ]);},
                       Error);
       },
       "wrong attributes type" : function() {
         assert.throws(function() { new fg.Menu("TMenu", null, "string",
-                                               [ "menu1" , "/url1" ])},
+                                               [ "menu1" , "/url1" ]);},
                       Error);
         assert.throws(function() { new fg.Menu("TMenu", null, null,
-                                               [ "menu1", "/url1", "string" ])},
+                                               [ "menu1", "/url1", "string" ]);},
                       Error);
       },
       "no entries specification" : function() {
-        assert.throws(function() { new fg.Menu("TMenu", null, null)},
+        assert.throws(function() { new fg.Menu("TMenu", null, null);},
                       Error);
       }
     }
