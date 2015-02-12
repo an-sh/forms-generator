@@ -24,8 +24,8 @@ as arguments. `Jade` should be compatible with version `1.8.0` and
 ### Identifiers or IDs
 
 Each form field and menu item should have an id that is used for
-several purposes. All ids should match `/^[a-zA-Z_][a-zA-Z0-9_]*$/`
-regular expression.
+several purposes. All ids should match `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
+regular expression. `~` prefix is stripped from actual IDs.
 
 The first one is generating HTML id attributes. All fields/items ids
 are prefixed with the form/menu id. Also form field items ids are
@@ -40,7 +40,7 @@ one, but using non-prefixed ids is allowed. The first way is to
 globally disable prefixes for an entire form/menu with `noPrefix`
 option. The second one is to use `nTP` function to disable prefixing
 for just single id. HTML id attributes are not affected by these
-options.
+options. `~` prefix is simular to using `nTP` function.
 
 The last one is form data format. Forms field will have the same names
 as ids. Also radio, select and checkbox field values will contain
@@ -63,7 +63,7 @@ and `runGlobalValidatator` methods.
 
 - fields = field | fields
 - field(`array`) =  id , type , [ attributes , ( entries | fields ) ]
-- id = `/^[a-zA-Z_][a-zA-Z0-9_]*$/`
+- id = `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
 - type = `"div"` | `"fieldset"` | `"textarea"` | `"select"` |
   `"datalist"` | `"text"` | `"password"` | `"radio"` | `"checkbox"` |
   `"file"` | `"hidden"` | `"button"` | `"image"` | `"reset"` |
@@ -97,7 +97,7 @@ wrapper too.
 
 - items = item | items
 - item(`array`) =  id , url , [ attributes , items ]
-- id = `/^[a-zA-Z_][a-zA-Z0-9_]*$/`
+- id = `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
 - url = `string`
 - attributes = `object`
 
@@ -134,7 +134,7 @@ __Throws:__
 
 __Arguments:__
 
-- `id` - `string` matching `/^[a-zA-Z_][a-zA-Z0-9_]*$/` regular
+- `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
 expression, or result of `nTP` function.
 - `options` - `object` with form options or `null`. ___Fields:___
   - `noPrefix` - `boolean` option to turn off prefixes for translation
@@ -347,7 +347,7 @@ __Throws:__
 
 __Arguments:__
 
-- `id` - `string` matching `/^[a-zA-Z_][a-zA-Z0-9_]*$/` regular
+- `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
 expression, or result of `nTP` function.
 - `options` - `object` with menu options or `null`. ___Fields:___
   - `noPrefix` - `boolean` option to turn off prefixes for translation

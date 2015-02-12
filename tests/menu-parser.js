@@ -103,11 +103,11 @@ vows.describe("Menu definitions parser")
       topic: function() {
         return new fg.Menu("TMenu", null, null,
                            [ "menu1" , "/url1" ],
-                           [ "menu2" , "/url2", null,
+                           [ "~menu2" , "/url2", null,
                              ["submenu1", "/url2a"],
-                             ["submenu2", "/url2b"] ],
+                             ["~submenu2", "/url2b"] ],
                            [ "menu3" , "/url3" ],
-                           [ "menu4" , "/url4" ]);
+                           [ fg.nTP("menu4") , "/url4" ]);
       },
       "length" : function (menu) {
         assert.strictEqual(menu.skel.length, 4);
@@ -125,11 +125,11 @@ vows.describe("Menu definitions parser")
       },
       "content values" : function (menu) {
         assert.strictEqual(menu.skel[0].content().toString(), "TMenu-menu1");
-        assert.strictEqual(menu.skel[1].content().toString(), "TMenu-menu2");
+        assert.strictEqual(menu.skel[1].content().toString(), "menu2");
         assert.strictEqual(menu.skel[1][0].content().toString(), "TMenu-submenu1");
-        assert.strictEqual(menu.skel[1][1].content().toString(), "TMenu-submenu2");
+        assert.strictEqual(menu.skel[1][1].content().toString(), "submenu2");
         assert.strictEqual(menu.skel[2].content().toString(), "TMenu-menu3");
-        assert.strictEqual(menu.skel[3].content().toString(), "TMenu-menu4");
+        assert.strictEqual(menu.skel[3].content().toString(), "menu4");
       },
     },
     "Errors checking" : {

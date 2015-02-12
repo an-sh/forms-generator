@@ -277,12 +277,12 @@ vows.describe("Form definitions parser")
       topic: function() {
         return new fg.Form("TForm", null, null,
                            [ "field1", "text" ],
-                           [ "field2", "text" ],
-                           [ "set", "fieldset", null,
+                           [ "~field2", "text" ],
+                           [ "~set", "fieldset", null,
                              [ "field3", "text" ],
-                             [ "field4", "text" ] ],
+                             [ "~field4", "text" ] ],
                            [ "field5", "text" ],
-                           [ "field6", "text" ] );
+                           [ fg.nTP("field6"), "text" ] );
       },
       "fields length" :  function (form) {
         assert.lengthOf(form.skel.fields, 5);
@@ -296,6 +296,15 @@ vows.describe("Form definitions parser")
         assert.strictEqual(form.skel.fields[2].fields[1].id, "TForm-field4");
         assert.strictEqual(form.skel.fields[3].id, "TForm-field5");
         assert.strictEqual(form.skel.fields[4].id, "TForm-field6");
+      },
+      "fields labels" : function (form) {
+        assert.strictEqual(form.skel.fields[0].label().toString(), "TForm-field1");
+        assert.strictEqual(form.skel.fields[1].label().toString(), "field2");
+        assert.strictEqual(form.skel.fields[2].label().toString(), "set");
+        assert.strictEqual(form.skel.fields[2].fields[0].label().toString(), "TForm-field3");
+        assert.strictEqual(form.skel.fields[2].fields[1].label().toString(), "field4");
+        assert.strictEqual(form.skel.fields[3].label().toString(), "TForm-field5");
+        assert.strictEqual(form.skel.fields[4].label().toString(), "field6");
       }
     },
     "Global translation IDs" : {
