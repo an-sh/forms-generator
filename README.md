@@ -309,7 +309,7 @@ __Returns:__
 
 ---
 
-### Form.render(jade, jadeMixinsPath, i18n, insertionsObject)
+### Form.render(jade, i18n, insertionsObject, jadeCode)
 
 _Method_
 
@@ -318,9 +318,9 @@ Renders HTML form.
 __Arguments:__
 
 - `jade` - `jade` library.
-- `jadeMixinsPath` - `string` with Jade mixins file.
 - `i18n` - `i18n` translation library.
 - `insertionsObject` - `object` with insertions data.
+- `jadeCode` - Jade code that will be available to the render.
 
 __Returns:__
 
@@ -373,7 +373,7 @@ __Returns:__
 
 ---
 
-### Menu.render(jade, jadeMixinsPath, i18n, insertionsObject)
+### Menu.render(jade, i18n, insertionsObject, jadeCode)
 
 _Method_
 
@@ -382,9 +382,9 @@ Renders HTML menu.
 __Arguments:__
 
 - `jade` - `jade` library.
-- `jadeMixinsPath` - `string` with Jade mixins file.
 - `i18n` - `i18n` translation library.
 - `insertionsObject` - `object` with insertions data.
+- `jadeCode` - Jade code that will be available to the render.
 
 __Returns:__
 

@@ -112,8 +112,16 @@ vows.describe("Form jade mixins")
     "Render" : function() {
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
-      var p = path.join(__dirname, "../jade/");
-      var formDOMa = jsdom( form.render(jade, p, null, {"TForm-field::before" : "<span>element</span>", "TForm-field::after" : "<span>element</span>"} ));
+      var formDOMa = jsdom( form.render(jade, null, {"TForm-field::before" : "<span>element</span>", "TForm-field::after" : "<span>element</span>"} ));
+      var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div>');
+      result = compare(formDOMa, formDOMe);
+      assert.isEmpty(result.getDifferences());
+    },
+    "Render with mixin" : function() {
+      var form = new fg.Form("TForm", null, null,
+                             [ "field" , "text" ]);
+      var code = "mixin tst()\n  span element\n";
+      var formDOMa = jsdom( form.render(jade, null, {"TForm-field::before" : [ "tst" ], "TForm-field::after" : [ "tst" ]}, code ));
       var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div>');
       result = compare(formDOMa, formDOMe);
       assert.isEmpty(result.getDifferences());
