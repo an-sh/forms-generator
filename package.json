@@ -1,9 +1,14 @@
 {
   "name": "forms-generator",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A library that helps with HTML forms",
   "author": {
-    "name": "Andrey Sharapov"
+    "name": "Andrey Sharapov",
+    "email": "an.sh.1@yandex.ru"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/an-sh/forms-generator.git"
   },
   "private": false,
   "main": "lib/forms-generator.js",
