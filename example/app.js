@@ -68,7 +68,7 @@ var simpleForm = new fg.Form(
   ],
   [ "buttons", "fieldset", null,
     [ "field11", "hidden" ],
-    [ "field12", "button", { value : fg.__("btn") } ],
+    [ "field12", "button", { type : "submit" } ],
     [ "field13", "image", {alt : fg.__("img"), src : "images/image.png" } ],
   ],
   [ "otherInputs", "fieldset", null,
