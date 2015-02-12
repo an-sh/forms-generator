@@ -226,6 +226,10 @@ vows.describe("Form definitions parser")
       },
       "field" : function (form) {
         assert.isNull(form.skel.fields[0].label);
+        assert.isFunction(form.skel.fields[0].inlineLabel);
+      },
+      "expected values" : function (form) {
+        assert.deepEqual(form.getExpectedValues("field"), ["field"]);
       }
     },
     "Field set" : {

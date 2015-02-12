@@ -40,6 +40,12 @@ vows.describe("Form jade mixins")
       var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><input id="TForm-field" type="checkbox" name="field" value="field"/><label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
+    "Button" : function() {
+      var form = (new fg.Form("TForm", null, null,
+                              [ "field" , "button" ] )).getContent();
+      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><button id="TForm-field" type="button" name="field" value="field">TForm-field</button></div></form></div></html>';
+      compareHelper(renderHelper(form), htmlE);
+    },
     "Select groups" : function() {
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "select", null, "sel1", "sel2",
