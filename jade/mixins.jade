@@ -115,6 +115,11 @@ mixin _formDataList(field, data)
       option/(value=entry.content)&attributes(entry.attrs)
   +_AE(field, data, "")
 
+mixin _formButton(field, data)
+  +_BE(field, data, "")
+  button(id=field.id)&attributes(field.attrs)
+    | #{field.inlineLabel}
+  +_AE(field, data, "")
 
 mixin _formField(field, data)
   +_BE(field, data, "--wrapper")
@@ -136,6 +141,8 @@ mixin _formField(field, data)
             +_formTextArea(field, data)
           when "datalist"
             +_formDataList(field, data)
+          when "button"
+            +_formButton(field, data)
           default
             +_formInput(field, data)
   +_AE(field, data, "--wrapper")
