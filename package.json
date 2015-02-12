@@ -19,7 +19,9 @@
   },
   "keywords": [
     "form",
-    "forms"
+    "forms",
+    "i18n",
+    "validation"
   ],
   "devDependencies": {
     "vows": "~0.9.0",
