@@ -178,9 +178,10 @@ __Arguments:__
   - `fields` - `object` with Multiparty fields data.
   - `files` -  `object` with Multiparty files data.
 - `callbackFail` - `function` called when form validation
-    fails. ___Arguments:___
-  - `fieldErrors` - `object` with field validation errors or `null`.
-  - `formError` - Result of global validator or `null`.
+  fails. ___Arguments:___
+  - `errors` - `object` with validation errors or `null`. It contains
+    either a `field : error` object for field validation errors, or an
+    object with `"form-error" : error` for global validation error.
 
 ---
 
@@ -268,8 +269,7 @@ __Arguments:__
   - `data` - `Array` of Multiparty file/field data.
   - `i18n` - `i18n` translation library.
   - `cb` - `function` callback to run after validation. ___Arguments:___
-      - `error` - `true value` with an error or `false`.
-      - `data` - `Array` of Multiparty file/field data.
+      - `error` - `true value` with an error or `false value`.
 
 ---
 
@@ -287,9 +287,7 @@ __Arguments:__
   - `files` - Multiparty fields data or `null`.
   - `i18n` - `i18n` translation library.
   - `cb` - `function` callback to run after validation. ___Arguments:___
-      - `error` - `true value` with an error or `false`.
-      - `fields` - Multiparty fields data or `null`.
-      - `files` - Multiparty fields data or `null`.
+      - `error` - `true value` with an error or `false value`.
 
 ---
 

@@ -88,8 +88,22 @@ vows.describe("Form validation")
         f.setValidator("field1", fieldValidatorA);
         f.runValidatator("field1", [ 'OK' ], i18n, this.callback);
       },
-      "results" : function(data) {
-        assert.isFalse(data);
+      "results" : function(error, data) {
+        assert.isNull(error);
+        assert.deepEqual(data, [ 'OK' ]);
+      }
+    },
+    "Run validator error" : {
+      topic: function() {
+        var f = new fg.Form("TForm", null ,null,
+                            [ "field1" , "text" ],
+                            [ "field2" , "text" ],
+                            [ "field3" , "text" ]);
+        f.setValidator("field1", fieldValidatorA);
+        f.runValidatator("field1", [ 'ERROR' ], i18n, this.callback);
+      },
+      "results" : function(data, _) {
+        assert.deepEqual(data, 'Field Error');
       }
     },
     "Run global validator" : {
@@ -98,12 +112,27 @@ vows.describe("Form validation")
                             [ "field1" , "text" ],
                             [ "field2" , "text" ],
                             [ "field3" , "text" ]);
-        f.setValidator("field1", fieldValidatorA);
+        f.setGlobalValidator(formValidatorA);
         f.runGlobalValidatator(data1, null, i18n, this.callback, this.callback);
       },
       "results" : function(error, fields, files) {
         assert.isNull(error);
         assert.deepEqual(fields, data1);
+        assert.isNull(files);
+      }
+    },
+    "Run global validator error" : {
+      topic: function() {
+        var f = new fg.Form("TForm", null ,null,
+                            [ "field1" , "text" ],
+                            [ "field2" , "text" ],
+                            [ "field3" , "text" ]);
+        f.setGlobalValidator(formValidatorA);
+        f.runGlobalValidatator(data3, null, i18n, this.callback, this.callback);
+      },
+      "results" : function(error, fields, files) {
+        assert.deepEqual(error, 'Form Error');
+        assert.deepEqual(fields, data3);
         assert.isNull(files);
       }
     },
@@ -134,9 +163,8 @@ vows.describe("Form validation")
         f.setGlobalValidator(formValidatorA);
         f.validate(data2, null, i18n, this.callback, this.callback);
       },
-      "results" : function(errors, formError) {
-        assert.deepEqual(errors, { field1: 'Field Error', field2: 'Field Error' });
-        assert.isNull(formError);
+      "results" : function(error, _) {
+        assert.deepEqual(error, { field1: 'Field Error', field2: 'Field Error' });
       }
     },
     "Async validators form error" : {
@@ -150,9 +178,8 @@ vows.describe("Form validation")
         f.setGlobalValidator(formValidatorA);
         f.validate(data3, null, i18n, this.callback, this.callback);
       },
-      "results" : function(errors, formError) {
-        assert.isNull(errors);
-        assert.deepEqual(formError, 'Form Error' );
+      "results" : function(error, _) {
+        assert.deepEqual(error, { "form-error" : 'Form Error' } );
       }
     }
   })
