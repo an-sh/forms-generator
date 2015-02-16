@@ -26,7 +26,8 @@
     "form",
     "forms",
     "i18n",
-    "validation"
+    "validation",
+    "jade"
   ],
   "devDependencies": {
     "vows": "~0.9.0",
