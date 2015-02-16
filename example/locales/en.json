@@ -75,5 +75,6 @@
 	"Menu": "Menu",
 	"Form": "Form",
 	"Server response": "Server response",
-	"btn": "btn"
+	"btn": "btn",
+	"TForm-controls": "Controls"
 }

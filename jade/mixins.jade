@@ -25,35 +25,6 @@ mixin TR(str)
 
 
 //- ----------------------------------------------------------------------------
-//- Menu generation
-//- ----------------------------------------------------------------------------
-
-mixin _makeEntryData(item, data)
-  +_BE(item, data, "--link")
-  a(id=item.id + "--link", href=item.url)
-    +_BE(item, data, "--text")
-    span(id=item.id + "--text")
-      | #{item.content}
-    +_AE(item, data, "--text")
-  +_AE(item, data, "--link")
-
-mixin _menuRec(items, data)
-  for item in items
-    li(id=item.id)&attributes(item.attrs)
-      +_makeEntryData(item, data)
-      if(item instanceof Array)
-        +_BE(item, data, "--list")
-        ul(id=item.id + "--list")
-          +_menuRec(item, data)
-        +_AE(item, data, "--list")
-
-//- menu generation interface mixin
-mixin Menu(menuData, data)
-  ul(id=menuData.id)&attributes(menuData.attrs)
-    +_menuRec(menuData, data)
-
-
-//- ----------------------------------------------------------------------------
 //- Form generation
 //- ----------------------------------------------------------------------------
 

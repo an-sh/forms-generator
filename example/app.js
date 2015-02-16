@@ -22,22 +22,6 @@ app.use(i18n.init);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-var langMenu = new fg.Menu(
-  "lngM", null, null,
-  [ "en" , "?locale=en" ],
-  [ "ru" , "?locale=ru" ]);
-
-var mainMenu = new fg.Menu(
-  "TMenu", null, null,
-  [ "elem1" , "/url1" ],
-  [ "elem2" , "/url2", null,
-    ["elem3", "/url3", { "class": "someclass1"},
-     ["elem4", "/url4"],
-     ["elem5", "/url5"] ],
-    ["elem6", "/url6"] ],
-  [ "elem7" , "/url7" ],
-  [ "elem8" , "/url8", { "class": "someclass2"} ] );
-
 var simpleForm = new fg.Form(
   "TForm", null, null,
   [ "userData", "fieldset", null,
@@ -86,7 +70,7 @@ var simpleForm = new fg.Form(
     [ "field25", "url" ],
     [ "field26", "week" ],
   ],
-  [ null, "div", { "class": "control"},
+  [ "controls", "fieldset", { "class": "control"},
     [ "reset", "reset" ],
     [ "submit", "submit" ] ],
   [ "errors", "div", { "class" : "errorsOut"} ]
@@ -157,12 +141,9 @@ simpleForm.setFormRoute(router, function(req, res, next) {
 
 router.get("/", function(req, res) {
   i18n.overrideLocaleFromQuery(req);
-  res.render("index",
-             { title: res.__("title"),
-               langMenu: langMenu.getContent(req),
-               mainMenu: mainMenu.getContent(req),
-               simpleForm: simpleForm.getContent(req)
-             });
+  res.render("index", {
+    simpleForm: simpleForm.getContent(req)
+  });
 });
 
 

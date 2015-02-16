@@ -16,35 +16,6 @@ i18n.configure({
 
 vows.describe("Translations")
   .addBatch({
-    "Menu Expand" : {
-      topic: function() {
-        var m = new fg.Menu("TMenu", null, null,
-                            [ "menu1" , "/url1" ],
-                            [ "menu2" , "/url2",  { name : fg.__("_name") },
-                              ["submenu1", "/url2a"],
-                              ["submenu2", "/url2b"] ],
-                            [ "menu3" , "/url3" ],
-                            [ "menu4" , "/url4" ]);
-        return m.getContent(i18n);
-      },
-      "length" : function (exp) {
-        assert.strictEqual(exp.length, 4);
-      },
-      "submenu length" : function (exp) {
-        assert.strictEqual(exp[1].length, 2);
-      },
-      "content translation" : function (exp) {
-        assert.strictEqual(exp[0].content, "Menu1");
-        assert.strictEqual(exp[1].content, "Menu2");
-        assert.strictEqual(exp[1][0].content, "Submenu1");
-        assert.strictEqual(exp[1][1].content, "Submenu2");
-        assert.strictEqual(exp[2].content, "Menu3");
-        assert.strictEqual(exp[3].content, "Menu4");
-      },
-      "attributes" : function (exp) {
-        assert.strictEqual(exp[1].attrs.name, "Name");
-      }
-    },
     "Form Expand" : {
       topic: function() {
         var f = new fg.Form("TForm", null, null,

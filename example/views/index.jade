@@ -13,17 +13,18 @@ mixin testArgument(args)
 
 extends layout
 block page
-  +Menu(langMenu)
-  hr
-  h1
-    +TR("Menu")
-  +Menu(mainMenu)
-  hr
+  ul
+    li
+      a(href="?locale=en")
+        | EN
+    li
+      a(href="?locale=ru")
+        | RU
   h1
     +TR("Form")
-  p
+  hr
   +Form(simpleForm, {
-    "TForm-nonInput::before" : "<p><i><span>Inserted HTML</span></i></p>",
-    "TForm-buttons::after" : [ "testInsert" ],
+    "TForm-nonInput::before" : "<p><i><span>Literally inserted HTML</span></i></p>",
+    "TForm-userData::after" : [ "testInsert" ],
     "TForm-errors::before" : [ "testArgument", "Server response" ] } )
   hr

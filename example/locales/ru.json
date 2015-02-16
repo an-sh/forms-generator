@@ -74,5 +74,6 @@
 	"Inserted HTML": "Добавленный HTML",
 	"Menu": "Меню",
 	"Form": "Форма",
-	"Server response": "Ответ сервера"
+	"Server response": "Ответ сервера",
+	"TForm-controls": "Отправка"
 }

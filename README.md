@@ -1,63 +1,72 @@
 
 # Forms Generator
 
-Forms Generator is a library for Node.js that helps with HTML forms
-and lists (menus), including simple definitions, translation, data
-transmission and validation.
+Forms Generator is a library for Node.js that helps with HTML forms,
+including simple definition, translation, data transmission and
+validation.
 
+### Features
+
+- Simple syntax that allows both manually and by-software forms
+creation.
+- API for setting and running data validation functions.
+- Separate definition of fields variables and labels with a build-in
+internationalization support.
+- Easy to define fields HTML attributes (internationalization is also
+supported).
+- API for inserting custom HTML into generated forms.
 
 
 # Description
 
-The main interface consists of `Form` and `Menu` classes, for forms
-and menus definitions respectively. These definition classes could be
-directly rendered to HTML via `render` method. Also `getContent`
-method could be used to get object suitable as an argument to Jade
-`Form` and `Menu` mixins, so HTML will be rendered as a part of Jade
-template.
+The main interface is `Form` class, which creates form
+definitions. These definitions could be directly rendered to HTML via
+`render` method. Or `getContent` method could be used to get an object
+suitable as an argument for Jade `Form` mixin. In this case HTML will
+be rendered as a part of Jade template.
 
-___Note:___ Neither `i18n` nor `jade` are not included in the
-production dependencies, but rather they are expected by some methods
-as arguments. `Jade` should be compatible with version `1.8.0` and
-`i18n` with version `0.5.0`.
+___Note:___ Neither `i18n` nor `jade` are included in the production
+dependencies, but rather they are expected by some methods as
+arguments. `Jade` should be compatible with version `1.8.0` and `i18n`
+with version `0.5.0`.
 
 ### Identifiers or IDs
 
-Each form field and menu item should have an id that is used for
-several purposes. All ids should match `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
-regular expression. `~` prefix is stripped from actual IDs.
+Each form field should have an id that is used for several
+purposes. All ids should match `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
+expression. `~` prefix is stripped from actual ids.
 
-The first one is generating HTML id attributes. All fields/items ids
-are prefixed with the form/menu id. Also form field items ids are
-prefixed with the field id. So generated HTML id attributes will look
-like _`FormID-FieldID-EntryID`_ or _`MenuID-ItemID`_. Single `-` is
-used as a nesting separator, `--` is used to separate id suffixes for
-additional elements like labels or wrappers.
+The first one is generating HTML id attributes. All fields ids are
+prefixed with a form id. Also field entries (they are used for some
+field types like radio buttons) are prefixed with a field id. So
+generated HTML id attributes will look like
+_`FormID-FieldID-EntryID`_. Single `-` is used as a nesting separator,
+`--` is used to separate id suffixes for additional elements like
+labels or wrappers.
 
-The second one is generating translated labels for fields/items. By
-default translation ids generation algorithm is the same as the HTML
-one, but using non-prefixed ids is allowed. The first way is to
-globally disable prefixes for an entire form/menu with `noPrefix`
-option. The second one is to use `nTP` function to disable prefixing
-for just single id. HTML id attributes are not affected by these
-options. `~` prefix is simular to using `nTP` function.
+The second one is generating translation labels for fields. By default
+translation ids generation algorithm is the same as the HTML one, but
+using non-prefixed ids is allowed. `noPrefix` option globally disables
+prefixes for an entire form. `nTP` function disables prefixing for a
+single id. HTML id attributes are not affected by these options. Also
+prefixing id with `~` is simular to using `nTP` function.
 
-The last one is form data format. Forms field will have the same names
+The last one is form data format. Forms field names will be the same
 as ids. Also radio, select and checkbox field values will contain
-values matching respective ids. Look at `getExpectedValues` and
-`hasField` methods.
+values matching theirs entries ids.
 
 ### Form parsing and validation
 
 By default no any validation is performed. User supplied asynchronous
-functions can be used for validation, set by `setValidator` and
-`setGlobalValidator` methods. Each field can have one validation
-function, that is validating only field data. Global validator can be
-used for more complex validation, that has access to all fields
-data. All data should be in Multiparty parser(which is provided by
-`FormParser` class) format. It is possible to run full validation with
-`validate` method, or execute just one validator with `runValidatator`
-and `runGlobalValidatator` methods.
+functions can be used in a validation. Validators can be set by
+`setValidator` and `setGlobalValidator` methods. Each field can have
+one validation function that validates only a field data. Global
+validator can be used for a more complex validation that requires an
+access to all fields data. It is possible to run a full validation
+with `validate` method, or execute just one validator with
+`runValidatator` and `runGlobalValidatator` methods. All data for
+validation should be in the Multiparty parser (it is provided by
+`FormParser` class) format.
 
 ### Fields definitions
 
@@ -77,46 +86,34 @@ and `runGlobalValidatator` methods.
 
 Entries are allowed for `"checkbox"`, `"radio"`, `"select"` and
 `"datalist"` types. Entries nesting is only allowed for `"select"`,
-the depth must be only of one level, so it makes possible to define
-HTML select optgroups. `"radio"` and `"select"` select fields must
-contain one or more entries.
+the depth must be only of one level (it makes possible to define HTML
+select optgroups). `"radio"` and `"select"` fields must contain one or
+more entries.
 
 Fields nesting is only allowed for `"div"` and `"fieldset"` types,
-nested field are wrapped with the respective tag.  `"fieldset"` must
-contain one or more fields, but `"div"` can be empty and have a `null`
+nested fields are wrapped with respective tags.  `"fieldset"` must
+contain one or more fields, but `"div"` can be empty or have a `null`
 id.
 
-Attributes objects allow to set input html elements
-attributes. ___Note:___ style and class attributes are applied to a
-field wrapper div element, so both input and label can be
-styled. `"radio"` and `"checkbox"` entries styles are applied to a div
-wrapper too.
-
-
-### Items definitions
-
-- items = item | items
-- item(`array`) =  id , url , [ attributes , items ]
-- id = `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
-- url = `string`
-- attributes = `object`
+Attributes objects with `attribute : value` pairs are used to set
+input html elements attributes. ___Note:___ `style` and `class`
+attributes are applied to a field wrapper div element, so both input
+and label can be styled. `"radio"` and `"checkbox"` entries styles are
+applied to a div wrapper too.
 
 ### HTML insertions
 
-It is possible to insert html into generated forms and menus. The
-special js object must be used. Key are the following selectors
-prefixed by the element HTML id: `::before` and `::after`, for
-insertion before and after an element respectively.
-
-Values can be either HTML strings or arrays with mixin name and
-arguments. ___Note:___ Arguments are passed to a mixin as a single
-array argument. Also mixins should be defined on a global scope.
-
-
+It is possible to insert html elements into generated forms with an
+object. Object key are the following selectors prefixed by an element
+HTML id: `::before` and `::after`, for insertion before and after an
+element respectively. Values can be either HTML strings or arrays with
+mixin name and arguments. ___Note:___ Arguments are passed to a mixin
+as a single array argument. Also mixins should be defined on a global
+scope.
 
 ### Example
 
-A complete Express 4 application is in `example` directory.
+Complete Express 4 application is in an `example` directory.
 
 
 
@@ -130,12 +127,12 @@ _Constructor_
 
 __Throws:__
 
-- `Error` with a `string` description on malformed items definitions.
+- `Error` with a `string` description on malformed item definitions.
 
 __Arguments:__
 
 - `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
-expression, or result of `nTP` function.
+expression, or a result of `nTP` function.
 - `options` - `object` with form options or `null`. ___Fields:___
   - `noPrefix` - `boolean` option to turn off prefixes for translation
 ids, `false` by default.
@@ -180,8 +177,9 @@ __Arguments:__
 - `callbackFail` - `function` called when form validation
   fails. ___Arguments:___
   - `errors` - `object` with validation errors or `null`. It contains
-    either a `field : error` object for field validation errors, or an
-    object with `"form-error" : error` for global validation error.
+    either `field : error` pairs for field validation errors, or an
+    object with one `"form-error" : error` pair for a global
+    validation error.
 
 ---
 
@@ -189,7 +187,7 @@ __Arguments:__
 
 _Method_ ___[async]___
 
-Run only one field validator.
+Runs only a specific field validator.
 
 __Arguments:__
 
@@ -197,7 +195,7 @@ __Arguments:__
 - `data` - `object` with Multiparty field data.
 - `i18n` - `i18n` translation library.
   - `callback` - `function` callback to run after validation. _Arguments:_
-      - `error` - `true value` with an error or `false`.
+      - `error` - `true value` with an error or `false value`.
       - `data` - `object` with Multiparty field data or `null`.
 
 ---
@@ -214,7 +212,7 @@ __Arguments:__
 - `files` - Multiparty fields data or `null`.
 - `i18n` - `i18n` translation library.
 - `callback` - `function` callback to run after validation.
-  - `error` - `true value` with an error or `false`.
+  - `error` - `true value` with an error or `false value`.
   - `fields` - Multiparty fields data or `null`.
   - `files` - Multiparty fields data or `null`.
 
@@ -224,8 +222,8 @@ __Arguments:__
 
 _Method_
 
-Validation helper. Gets expected values for radio, select and checkbox
-fields.
+Validation helper. Returns expected values for fields that contain a
+fix set of entries.
 
 __Arguments:__
 
@@ -234,7 +232,8 @@ __Arguments:__
 __Returns:__
 
 - `Array` with expected `string` values, __or__ an empty `Array` if no
-  values are expected, __or__ `undefined` if a form has no such field.
+  specific values are expected, __or__ `undefined` if a form has no
+  such field.
 
 ---
 
@@ -242,7 +241,7 @@ __Returns:__
 
 _Method_
 
-Check whether or not a form has a field with the supplied id.
+Check whether or not a form has a field with a supplied id.
 
 __Arguments:__
 
@@ -250,7 +249,7 @@ __Arguments:__
 
 __Returns:__
 
-- `boolean` `true` if a form has a field with the id, `false`
+- `boolean` `true` if a form has a field with an id, `false`
   otherwise.
 
 ---
@@ -259,8 +258,8 @@ __Returns:__
 
 _Method_ ___[mutable]___
 
-Field validator setter. Validator should always call a cb and expect
-`field` to be `null` or `undefined`.
+Field validator setter. Validator should always call a callback and
+expect `data` to be `undefined` or `null`.
 
 __Arguments:__
 
@@ -277,8 +276,9 @@ __Arguments:__
 
 _Method_ ___[mutable]___
 
-Global validator setter. Validator should always call a cb and expect
-`fields`, `files` or both to be `null`.
+Global validator setter. Validator should always call a callback and
+expect `fields`, `files` or both to be `null`, `undefined` or miss
+some fields data.
 
 __Arguments:__
 
@@ -319,7 +319,7 @@ __Arguments:__
 - `i18n` - `i18n` translation library.
 - `insertionsObject` - `object` with insertions data.
 - `...includeJadeFiles` - The rest arguments are treated as jade files
-  with mixins. All file pathnames should be absolute.
+  pathnames to include. All pathnames should be absolute.
 
 __Returns:__
 
@@ -331,64 +331,8 @@ __Returns:__
 
 _Constructor_
 
-The same as `multiparty.Form`. External form parser with the same
-results format could be used.
-
----
-
-### Menu(id, options, attributes, ...items)
-
-_Constructor_
-
-__Throws:__
-
-- `Error` with a `string` description on malformed items definitions.
-
-__Arguments:__
-
-- `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
-expression, or result of `nTP` function.
-- `options` - `object` with menu options or `null`. ___Fields:___
-  - `noPrefix` - `boolean` option to turn off prefixes for translation
-ids, `false` by default.
-- `attributes` - `object` for ul tag attributes or `null`.
-- `...items` - Rest arguments are interpreted as items definitions.
-
----
-
-### Menu.getContent(i18n)
-
-_Method_ ___[caches results]___
-
-Expands menu for `i18n` locale and caches results.
-
-__Arguments:__
-
-- `i18n` - `i18n` translation library.
-
-__Returns:__
-
-- `object` for Jade menu render.
-
----
-
-### Menu.render(jade, i18n, insertionsObject, ...includeJadeFiles)
-
-_Method_
-
-Renders HTML menu.
-
-__Arguments:__
-
-- `jade` - `jade` library.
-- `i18n` - `i18n` translation library.
-- `insertionsObject` - `object` with insertions data.
-- `...includeJadeFiles` - The rest arguments are treated as jade files
-  with mixins. All file pathnames should be absolute.
-
-__Returns:__
-
-- `string` HTML menu.
+Same as `multiparty.Form`. External form parser with the same results
+format could be used.
 
 ---
 
@@ -396,7 +340,7 @@ __Returns:__
 
 _Function_
 
-Wrapper for menu/form strings translation via `__` function.
+Wrapper for strings translation via `__` function.
 
 __Arguments:__
 
@@ -404,23 +348,24 @@ __Arguments:__
 
 __Returns:__
 
-`object` that will be translated with form/menu.
+`object` that will be translated with a form.
 
 ---
 
-### __n(str)
+### __n(str, n)
 
 _Function_
 
-Wrapper for menu/form strings translation via `__n` function.
+Wrapper for strings translation via `__n` function.
 
 __Arguments:__
 
 - `str` - `string` to translate.
+- `n` - `integer`.
 
 __Returns:__
 
-`object` that will be translated with form/menu.
+`object` that will be translated with a form.
 
 ---
 
@@ -436,7 +381,7 @@ __Arguments:__
 
 __Returns:__
 
-`object` that could be used as id in form/menu definitions.
+`object` that could be used as id in form definitions.
 
 ---
 
@@ -444,7 +389,7 @@ __Returns:__
 
 _Constant_
 
-Path to Jade mixins file. This file contains `Form` and `Menu` mixins,
-which perform HTML rendering.
+Path to Jade mixins file. This file contains `Form` mixin which
+performs HTML rendering.
 
 ---
