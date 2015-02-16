@@ -1,13 +1,5 @@
 {
 	"title": "Title",
-	"TMenu-elem1": "Item 1",
-	"TMenu-elem2": "Item 2",
-	"TMenu-elem3": "Item 3",
-	"TMenu-elem4": "Item 4",
-	"TMenu-elem5": "Item 5",
-	"TMenu-elem6": "Item 6",
-	"TMenu-elem7": "Item 7",
-	"TMenu-elem8": "Item 8",
 	"TForm-userData": "User Data",
 	"name": "Name",
 	"TForm-field1": "Name",
@@ -69,12 +61,8 @@
 	"short_name_error": "Short name",
 	"short_pw_error": "Short password",
 	"pw": "Password",
-	"lngM-en": "En",
-	"lngM-ru": "Рус",
 	"Inserted HTML": "Inserted HTML",
-	"Menu": "Menu",
 	"Form": "Form",
 	"Server response": "Server response",
-	"btn": "btn",
 	"TForm-controls": "Controls"
 }
