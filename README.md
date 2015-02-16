@@ -440,10 +440,11 @@ __Returns:__
 
 ---
 
-### pathJade
+### includeJade
 
 _Constant_
 
-Path to Jade mixins directory.
+Path to Jade mixins file. This file contains `Form` and `Menu` mixins,
+which perform HTML rendering.
 
 ---
