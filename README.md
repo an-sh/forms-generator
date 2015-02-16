@@ -309,7 +309,7 @@ __Returns:__
 
 ---
 
-### Form.render(jade, i18n, insertionsObject, jadeCode)
+### Form.render(jade, i18n, insertionsObject, ...includeJadeFiles)
 
 _Method_
 
@@ -320,7 +320,8 @@ __Arguments:__
 - `jade` - `jade` library.
 - `i18n` - `i18n` translation library.
 - `insertionsObject` - `object` with insertions data.
-- `jadeCode` - Jade code that will be available to the render.
+- `...includeJadeFiles` - The rest arguments are treated as jade files
+  with mixins. All file pathnames should be absolute.
 
 __Returns:__
 
@@ -373,7 +374,7 @@ __Returns:__
 
 ---
 
-### Menu.render(jade, i18n, insertionsObject, jadeCode)
+### Menu.render(jade, i18n, insertionsObject, ...includeJadeFiles)
 
 _Method_
 
@@ -384,7 +385,8 @@ __Arguments:__
 - `jade` - `jade` library.
 - `i18n` - `i18n` translation library.
 - `insertionsObject` - `object` with insertions data.
-- `jadeCode` - Jade code that will be available to the render.
+- `...includeJadeFiles` - The rest arguments are treated as jade files
+  with mixins. All file pathnames should be absolute.
 
 __Returns:__
 
