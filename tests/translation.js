@@ -44,7 +44,7 @@ vows.describe("Translations")
         assert.strictEqual(exp.fields[4].label, "Field6");
       },
       "attributes" : function (exp) {
-        assert.strictEqual(exp.fields[1]["class"], "Name");
+        assert.strictEqual(exp.fields[1].attrs["class"], "Name");
       }
     }
   })

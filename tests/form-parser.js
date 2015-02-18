@@ -60,8 +60,7 @@ vows.describe("Form definitions parser")
         assert.strictEqual(form.skel.attrs["class"], "class1");
       },
       "field attributes" : function (form) {
-        assert.strictEqual(form.skel.fields[0]["class"], "class2");
-        assert.isUndefined(form.skel.fields[0].attrs["class"]);
+        assert.strictEqual(form.skel.fields[0].attrs["class"], "class2");
       }
     },
     "Select field" : {
@@ -252,18 +251,6 @@ vows.describe("Form definitions parser")
     "Empty div" : {
       topic: function() {
         return new fg.Form("TForm", null, null, [ "set" , "div"]);
-      },
-      "field type" : function (form) {
-        assert.strictEqual(form.skel.fields[0].type, "div");
-      },
-      "fields length" : function (form) {
-        assert.isArray(form.skel.fields[0].fields);
-        assert.lengthOf(form.skel.fields[0].fields, 0);
-      }
-    },
-    "No id div" : {
-      topic: function() {
-        return new fg.Form("TForm", null, null, [ null , "div"]);
       },
       "field type" : function (form) {
         assert.strictEqual(form.skel.fields[0].type, "div");

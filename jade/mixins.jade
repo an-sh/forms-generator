@@ -3,6 +3,43 @@
 //- utils
 //- ----------------------------------------------------------------------------
 
+-function copyObj(obj) {
+-  var result = {};
+-  for(var prop in obj) {
+-    if(obj.hasOwnProperty(prop))
+-      result[prop] = obj[prop];
+-  }
+-  return result;
+-}
+
+-function addClasses(attrs, classes) {
+-  if(attrs["class"]) {
+-    attrs["class"] = attrs["class"] + " " + classes;
+-  } else {
+-    attrs["class"] = classes;
+-  }
+-  return attrs;
+-}
+
+-function defaultExt(type, elem, attrs) {
+-  if(elem === "entryWrapper") {
+-    return addClasses(attrs, "fgEntryWrapper");
+-  } else if(elem === "fieldWrapper") {
+-    return addClasses(attrs, "fgFieldWrapper");
+-  } else if(elem === "label") {
+-    return addClasses(attrs, "fgElementLabel");
+-  } else if(elem === "name") {
+-    return addClasses(attrs, "fgFieldName");
+-  } else {
+-    return attrs;
+-  }
+-}
+
+-function extAttrs(renderExt, attrs, type, elem) {
+-  var attrsCopy = copyObj(attrs);
+-  return defaultExt(type, elem, attrsCopy);
+-}
+
 mixin _insertHelper(elem, data, suffix, position)
   -var elemSel = elem.id + suffix + position
   -if(data && (elemSel in data))
@@ -19,6 +56,7 @@ mixin _BE(elem, data, suffix)
 mixin _AE(elem, data, suffix)
   +_insertHelper(elem, data, suffix, "::after")
 
+
 //- translation helper
 mixin TR(str)
   span #{__(str)}
@@ -29,132 +67,143 @@ mixin TR(str)
 //- ----------------------------------------------------------------------------
 
 
-mixin _formInputEntry(entry, data, label)
+mixin _formInputEntry(entry, data, label, type, renderType)
   +_BE(entry, data, "")
-  input(id=entry.id)&attributes(entry.attrs)
+  -var eAttrs = extAttrs(renderType, entry.attrs, type, "entry")
+    input(id=entry.id)&attributes(eAttrs)
   +_AE(entry, data, "")
   if label
     +_BE(entry, data, "--label")
-    label(id=entry.id + "--label", for=entry.id, class="fgElementLabel")
-      | #{label}
+    -var eAttrs = extAttrs(renderType, entry.secondaryAttrs, type, "label")
+      label(id=entry.id + "--label", for=entry.id)&attributes(eAttrs)
+        | #{label}
     +_AE(entry, data, "--label")
 
 
-mixin _formInput(field, data)
+mixin _formInput(field, data, renderType)
   if field.entrydata
     +_BE(field, data, "")
     for entry in field.entrydata
       +_BE(entry, data, "--wrapper")
-      -var cls = entry["class"] ? entry["class"] + " fgEntryWrapper" : "fgEntryWrapper"
-      -var stl = entry["style"] ? entry["style"]  : undefined
-        div(id=entry.id + "--wrapper", class=cls, style=stl)
-          +_formInputEntry(entry, data, entry.content)
+      -var eAttrs = extAttrs(renderType, entry.wrapperAttrs, field.type, "entryWrapper")
+        div(id=entry.id + "--wrapper")&attributes(eAttrs)
+          +_formInputEntry(entry, data, entry.content, type, renderType)
       +_AE(entry, data, "--wrapper")
     +_AE(field, data, "")
   else
-    +_formInputEntry(field, data, false)
+    +_formInputEntry(field, data, false, type, renderType)
 
 
-mixin _formSelectRec(field, data)
+mixin _formSelectRec(field, data, type, renderType)
   for entry in field.entrydata
     if entry.entrydata
-      optgroup(id=entry.id, label=entry.content)&attributes(entry.attrs)
-        +_formSelectRec(entry, data)
+      -var eAttrs = extAttrs(renderType, entry.attrs, type, "optGroup")
+        optgroup(id=entry.id, label=entry.content)&attributes(eAttrs)
+          +_formSelectRec(entry, data, type, renderType)
     else
-      option(id=entry.id)&attributes(entry.attrs)
-        | #{entry.content}
+      -var eAttrs = extAttrs(renderType, entry.attrs, type, "option")
+        option(id=entry.id)&attributes(eAttrs)
+          | #{entry.content}
 
-mixin _formSelect(field, data)
+mixin _formSelect(field, data, renderType)
   +_BE(field, data, "")
-  select(id=field.id)&attributes(field.attrs)
-    +_formSelectRec(field, data)
+  -var eAttrs = extAttrs(renderType, field.attrs, field.type, "field")
+    select(id=field.id)&attributes(eAttrs)
+      +_formSelectRec(field, data, field.type, renderType)
   +_AE(field, data, "")
 
 
-mixin _formTextArea(field, data)
+mixin _formTextArea(field, data, renderType)
   +_BE(field, data, "")
-  textarea(id=field.id)&attributes(field.attrs)
-    | #{field.content}
+  -var eAttrs = extAttrs(renderType, field.attrs, field.type, "field")
+    textarea(id=field.id)&attributes(eAttrs)
+      | #{field.content}
   +_AE(field, data, "")
 
 
-mixin _formDataList(field, data)
+mixin _formDataList(field, data, renderType)
   +_BE(field, data, "")
-  input(id=field.id, list=field.id + "--datalist")&attributes(field.attrs)
-  datalist(id=field.id + "--datalist")
-    for entry in field.entrydata
-      option/(value=entry.content)&attributes(entry.attrs)
+  -var eAttrs = extAttrs(renderType, field.attrs, field.type, "field")
+    input(id=field.id, list=field.id + "--datalist")&attributes(eAttrs)
+  -var eAttrs = extAttrs(renderType, field.tertiaryAttrs, field.type, "field")
+    datalist(id=field.id + "--datalist")&attributes(eAttrs)
+      for entry in field.entrydata
+        -var eAttrs = extAttrs(renderType, entry.attrs, field.type, "option")
+          option/(value=entry.content)&attributes(eAttrs)
   +_AE(field, data, "")
 
-mixin _formButton(field, data)
+mixin _formButton(field, data, renderType)
   +_BE(field, data, "")
-  button(id=field.id)&attributes(field.attrs)
-    | #{field.inlineLabel}
+  -var eAttrs = extAttrs(renderType, field.attrs, field.type, "field")
+    button(id=field.id)&attributes(eAttrs)
+      | #{field.inlineLabel}
   +_AE(field, data, "")
 
-mixin _formField(field, data)
+mixin _formField(field, data, renderType)
   +_BE(field, data, "--wrapper")
-  -var cls = field["class"] ? field["class"] + " fgFieldWrapper" : "fgFieldWrapper"
-  -var stl = field["style"] ? field["style"]  : undefined
-    div(id=field.id + "--wrapper", class=cls, style=stl)
+  -var eAttrs = extAttrs(renderType, field.wrapperAttrs, field.type, "fieldWrapper")
+    div(id=field.id + "--wrapper")&attributes(eAttrs)
       if(field.singleEntry)
-        +_formInputEntry(field, data, field.label)
+        +_formInputEntry(field, data, field.label, renderType)
       else
         if field.label
           +_BE(field, data, "--name")
-          div(id=field.id + "--name", class="fgFieldName")
-            | #{field.label}
+          -var eAttrs = extAttrs(renderType, field.secondaryAttrs, field.type, "name")
+            div(id=field.id + "--name")&attributes(eAttrs)
+              | #{field.label}
           +_AE(field, data, "--name")
         case field.type
           when "select"
-            +_formSelect(field, data)
+            +_formSelect(field, data, renderType)
           when "textarea"
-            +_formTextArea(field, data)
+            +_formTextArea(field, data, renderType)
           when "datalist"
-            +_formDataList(field, data)
+            +_formDataList(field, data, renderType)
           when "button"
-            +_formButton(field, data)
+            +_formButton(field, data, renderType)
           default
-            +_formInput(field, data)
+            +_formInput(field, data, renderType)
   +_AE(field, data, "--wrapper")
 
 
-mixin _fieldSet(fieldset, data)
+mixin _fieldSet(fieldset, data, renderType)
   +_BE(fieldset, data, "")
-  fieldset(id=fieldset.id)&attributes(fieldset.attrs)
-    legend(id=fieldset.id + "--legend")
-      | #{fieldset.label}
-    +_fieldRec(fieldset.fields, data)
+  -var eAttrs = extAttrs(renderType, fieldset.attrs, fieldset.type, "fieldSet")
+    fieldset(id=fieldset.id)&attributes(eAttrs)
+      -var eAttrs = extAttrs(renderType, fieldset.wrapperAttrs, fieldset.type, "legend")
+        legend(id=fieldset.id + "--legend")&attributes(eAttrs)
+          | #{fieldset.label}
+      +_fieldRec(fieldset.fields, data, renderType)
   +_AE(fieldset, data, "")
 
-mixin _divSet(divset, data)
+mixin _divSet(divset, data, renderType)
   +_BE(divset, data, "")
-  if(divset.id)
-    div(id=divset.id)&attributes(divset.attrs)
-      +_fieldRec(divset.fields, data)
-  else
-    div&attributes(divset.attrs)
-      +_fieldRec(divset.fields, data)
+  -var eAttrs = extAttrs(renderType, divset.attrs, divset.type, "div")
+    div(id=divset.id)&attributes(eAttrs)
+      +_fieldRec(divset.fields, data, renderType)
   +_AE(divset, data, "")
 
 
-mixin _fieldRec(fields, data)
+mixin _fieldRec(fields, data, renderType)
   for field in fields
     case field.type
       when "fieldset"
-        +_fieldSet(field, data)
+        +_fieldSet(field, data, renderType)
       when "div"
-        +_divSet(field, data)
+        +_divSet(field, data, renderType)
       default
-        +_formField(field, data)
+        +_formField(field, data, renderType)
 
 
 //- form generation interface mixin
-mixin Form(formData, data)
-  div(id=formData.id + "--wrapper")
-    if(formData.attrs.target)
-      iframe(id=formData.attrs.target, onload=formData.id + "Onload()", name=formData.attrs.target, width=0, height=0, tabindex=-1, hidden)
-    +_BE(formData, data, "")
-    form(id=formData.id)&attributes(formData.attrs)
-      +_fieldRec(formData.fields, data)
-    +_AE(formData, data, "")
+mixin Form(formData, data, renderType)
+  -var eAttrs = extAttrs(renderType, formData.wrapperAttrs, "form", "formWrapper")
+    div(id=formData.id + "--wrapper")&attributes(eAttrs)
+      -var eAttrs = extAttrs(renderType, formData.secondaryAttrs, "form", "formIframe")
+        iframe(id=formData.attrs.target,
+               width=0, height=0, tabindex=-1, hidden)&attributes(eAttrs)
+      +_BE(formData, data, "")
+      -var eAttrs = extAttrs(renderType, formData.attrs, "form", "form")
+        form(id=formData.id)&attributes(eAttrs)
+          +_fieldRec(formData.fields, data, renderType)
+      +_AE(formData, data, "")

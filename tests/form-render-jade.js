@@ -16,7 +16,7 @@ function renderHelper(form) {
 function compareHelper(htmlA, htmlE) {
   var formDOMa = jsdom(htmlA);
   var formDOMe = jsdom(htmlE);
-  result = compare(formDOMa, formDOMe);
+  result = compare(formDOMe, formDOMa);
   assert.isEmpty(result.getDifferences());
 }
 
@@ -25,19 +25,19 @@ vows.describe("Form jade mixins")
     "Input" : function() {
       var form = (new fg.Form("TForm", null, { "class" : "c" },
                               [ "field" , "text", { "class" : "c1" } ])).getContent();
-      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" class="c" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><input id="TForm-field" type="text" name="field"/></div></form></div></html>';
+      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" class="c" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><input id="TForm-field" class="c1" type="text" name="field"/></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Text area" : function() {
       var form = (new fg.Form("TForm", null, null,
-                              [ "field" , "textarea", { "class" : "c1" } ])).getContent();
-      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><textarea id="TForm-field" name="field"></textarea></div></form></div></html>';
+                              [ "field" , "textarea", [ { "class" : "c" } , { "class" : "c1" } ] ])).getContent();
+      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><textarea id="TForm-field" class="c" name="field"></textarea></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Single checkbox" : function() {
       var form = (new fg.Form("TForm", null, null,
-                              [ "field" , "checkbox", { "class": "c1" } ] )).getContent();
-      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><input id="TForm-field" type="checkbox" name="field" value="field"/><label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label></div></form></div></html>';
+                              [ "field" , "checkbox", [ { "class": "c" } , { "class": "c1" } ] ])).getContent();
+      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><input id="TForm-field" class="c" type="checkbox" name="field" value="field"/><label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Button" : function() {
@@ -55,7 +55,7 @@ vows.describe("Form jade mixins")
     },
     "Select options" : function() {
       var form = (new fg.Form("TForm", null, null,
-                              [ "field" , "select", { "class": "c1" } ,
+                              [ "field" , "select", [ null, { "class": "c1" } ] ,
                                 "sel1", {id: "sel2", "class": "specialSelect"}, "sel3"] )).getContent();
       var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><select id="TForm-field" name="field"><option id="TForm-field-sel1" value="sel1">TForm-field-sel1</option><option id="TForm-field-sel2" class="specialSelect" value="sel2">TForm-field-sel2</option><option id="TForm-field-sel3" value="sel3">TForm-field-sel3</option></select></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
@@ -64,7 +64,7 @@ vows.describe("Form jade mixins")
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "radio", { "class": "c1" } ,
                                 "sel1", {id: "sel2", "class": "specialSelect"}, "sel3"] )).getContent();
-      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><div id="TForm-field-sel1--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel1" name="field" value="sel1" type="radio"/><label id="TForm-field-sel1--label" for="TForm-field-sel1" class="fgElementLabel">TForm-field-sel1</label></div><div id="TForm-field-sel2--wrapper" class="specialSelect fgEntryWrapper"><input id="TForm-field-sel2" name="field" value="sel2" type="radio"/><label id="TForm-field-sel2--label" for="TForm-field-sel2" class="fgElementLabel">TForm-field-sel2</label></div><div id="TForm-field-sel3--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel3" name="field" value="sel3" type="radio"/><label id="TForm-field-sel3--label" for="TForm-field-sel3" class="fgElementLabel">TForm-field-sel3</label></div></div></form></div></html>';
+      var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><div id="TForm-field-sel1--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel1" name="field" value="sel1" type="radio"/><label id="TForm-field-sel1--label" for="TForm-field-sel1" class="fgElementLabel">TForm-field-sel1</label></div><div id="TForm-field-sel2--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel2" class="specialSelect" name="field" value="sel2" type="radio"/><label id="TForm-field-sel2--label" for="TForm-field-sel2" class="fgElementLabel">TForm-field-sel2</label></div><div id="TForm-field-sel3--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel3" name="field" value="sel3" type="radio"/><label id="TForm-field-sel3--label" for="TForm-field-sel3" class="fgElementLabel">TForm-field-sel3</label></div></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Datalist" : function() {
@@ -97,7 +97,7 @@ vows.describe("Form jade mixins")
       var opts = { 'filename' : __filename, 'form' : form  };
       var formDOMa = jsdom( jade.render('include ../jade/mixins.jade\nmixin tst()\n  span element\nhtml\n  +Form(form, {"TForm-field::before" : [ "tst" ], "TForm-field::after" : [ "tst" ]})', opts));
       var formDOMe = jsdom('<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div></html>');
-      result = compare(formDOMa, formDOMe);
+      result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
     "Mixin arguments" : function() {
@@ -106,7 +106,7 @@ vows.describe("Form jade mixins")
       var opts = { 'filename' : __filename, 'form' : form  };
       var formDOMa = jsdom( jade.render('include ../jade/mixins.jade\nmixin tst(args)\n  span #{args[0]}\nhtml\n  +Form(form, {"TForm-field::before" : [ "tst", "element" ], "TForm-field::after" : [ "tst", "element" ]})', opts));
       var formDOMe = jsdom('<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div></html>');
-      result = compare(formDOMa, formDOMe);
+      result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
     "Render" : function() {
@@ -114,7 +114,7 @@ vows.describe("Form jade mixins")
                              [ "field" , "text" ]);
       var formDOMa = jsdom( form.render(jade, null, {"TForm-field::before" : "<span>element</span>", "TForm-field::after" : "<span>element</span>"} ));
       var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div>');
-      result = compare(formDOMa, formDOMe);
+      result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
     "Render with mixin" : function() {
@@ -123,7 +123,7 @@ vows.describe("Form jade mixins")
       var include = path.join(__dirname, "test.jade");
       var formDOMa = jsdom( form.render(jade, null, {"TForm-field::before" : [ "tst" ], "TForm-field::after" : [ "tst" ]}, include ));
       var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div>');
-      result = compare(formDOMa, formDOMe);
+      result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     }
   })
