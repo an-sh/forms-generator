@@ -104,7 +104,7 @@ vows.describe("Form jade mixins")
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "text" ])).getContent();
       var opts = { 'filename' : __filename, 'form' : form  };
-      var formDOMa = jsdom( jade.render('include ../jade/mixins.jade\nmixin tst(args)\n  span #{args[0]}\nhtml\n  +Form(form, {"TForm-field::before" : [ "tst", "element" ], "TForm-field::after" : [ "tst", "element" ]})', opts));
+      var formDOMa = jsdom( jade.render('include ../jade/mixins.jade\nmixin tst(arg)\n  span #{arg}\nhtml\n  +Form(form, {"TForm-field::before" : [ "tst", "element" ], "TForm-field::after" : [ "tst", "element" ]})', opts));
       var formDOMe = jsdom('<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div></html>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
@@ -121,7 +121,7 @@ vows.describe("Form jade mixins")
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
       var include = path.join(__dirname, "test.jade");
-      var formDOMa = jsdom( form.render(jade, null, {"TForm-field::before" : [ "tst" ], "TForm-field::after" : [ "tst" ]}, include ));
+      var formDOMa = jsdom( form.render(jade, null, {"TForm-field::before" : [ "tst0" ], "TForm-field::after" : [ "tst1", "element" ]}, include ));
       var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><span>element</span><input id="TForm-field" type="text" name="field"/><span>element</span></div></form></div>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());

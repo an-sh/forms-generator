@@ -3,13 +3,11 @@ include ../../jade/mixins.jade
 
 mixin testInsert()
   p
-    i
-      +TR("Inserted HTML")
+    +TR("Inserted HTML")
 
-mixin testArgument(args)
-  -var title=args[0]
-    h3
-      +TR(title)
+mixin testArgument(title)
+  h3
+    +TR(title)
 
 extends layout
 block page

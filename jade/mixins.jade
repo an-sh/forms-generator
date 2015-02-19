@@ -46,7 +46,7 @@ mixin _insertHelper(elem, data, suffix, position)
     -var insertData = data[elemSel]
       -if(insertData instanceof Array)
         -var name = insertData[0], args = insertData.slice(1)
-          +#{name}(args)
+          +#{name}(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8])
       -else
         | !{insertData}
 
