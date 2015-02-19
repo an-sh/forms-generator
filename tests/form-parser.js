@@ -103,7 +103,7 @@ vows.describe("Form definitions parser")
       topic: function() {
         return new fg.Form("TForm", null, null,
                            [ "field" , "select", null, "sel1", "sel2",
-                             [ "grp1", null, "sel3", "sel4" ]]);
+                             { group : [ "grp1", null, "sel3", "sel4" ] }]);
       },
       "entries" :  function (form) {
         assert.lengthOf(form.skel.fields[0].entrydata, 3);
@@ -130,7 +130,7 @@ vows.describe("Form definitions parser")
       topic: function() {
         return new fg.Form("TForm", null, null,
                            [ "field" , "select", null,
-                             "sel1", {id: "sel2", "class": "specialSelect"}, "sel3"] );
+                             "sel1", [ "sel2", {"class": "specialSelect"} ], "sel3"] );
       },
       "entries" : function (form) {
         assert.isArray(form.skel.fields[0].entrydata);

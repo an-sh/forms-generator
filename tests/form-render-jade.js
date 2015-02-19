@@ -49,21 +49,21 @@ vows.describe("Form jade mixins")
     "Select groups" : function() {
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "select", null, "sel1", "sel2",
-                                [ "grp1", null, "sel3", "sel4" ]])).getContent();
+                                { group : [ "grp1", null, "sel3", "sel4" ] } ])).getContent();
       var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><select id="TForm-field" name="field"><option id="TForm-field-sel1" value="sel1">TForm-field-sel1</option><option id="TForm-field-sel2" value="sel2">TForm-field-sel2</option><optgroup id="TForm-field-grp1" label="TForm-field-grp1"><option id="TForm-field-sel3" value="sel3">TForm-field-sel3</option><option id="TForm-field-sel4" value="sel4">TForm-field-sel4</option></optgroup></select></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Select options" : function() {
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "select", [ null, { "class": "c1" } ] ,
-                                "sel1", {id: "sel2", "class": "specialSelect"}, "sel3"] )).getContent();
+                                "sel1", [ "sel2", { "class": "specialSelect" } ], "sel3"] )).getContent();
       var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="c1 fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><select id="TForm-field" name="field"><option id="TForm-field-sel1" value="sel1">TForm-field-sel1</option><option id="TForm-field-sel2" class="specialSelect" value="sel2">TForm-field-sel2</option><option id="TForm-field-sel3" value="sel3">TForm-field-sel3</option></select></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Radio" : function() {
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "radio", { "class": "c1" } ,
-                                "sel1", {id: "sel2", "class": "specialSelect"}, "sel3"] )).getContent();
+                                "sel1", [ "sel2", {"class": "specialSelect"} ], "sel3"] )).getContent();
       var htmlE = '<html><div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><div id="TForm-field--name" class="fgFieldName">TForm-field</div><div id="TForm-field-sel1--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel1" name="field" value="sel1" type="radio"/><label id="TForm-field-sel1--label" for="TForm-field-sel1" class="fgElementLabel">TForm-field-sel1</label></div><div id="TForm-field-sel2--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel2" class="specialSelect" name="field" value="sel2" type="radio"/><label id="TForm-field-sel2--label" for="TForm-field-sel2" class="fgElementLabel">TForm-field-sel2</label></div><div id="TForm-field-sel3--wrapper" class="fgEntryWrapper"><input id="TForm-field-sel3" name="field" value="sel3" type="radio"/><label id="TForm-field-sel3--label" for="TForm-field-sel3" class="fgElementLabel">TForm-field-sel3</label></div></div></form></div></html>';
       compareHelper(renderHelper(form), htmlE);
     },
