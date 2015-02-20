@@ -3,41 +3,46 @@
 //- utils
 //- ----------------------------------------------------------------------------
 
-mixin _proxy(name, id, renderExt, attrs, type, elem)
-  -function copyObj(obj) {
-  -  var result = {};
-  -  for(var prop in obj) {
-  -    if(obj.hasOwnProperty(prop))
-  -      result[prop] = obj[prop];
+mixin _proxy(name, id, attrs, type, elem, attrsExtender, content)
+  -function defaultExtender(name, type, elem, attrs) {
+  -  function copyObj(obj) {
+  -    var result = {};
+  -    for(var prop in obj) {
+  -      if(obj.hasOwnProperty(prop))
+  -        result[prop] = obj[prop];
+  -    }
+  -    return result;
   -  }
-  -  return result;
-  -}
-  -function addClasses(attrs, classes) {
-  -  if(attrs["class"]) {
-  -    attrs["class"] = attrs["class"] + " " + classes;
-  -  } else {
-  -    attrs["class"] = classes;
+  -  function addClasses(attrs, classes) {
+  -    if(attrs["class"]) {
+  -      attrs["class"] = attrs["class"] + " " + classes;
+  -    } else {
+  -      attrs["class"] = classes;
+  -    }
+  -    return attrs;
   -  }
-  -  return attrs;
-  -}
-  -function defaultExt(type, elem, attrs) {
   -  if(elem === "entryWrapper") {
-  -    return addClasses(attrs, "fgEntryWrapper");
+  -    return addClasses(copyObj(attrs), "fgEntryWrapper");
   -  } else if(elem === "fieldWrapper") {
-  -    return addClasses(attrs, "fgFieldWrapper");
+  -    return addClasses(copyObj(attrs), "fgFieldWrapper");
   -  } else if(elem === "label") {
-  -    return addClasses(attrs, "fgElementLabel");
+  -    return addClasses(copyObj(attrs), "fgElementLabel");
   -  } else if(elem === "name") {
-  -    return addClasses(attrs, "fgFieldName");
+  -    return addClasses(copyObj(attrs), "fgFieldName");
   -  } else {
   -    return attrs;
   -  }
   -}
   -function extAttrs(renderExt, attrs, type, elem) {
-  -  var attrsCopy = copyObj(attrs);
-  -  return defaultExt(type, elem, attrsCopy);
+  -  var ext = typeof attrsExtender === "function" ? attrsExtender : defaultExtender;
+  -  return ext(name, type, elem, attrs);
   -}
-    #{name}(id=id)&attributes(extAttrs(renderExt, attrs, type, elem))
+  -if(content === false)
+    #{name}(id=id)&attributes(extAttrs(attrsExtender, attrs, type, elem))
+  -else if(content)
+    #{name}(id=id)&attributes(extAttrs(attrsExtender, attrs, type, elem)) #{content}
+  -else
+    #{name}(id=id)&attributes(extAttrs(attrsExtender, attrs, type, elem))
       block
 
 mixin _insertHelper(elem, data, suffix, position)
@@ -46,7 +51,7 @@ mixin _insertHelper(elem, data, suffix, position)
     -var insertData = data[elemSel]
       -if(insertData instanceof Array)
         -var name = insertData[0], args = insertData.slice(1)
-          +#{name}(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8])
+          +#{name}(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9])
       -else
         | !{insertData}
 
@@ -61,110 +66,107 @@ mixin _AE(elem, data, suffix)
 //- Form generation
 //- ----------------------------------------------------------------------------
 
-mixin _formInputEntry(entry, data, label, type, renderType)
+mixin _formInputEntry(entry, data, label, type, attrsExtender)
   +_BE(entry, data, "")
-  +_proxy("input", entry.id, renderType, entry.attrs, type, "entry")
+  +_proxy("input", entry.id, entry.attrs, type, "entry", attrsExtender, false)
   +_AE(entry, data, "")
   if label
     +_BE(entry, data, "--label")
-    +_proxy("label", id=entry.id + "--label", renderType, entry.secondaryAttrs, type, "label")
-      | #{label}
+    +_proxy("label", id=entry.id + "--label", entry.secondaryAttrs, type, "label", attrsExtender, label)
     +_AE(entry, data, "--label")
 
-mixin _formInput(field, data, renderType)
+mixin _formInput(field, data, attrsExtender)
   if field.entrydata
     +_BE(field, data, "")
     for entry in field.entrydata
       +_BE(entry, data, "--wrapper")
-      +_proxy("div", entry.id + "--wrapper", renderType, entry.wrapperAttrs, field.type, "entryWrapper")
-        +_formInputEntry(entry, data, entry.content, type, renderType)
+      +_proxy("div", entry.id + "--wrapper", entry.wrapperAttrs, field.type, "entryWrapper", attrsExtender)
+        +_formInputEntry(entry, data, entry.content, type, attrsExtender)
       +_AE(entry, data, "--wrapper")
     +_AE(field, data, "")
   else
-    +_formInputEntry(field, data, false, type, renderType)
+    +_formInputEntry(field, data, false, type, attrsExtender)
 
-mixin _formSelectRec(field, data, type, renderType)
+mixin _formSelectRec(field, data, type, attrsExtender)
   for entry in field.entrydata
     if entry.entrydata
-      +_proxy("optgroup", entry.id, renderType, entry.attrs, type, "optgroup")
-        +_formSelectRec(entry, data, type, renderType)
+      +_proxy("optgroup", entry.id, entry.attrs, type, "optgroup", attrsExtender)
+        +_formSelectRec(entry, data, type, attrsExtender)
     else
-      +_proxy("option", entry.id, renderType, entry.attrs, type, "option")
-        | #{entry.content}
+      +_proxy("option", entry.id, entry.attrs, type, "option", attrsExtender, entry.content)
 
-mixin _formSelect(field, data, renderType)
+mixin _formSelect(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("select", field.id, renderType, field.attrs, field.type, "field")
-    +_formSelectRec(field, data, field.type, renderType)
+  +_proxy("select", field.id, field.attrs, field.type, "field", attrsExtender)
+    +_formSelectRec(field, data, field.type, attrsExtender)
   +_AE(field, data, "")
 
-mixin _formTextArea(field, data, renderType)
+mixin _formTextArea(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("textarea", field.id, renderType, field.attrs, field.type, "field")
-    | #{field.content}
+  -if(field.content)
+    +_proxy("textarea", field.id, field.attrs, field.type, "field", attrsExtender, field.content)
+  -else
+    +_proxy("textarea", field.id, field.attrs, field.type, "field", attrsExtender, false)
   +_AE(field, data, "")
 
-mixin _formDataList(field, data, renderType)
+mixin _formDataList(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("input", field.id, renderType, field.attrs, field.type, "field")
-  +_proxy("datalist", field.attrs.list, renderType, field.tertiaryAttrs, field.type, "field")
+  +_proxy("input", field.id, field.attrs, field.type, "field")
+  +_proxy("datalist", field.attrs.list, field.tertiaryAttrs, field.type, "datalist", attrsExtender)
     for entry in field.entrydata
-      +_proxy("option", null, renderType, entry.attrs, field.type, "option")
+      +_proxy("option", null, entry.attrs, field.type, "option", attrsExtender, false)
   +_AE(field, data, "")
 
-mixin _formButton(field, data, renderType)
+mixin _formButton(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("button", field.id, renderType, field.attrs, field.type, "field")
-    | #{field.inlineLabel}
+  +_proxy("button", field.id, field.attrs, field.type, "field", attrsExtender, field.inlineLabel)
   +_AE(field, data, "")
 
-mixin _formField(field, data, renderType)
+mixin _formField(field, data, attrsExtender)
   +_BE(field, data, "--wrapper")
-  +_proxy("div", field.id + "--wrapper", renderType, field.wrapperAttrs, field.type, "fieldWrapper")
+  +_proxy("div", field.id + "--wrapper", field.wrapperAttrs, field.type, "fieldWrapper", attrsExtender)
     if(field.singleEntry)
-      +_formInputEntry(field, data, field.label, renderType)
+      +_formInputEntry(field, data, field.label, attrsExtender)
     else
       if field.label
-        +_BE(field, data, "--name")
-        +_proxy("div", field.id + "--name", renderType, field.secondaryAttrs, field.type, "name")
-          | #{field.label}
-        +_AE(field, data, "--name")
+        +_BE(field, data, "--label")
+        +_proxy("label", field.id + "--label", field.secondaryAttrs, field.type, "label", attrsExtender, field.label)
+        +_AE(field, data, "--label")
       case field.type
         when "select"
-          +_formSelect(field, data, renderType)
+          +_formSelect(field, data, attrsExtender)
         when "textarea"
-          +_formTextArea(field, data, renderType)
+          +_formTextArea(field, data, attrsExtender)
         when "datalist"
-          +_formDataList(field, data, renderType)
+          +_formDataList(field, data, attrsExtender)
         when "button"
-          +_formButton(field, data, renderType)
+          +_formButton(field, data, attrsExtender)
         default
-          +_formInput(field, data, renderType)
+          +_formInput(field, data, attrsExtender)
   +_AE(field, data, "--wrapper")
 
-mixin _fieldSet(fieldset, data, renderType)
+mixin _fieldSet(fieldset, data, attrsExtender)
   +_BE(fieldset, data, "")
-  +_proxy("fieldset", fieldset.id, renderType, fieldset.attrs, fieldset.type, "fieldset")
-    +_proxy("legend", fieldset.id + "--legend", renderType, fieldset.wrapperAttrs, fieldset.type, "legend")
-      | #{fieldset.label}
-    +_fieldRec(fieldset.fields, data, renderType)
+  +_proxy("fieldset", fieldset.id, fieldset.attrs, fieldset.type, "fieldset", attrsExtender)
+    +_proxy("legend", fieldset.id + "--legend", fieldset.wrapperAttrs, fieldset.type, "legend", attrsExtender, fieldset.label)
+    +_fieldRec(fieldset.fields, data, attrsExtender)
   +_AE(fieldset, data, "")
 
-mixin _divSet(divset, data, renderType)
+mixin _divSet(divset, data, attrsExtender)
   +_BE(divset, data, "")
-  +_proxy("div", divset.id, renderType, divset.attrs, divset.type, "div")
-    +_fieldRec(divset.fields, data, renderType)
+  +_proxy("div", divset.id, divset.attrs, divset.type, "div", attrsExtender)
+    +_fieldRec(divset.fields, data, attrsExtender)
   +_AE(divset, data, "")
 
-mixin _fieldRec(fields, data, renderType)
+mixin _fieldRec(fields, data, attrsExtender)
   for field in fields
     case field.type
       when "fieldset"
-        +_fieldSet(field, data, renderType)
+        +_fieldSet(field, data, attrsExtender)
       when "div"
-        +_divSet(field, data, renderType)
+        +_divSet(field, data, attrsExtender)
       default
-        +_formField(field, data, renderType)
+        +_formField(field, data, attrsExtender)
 
 
 
@@ -173,11 +175,11 @@ mixin _fieldRec(fields, data, renderType)
 //- ----------------------------------------------------------------------------
 
 //- form generation interface mixin
-mixin Form(formData, data, renderType)
-  +_proxy("div", formData.id + "--wrapper", renderType, formData.wrapperAttrs, "form", "formWrapper")
-    +_proxy("iframe", formData.attrs.target, renderType, formData.secondaryAttrs, "form", "formIframe")
+mixin Form(formData, data, attrsExtender)
+  +_proxy("div", formData.id + "--wrapper", formData.wrapperAttrs, "form", "formWrapper", attrsExtender)
+    +_proxy("iframe", formData.attrs.target, formData.secondaryAttrs, "form", "formIframe", attrsExtender, false)
     +_BE(formData, data, "")
-    +_proxy("form", formData.id, renderType, formData.attrs, "form", "form")
+    +_proxy("form", formData.id, formData.attrs, "form", "form", attrsExtender)
       +_fieldRec(formData.fields, data, renderType)
     +_AE(formData, data, "")
 

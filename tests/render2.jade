@@ -1,0 +1,8 @@
+
+include ../jade/mixins.jade
+
+mixin tst(arg)
+  span #{arg}
+
+html
+  +Form(form, {"TForm-field::before" : [ "tst", "element" ], "TForm-field::after" : [ "tst", "element" ]})
