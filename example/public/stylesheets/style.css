@@ -1,6 +1,13 @@
 html,
 body {
-  height: 100%;
-  margin: 0 auto;
-  width: 800px;
+    margin: 0 auto;
+    width: 600px;
+}
+
+body {
+    padding-top: 30px;
+}
+
+#TForm-errors {
+    min-height: 100px;
 }

@@ -5,7 +5,7 @@ mixin testInsert()
   p
     +TR("Inserted HTML")
 
-mixin testArgument(title)
+mixin testInsertArgument(title)
   h3
     +TR(title)
 
@@ -20,9 +20,7 @@ block page
         | RU
   h1
     +TR("Form")
-  hr
   +Form(simpleForm, {
     "TForm-nonInput::before" : "<p><i><span>Literally inserted HTML</span></i></p>",
     "TForm-userData::after" : [ "testInsert" ],
-    "TForm-errors::before" : [ "testArgument", "Server response" ] } )
-  hr
+    "TForm-errors::before" : [ "testInsertArgument", "Server response" ] } )

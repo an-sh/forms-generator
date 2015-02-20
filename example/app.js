@@ -29,7 +29,7 @@ var simpleForm = new fg.Form(
     [ "field2", "password", { placeholder: fg.__("pw"), "class" : "pwField" } ]
   ],
   [ "nonInput", "fieldset", null,
-    [ "field3", "select", { "style" : "color:red" },
+    [ "field3", "select", null,
       "sel1", "sel2" , "sel3" ],
     [ "field4", "datalist", null,
       "s1", "s2", "s3" ],
@@ -40,7 +40,7 @@ var simpleForm = new fg.Form(
       { group : [ "grp2", null,
                   "selF", "selG"] },
       "selH" ],
-    [ "field6", "textarea", { placeholder: fg.__("txt") } ]
+    [ "field6", "textarea", { value: fg.__("txt") } ]
   ],
   [ "inputSelect", "fieldset", null,
     [ "field7", "radio", null,
