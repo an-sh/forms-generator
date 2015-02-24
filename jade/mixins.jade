@@ -4,31 +4,28 @@
 //- ----------------------------------------------------------------------------
 
 mixin _proxy(name, id, attrs, type, elem, attrsExtender, data, content)
-  -function defaultExtender(name, type, elem) {
+  -function defaultExtender() {
   -  if(elem === "entryWrapper") {
   -    return { "class" : "fgEntryWrapper" };
   -  } else if(elem === "fieldWrapper") {
   -    return { "class" : "fgFieldWrapper" };
   -  } else if(elem === "label") {
   -    return { "class" : "fgElementLabel" };
-  -  } else if(elem === "name") {
-  -    return { "class" : "fgFieldName" };
   -  } else {
   -    return {};
   -  }
   -}
-  -function extAttrs(attrsExtender, type, elem) {
-  -  var ext = typeof attrsExtender === "function" ? attrsExtender : defaultExtender;
-  -  return ext(name, type, elem);
+  -function extAttrs() {
+  -  return (typeof attrsExtender === "function") ? attrsExtender(name, type, elem) : {};
   -}
   -var elemSel = id + "::attributes"
   -var insertedAttrs = (data && data[elemSel]) ? data[elemSel] : {}
     -if(content === false)
-      #{name}(id=id)&attributes(attrs, extAttrs(attrsExtender, type, elem), insertedAttrs)
+      #{name}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
     -else if(content)
-      #{name}(id=id)&attributes(attrs, extAttrs(attrsExtender, type, elem), insertedAttrs) #{content}
+      #{name}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs) #{content}
     -else
-      #{name}(id=id)&attributes(attrs, extAttrs(attrsExtender, type, elem), insertedAttrs)
+      #{name}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
         block
 
 mixin _insertHelper(elem, data, suffix, position)
@@ -54,7 +51,7 @@ mixin _AE(elem, data, suffix)
 
 mixin _formInputEntry(entry, data, label, type, attrsExtender)
   +_BE(entry, data, "")
-  +_proxy("input", entry.id, entry.attrs, type, "entry", attrsExtender, data, false)
+  +_proxy("input", entry.id, entry.attrs, type, "input", attrsExtender, data, false)
   +_AE(entry, data, "")
   if label
     +_BE(entry, data, "--label")
@@ -67,11 +64,11 @@ mixin _formInput(field, data, attrsExtender)
     for entry in field.entrydata
       +_BE(entry, data, "--wrapper")
       +_proxy("div", entry.id + "--wrapper", entry.wrapperAttrs, field.type, "entryWrapper", attrsExtender, data)
-        +_formInputEntry(entry, data, entry.content, type, attrsExtender)
+        +_formInputEntry(entry, data, entry.content, field.type, attrsExtender)
       +_AE(entry, data, "--wrapper")
     +_AE(field, data, "")
   else
-    +_formInputEntry(field, data, false, type, attrsExtender)
+    +_formInputEntry(field, data, false, field.type, attrsExtender)
 
 mixin _formSelectRec(field, data, type, attrsExtender)
   for entry in field.entrydata
@@ -83,21 +80,21 @@ mixin _formSelectRec(field, data, type, attrsExtender)
 
 mixin _formSelect(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("select", field.id, field.attrs, field.type, "field", attrsExtender, data)
+  +_proxy("select", field.id, field.attrs, field.type, "select", attrsExtender, data)
     +_formSelectRec(field, data, field.type, attrsExtender)
   +_AE(field, data, "")
 
 mixin _formTextArea(field, data, attrsExtender)
   +_BE(field, data, "")
   -if(field.content)
-    +_proxy("textarea", field.id, field.attrs, field.type, "field", attrsExtender, data, field.content)
+    +_proxy("textarea", field.id, field.attrs, field.type, "textarea", attrsExtender, data, field.content)
   -else
-    +_proxy("textarea", field.id, field.attrs, field.type, "field", attrsExtender, data, false)
+    +_proxy("textarea", field.id, field.attrs, field.type, "textarea", attrsExtender, data, false)
   +_AE(field, data, "")
 
 mixin _formDataList(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("input", field.id, field.attrs, field.type, "field", attrsExtender, data, false)
+  +_proxy("input", field.id, field.attrs, field.type, "input", attrsExtender, data, false)
   +_proxy("datalist", field.attrs.list, field.tertiaryAttrs, field.type, "datalist", attrsExtender, data)
     for entry in field.entrydata
       +_proxy("option", null, entry.attrs, field.type, "option", attrsExtender, data, false)
@@ -105,7 +102,7 @@ mixin _formDataList(field, data, attrsExtender)
 
 mixin _formButton(field, data, attrsExtender)
   +_BE(field, data, "")
-  +_proxy("button", field.id, field.attrs, field.type, "field", attrsExtender, data, field.inlineLabel)
+  +_proxy("button", field.id, field.attrs, field.type, "button", attrsExtender, data, field.inlineLabel)
   +_AE(field, data, "")
 
 mixin _formField(field, data, attrsExtender)

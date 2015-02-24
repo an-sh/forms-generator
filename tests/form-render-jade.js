@@ -341,6 +341,55 @@ vows.describe("Form jade mixins")
 ');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
+    },
+    "Insert attributes" : function() {
+      var form = new fg.Form("TForm", null, null,
+                             [ "field" , "text" ]);
+      var html = form.render(jade, {pretty : true}, null,
+                             { "TForm-field::attributes" :  { "class" : "c2" },
+                               "TForm-field--label::attributes" :  { "class" : "c1" } } );
+      var formDOMa = jsdom(html);
+      var formDOMe = jsdom('\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel c1">TForm-field</label>\
+      <input id="TForm-field" type="text" name="field" class="c2"></input>\
+    </div>\
+  </form>\
+</div>\
+');
+      result = compare(formDOMe, formDOMa);
+      assert.isEmpty(result.getDifferences());
+    },
+    "Insert attributes function" : function() {
+      var form = new fg.Form("TForm", null, null,
+                             [ "field" , "text" ]);
+      var insfn = function(name, type, elem) {
+        if(name === 'input' && type === 'text' && elem === 'input') {
+          return { "class" : "c2" };
+        } else if(name === 'label' && type === 'text' && elem === 'label') {
+          return { "class" : "c1" };
+        } else {
+          return {};
+        }
+      };
+      var html = form.render(jade, {pretty : true}, null, { "attrsExtender" :  insfn } );
+      var formDOMa = jsdom(html);
+      var formDOMe = jsdom('\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel c1">TForm-field</label>\
+      <input id="TForm-field" type="text" name="field" class="c2"></input>\
+    </div>\
+  </form>\
+</div>\
+');
+      result = compare(formDOMe, formDOMa);
+      assert.isEmpty(result.getDifferences());
     }
   })
   .export(module);
