@@ -17,7 +17,7 @@ mixin _proxy(name, id, attrs, type, elem, attrsExtender, data, content)
   -    return {};
   -  }
   -}
-  -function extAttrs(renderExt, type, elem) {
+  -function extAttrs(attrsExtender, type, elem) {
   -  var ext = typeof attrsExtender === "function" ? attrsExtender : defaultExtender;
   -  return ext(name, type, elem);
   -}
@@ -166,7 +166,7 @@ mixin Form(formData, data, attrsExtender)
     +_proxy("iframe", formData.attrs.target, formData.secondaryAttrs, "form", "formIframe", attrsExtender, data, false)
     +_BE(formData, data, "")
     +_proxy("form", formData.id, formData.attrs, "form", "form", attrsExtender, data)
-      +_fieldRec(formData.fields, data, renderType)
+      +_fieldRec(formData.fields, data, attrsExtender)
     +_AE(formData, data, "")
 
 //- translation helper

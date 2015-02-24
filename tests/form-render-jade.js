@@ -9,7 +9,7 @@ var jsdom = require('jsdom').jsdom;
 var fg = require(path.join(__dirname, '../lib/forms-generator.js'));
 
 function renderHelper(form) {
-  var opts = { 'filename' : __filename, '__form' : form, pretty : true };
+  var opts = { 'filename' : __filename, '__form' : form };
   return jade.render('include ../jade/mixins.jade\n+Form(__form)', opts);
 }
 
@@ -262,7 +262,7 @@ vows.describe("Form jade mixins")
     "HTML insert" : function() {
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "text" ])).getContent();
-      var opts = { 'form' : form, pretty : true };
+      var opts = { 'form' : form };
       var html = jade.renderFile(path.join(__dirname, "render1.jade"), opts);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
@@ -284,7 +284,7 @@ vows.describe("Form jade mixins")
     "Mixin arguments" : function() {
       var form = (new fg.Form("TForm", null, null,
                               [ "field" , "text" ])).getContent();
-      var opts = { 'form' : form, pretty : true };
+      var opts = { 'form' : form };
       var html = jade.renderFile(path.join(__dirname, "render2.jade"), opts);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
@@ -306,9 +306,19 @@ vows.describe("Form jade mixins")
     "Render" : function() {
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
-      var html = form.render(jade, null, {"TForm-field::before" : "<span>element</span>", "TForm-field::after" : "<span>element</span>"});
+      var html = form.render(jade, null, null, {"TForm-field::before" : "<span>element</span>", "TForm-field::after" : "<span>element</span>"});
       var formDOMa = jsdom(html);
-      var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label><span>element</span><input id="TForm-field" type="text" name="field"></input><span>element</span></div></form></div>');
+      var formDOMe = jsdom('\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label><span>element</span>\
+      <input id="TForm-field" type="text" name="field"></input><span>element</span>\
+    </div>\
+  </form>\
+</div>\
+');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
@@ -316,9 +326,19 @@ vows.describe("Form jade mixins")
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
       var include = path.join(__dirname, "test.jade");
-      var html = form.render(jade, null, {"TForm-field::before" : [ "tst0" ], "TForm-field::after" : [ "tst1", "element" ]}, include );
+      var html = form.render(jade, null, null, {"TForm-field::before" : [ "tst0" ], "TForm-field::after" : [ "tst1", "element" ]}, include );
       var formDOMa = jsdom(html);
-      var formDOMe = jsdom('<div id="TForm--wrapper"><iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe><form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm"><div id="TForm-field--wrapper" class="fgFieldWrapper"><label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label><span>element</span><input id="TForm-field" type="text" name="field"></input><span>element</span></div></form></div>');
+      var formDOMe = jsdom('\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label><span>element</span>\
+      <input id="TForm-field" type="text" name="field"></input><span>element</span>\
+    </div>\
+  </form>\
+</div>\
+');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     }
