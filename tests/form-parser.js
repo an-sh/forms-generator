@@ -16,16 +16,24 @@ vows.describe("Form definitions parser")
       "id" : function (form) {
         assert.strictEqual(form.skel.id, "TForm");
       },
-      "attributes" : function (form) {
+      "validators" : function (form) {
+        assert.isNull(form.validators.fields.field);
+        assert.isNull(form.globalValidator);
+      },
+      "form attributes" : function (form) {
         assert.strictEqual(form.skel.attrs.target, "TFormIframe");
         assert.strictEqual(form.skel.attrs.action, "TFormSend");
         assert.strictEqual(form.skel.attrs.enctype, "multipart/form-data");
         assert.strictEqual(form.skel.attrs.method, "post");
         assert.strictEqual(form.skel.attrs.name, "TForm");
       },
-      "validators" : function (form) {
-        assert.isNull(form.validators.fields.field);
-        assert.isNull(form.globalValidator);
+      "iframe attributes" : function (form) {
+        assert.strictEqual(form.skel.secondaryAttrs.onload, "TFormOnload()");
+        assert.strictEqual(form.skel.secondaryAttrs.name, "TFormIframe");
+        assert.strictEqual(form.skel.secondaryAttrs.width, 0);
+        assert.strictEqual(form.skel.secondaryAttrs.height, 0);
+        assert.strictEqual(form.skel.secondaryAttrs.tabindex, -1);
+        assert.strictEqual(form.skel.secondaryAttrs.hidden, true);
       },
       "fields" : function (form) {
         assert.isArray(form.skel.fields);
@@ -46,6 +54,9 @@ vows.describe("Form definitions parser")
       },
       "field label value" : function (form) {
         assert.strictEqual(form.skel.fields[0].label().toString(), "TForm-field");
+      },
+      "field label attributes" : function (form) {
+        assert.strictEqual(form.skel.fields[0].secondaryAttrs["for"], "TForm-field");
       },
       "expected fields" : function (form) {
         assert.isTrue(form.hasField("field"));
@@ -145,7 +156,7 @@ vows.describe("Form definitions parser")
     },
     "Single checkbox field" : {
       topic: function() {
-        return new fg.Form("TForm", null, null, [ "field" , "checkbox"]);
+        return new fg.Form("TForm", null, null, [ "field" , "checkbox" ]);
       },
       "field" : function (form) {
         assert.strictEqual(form.skel.fields[0].id, "TForm-field");
@@ -157,6 +168,9 @@ vows.describe("Form definitions parser")
         assert.strictEqual(form.skel.fields[0].attrs.type, "checkbox");
         assert.strictEqual(form.skel.fields[0].attrs.name, "field");
         assert.strictEqual(form.skel.fields[0].attrs.value, "field");
+      },
+      "label attributes" : function (form) {
+        assert.strictEqual(form.skel.fields[0].secondaryAttrs["for"], "TForm-field");
       },
       "expected values" : function (form) {
         assert.deepEqual(form.getExpectedValues("field"), ["field"]);
@@ -189,14 +203,12 @@ vows.describe("Form definitions parser")
       "field" : function (form) {
         assert.strictEqual(form.skel.fields[0].type, "radio");
       },
-      "field type" : function (form) {
-        assert.strictEqual(form.skel.fields[0].type, "radio");
-      },
       "entries" : function (form) {
         assert.lengthOf(form.skel.fields[0].entrydata, 2);
       },
       "entries attributes" :  function (form) {
         assert.strictEqual(form.skel.fields[0].entrydata[0].attrs.type, "radio");
+        assert.strictEqual(form.skel.fields[0].entrydata[0].secondaryAttrs["for"], "TForm-field-flag1");
       },
       "expected values" : function (form) {
         assert.deepEqual(form.getExpectedValues("field"), ["flag1", "flag2"]);
@@ -216,6 +228,7 @@ vows.describe("Form definitions parser")
         return new fg.Form("TForm", null, null, [ "field" , "hidden" ]);
       },
       "field" : function (form) {
+        assert.strictEqual(form.skel.fields[0].type, "hidden");
         assert.isNull(form.skel.fields[0].label);
       }
     },
@@ -224,12 +237,28 @@ vows.describe("Form definitions parser")
         return new fg.Form("TForm", null, null, [ "field" , "button"]);
       },
       "field" : function (form) {
+        assert.strictEqual(form.skel.fields[0].type, "button");
         assert.isNull(form.skel.fields[0].label);
+        assert.strictEqual(form.skel.fields[0].attrs.value, "field");
         assert.isFunction(form.skel.fields[0].inlineLabel);
+      },
+      "field attributes" :  function (form) {
+        assert.strictEqual(form.skel.fields[0].attrs.value, "field");
       },
       "expected values" : function (form) {
         assert.deepEqual(form.getExpectedValues("field"), ["field"]);
       }
+    },
+    "Submit" : {
+      topic: function() {
+        return new fg.Form("TForm", null, null, [ "field" , "submit"]);
+      },
+      "field" : function (form) {
+        assert.strictEqual(form.skel.fields[0].type, "submit");
+      },
+      "field attributes" :  function (form) {
+        assert.strictEqual(form.skel.fields[0].attrs.value().toString(), "TForm-field");
+      },
     },
     "Field set" : {
       topic: function() {
