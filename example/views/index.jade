@@ -21,6 +21,7 @@ block page
   h1
     +TR("Form")
   +Form(simpleForm, {
+    "TForm::attributes" : { "class" : "pure-form" },
     "TForm-nonInput::before" : "<p><i><span>Literally inserted HTML</span></i></p>",
     "TForm-userData::after" : [ "testInsert" ],
     "TForm-errors::before" : [ "testInsertArgument", "Server response" ] } )

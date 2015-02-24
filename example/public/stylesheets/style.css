@@ -8,6 +8,14 @@ body {
     padding-top: 30px;
 }
 
+p {
+    background-color: #EEE
+}
+
+.fgFieldWrapper {
+    margin-bottom: 15px;
+}
+
 #TForm-errors {
     min-height: 100px;
 }
