@@ -30,7 +30,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" class="c" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <input id="TForm-field" class="c1" type="text" name="field"></input>\
     </div>\
   </form>\
@@ -46,7 +46,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="c1 fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <textarea id="TForm-field" class="c" name="field"></textarea>\
     </div>\
   </form>\
@@ -63,18 +63,18 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <div id="TForm-field-sel1--wrapper" class="fgEntryWrapper">\
         <input id="TForm-field-sel1" name="field" value="sel1" type="checkbox"></input>\
-        <label id="TForm-field-sel1--label" class="fgElementLabel" for="TForm-field-sel1">TForm-field-sel1</label>\
+        <label id="TForm-field-sel1--label" class="fgEntryLabel" for="TForm-field-sel1">TForm-field-sel1</label>\
       </div>\
       <div id="TForm-field-sel2--wrapper" class="fgEntryWrapper">\
         <input id="TForm-field-sel2" class="specialSelect" name="field" value="sel2" type="checkbox"></input>\
-        <label id="TForm-field-sel2--label" class="fgElementLabel" for="TForm-field-sel2">TForm-field-sel2</label>\
+        <label id="TForm-field-sel2--label" class="fgEntryLabel" for="TForm-field-sel2">TForm-field-sel2</label>\
       </div>\
       <div id="TForm-field-sel3--wrapper" class="fgEntryWrapper">\
         <input id="TForm-field-sel3" name="field" value="sel3" type="checkbox"></input>\
-        <label id="TForm-field-sel3--label" class="fgElementLabel" for="TForm-field-sel3">TForm-field-sel3</label>\
+        <label id="TForm-field-sel3--label" class="fgEntryLabel" for="TForm-field-sel3">TForm-field-sel3</label>\
       </div>\
     </div>\
   </form>\
@@ -91,7 +91,7 @@ vows.describe("Form jade mixins")
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="c1 fgFieldWrapper">\
       <input id="TForm-field" class="c" type="checkbox" name="field" value="field"></input>\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgEntryLabel" for="TForm-field">TForm-field</label>\
     </div>\
   </form>\
 </div>\
@@ -122,7 +122,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <select id="TForm-field" name="field">\
         <option id="TForm-field-sel1" value="sel1">TForm-field-sel1</option>\
         <option id="TForm-field-sel2" value="sel2">TForm-field-sel2</option>\
@@ -146,7 +146,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="c1 fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <select id="TForm-field" name="field">\
         <option id="TForm-field-sel1" value="sel1">TForm-field-sel1</option>\
         <option id="TForm-field-sel2" class="specialSelect" value="sel2">TForm-field-sel2</option>\
@@ -167,18 +167,18 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <div id="TForm-field-sel1--wrapper" class="fgEntryWrapper">\
         <input id="TForm-field-sel1" name="field" value="sel1" type="radio"></input>\
-        <label id="TForm-field-sel1--label" class="fgElementLabel" for="TForm-field-sel1">TForm-field-sel1</label>\
+        <label id="TForm-field-sel1--label" class="fgEntryLabel" for="TForm-field-sel1">TForm-field-sel1</label>\
       </div>\
       <div id="TForm-field-sel2--wrapper" class="fgEntryWrapper">\
         <input id="TForm-field-sel2" class="specialSelect" name="field" value="sel2" type="radio"></input>\
-        <label id="TForm-field-sel2--label" class="fgElementLabel" for="TForm-field-sel2">TForm-field-sel2</label>\
+        <label id="TForm-field-sel2--label" class="fgEntryLabel" for="TForm-field-sel2">TForm-field-sel2</label>\
       </div>\
       <div id="TForm-field-sel3--wrapper" class="fgEntryWrapper">\
         <input id="TForm-field-sel3" name="field" value="sel3" type="radio"></input>\
-        <label id="TForm-field-sel3--label" class="fgElementLabel" for="TForm-field-sel3">TForm-field-sel3</label>\
+        <label id="TForm-field-sel3--label" class="fgEntryLabel" for="TForm-field-sel3">TForm-field-sel3</label>\
       </div>\
     </div>\
   </form>\
@@ -194,7 +194,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label>\
+      <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label>\
       <input id="TForm-field" name="field" list="TForm-field--datalist">\
       </input>\
       <datalist id="TForm-field--datalist">\
@@ -221,11 +221,11 @@ vows.describe("Form jade mixins")
     <fieldset id="TForm-set">\
       <legend id="TForm-set--legend">TForm-set</legend>\
       <div id="TForm-field1--wrapper" class="fgFieldWrapper">\
-        <label id="TForm-field1--label" class="fgElementLabel" for="TForm-field1">TForm-field1</label>\
+        <label id="TForm-field1--label" class="fgFieldLabel" for="TForm-field1">TForm-field1</label>\
         <input id="TForm-field1" type="text" name="field1"></input>\
       </div>\
       <div id="TForm-field2--wrapper" class="fgFieldWrapper">\
-        <label id="TForm-field2--label" class="fgElementLabel" for="TForm-field2">TForm-field2</label>\
+        <label id="TForm-field2--label" class="fgFieldLabel" for="TForm-field2">TForm-field2</label>\
         <input id="TForm-field2" type="text" name="field2"></input>\
       </div>\
     </fieldset>\
@@ -246,11 +246,11 @@ vows.describe("Form jade mixins")
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-set">\
       <div id="TForm-field1--wrapper" class="fgFieldWrapper">\
-        <label id="TForm-field1--label" class="fgElementLabel" for="TForm-field1">TForm-field1</label>\
+        <label id="TForm-field1--label" class="fgFieldLabel" for="TForm-field1">TForm-field1</label>\
         <input id="TForm-field1" type="text" name="field1"></input>\
       </div>\
       <div id="TForm-field2--wrapper" class="fgFieldWrapper">\
-        <label id="TForm-field2--label" class="fgElementLabel" for="TForm-field2">TForm-field2</label>\
+        <label id="TForm-field2--label" class="fgFieldLabel" for="TForm-field2">TForm-field2</label>\
         <input id="TForm-field2" type="text" name="field2"></input>\
       </div>\
     </div>\
@@ -271,7 +271,7 @@ vows.describe("Form jade mixins")
     <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
     <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
       <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-        <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label><span>element</span>\
+        <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label><span>element</span>\
         <input id="TForm-field" type="text" name="field"></input><span>element</span>\
       </div>\
     </form>\
@@ -293,7 +293,7 @@ vows.describe("Form jade mixins")
     <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
     <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
       <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-        <label id="TForm-field--label" class="fgElementLabel" for="TForm-field">TForm-field</label><span>element</span>\
+        <label id="TForm-field--label" class="fgFieldLabel" for="TForm-field">TForm-field</label><span>element</span>\
         <input id="TForm-field" type="text" name="field"></input><span>element</span>\
       </div>\
     </form>\
@@ -313,7 +313,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label><span>element</span>\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel">TForm-field</label><span>element</span>\
       <input id="TForm-field" type="text" name="field"></input><span>element</span>\
     </div>\
   </form>\
@@ -333,7 +333,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel">TForm-field</label><span>element</span>\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel">TForm-field</label><span>element</span>\
       <input id="TForm-field" type="text" name="field"></input><span>element</span>\
     </div>\
   </form>\
@@ -354,7 +354,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel c1">TForm-field</label>\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel c1">TForm-field</label>\
       <input id="TForm-field" type="text" name="field" class="c2"></input>\
     </div>\
   </form>\
@@ -369,7 +369,7 @@ vows.describe("Form jade mixins")
       var insfn = function(name, type, elem) {
         if(name === 'input' && type === 'text' && elem === 'input') {
           return { "class" : "c2" };
-        } else if(name === 'label' && type === 'text' && elem === 'label') {
+        } else if(name === 'label' && type === 'text' && elem === 'fieldLabel') {
           return { "class" : "c1" };
         } else {
           return {};
@@ -382,7 +382,7 @@ vows.describe("Form jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fgFieldWrapper">\
-      <label id="TForm-field--label" for="TForm-field" class="fgElementLabel c1">TForm-field</label>\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel c1">TForm-field</label>\
       <input id="TForm-field" type="text" name="field" class="c2"></input>\
     </div>\
   </form>\

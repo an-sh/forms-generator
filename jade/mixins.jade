@@ -9,8 +9,10 @@ mixin _proxy(name, id, attrs, type, elem, attrsExtender, data, content)
   -    return { "class" : "fgEntryWrapper" };
   -  } else if(elem === "fieldWrapper") {
   -    return { "class" : "fgFieldWrapper" };
-  -  } else if(elem === "label") {
-  -    return { "class" : "fgElementLabel" };
+  -  } else if(elem === "fieldLabel") {
+  -    return { "class" : "fgFieldLabel" };
+  -  } else if(elem === "entryLabel") {
+  -    return { "class" : "fgEntryLabel" };
   -  } else {
   -    return {};
   -  }
@@ -55,7 +57,7 @@ mixin _formInputEntry(entry, data, label, type, attrsExtender)
   +_AE(entry, data, "")
   if label
     +_BE(entry, data, "--label")
-    +_proxy("label", id=entry.id + "--label", entry.secondaryAttrs, type, "label", attrsExtender, data, label)
+    +_proxy("label", id=entry.id + "--label", entry.secondaryAttrs, type, "entryLabel", attrsExtender, data, label)
     +_AE(entry, data, "--label")
 
 mixin _formInput(field, data, attrsExtender)
@@ -113,7 +115,7 @@ mixin _formField(field, data, attrsExtender)
     else
       if field.label
         +_BE(field, data, "--label")
-        +_proxy("label", field.id + "--label", field.secondaryAttrs, field.type, "label", attrsExtender, data, field.label)
+        +_proxy("label", field.id + "--label", field.secondaryAttrs, field.type, "fieldLabel", attrsExtender, data, field.label)
         +_AE(field, data, "--label")
       case field.type
         when "select"
