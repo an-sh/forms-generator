@@ -1,3 +1,4 @@
+/*jshint multistr: true */
 
 var path = require('path');
 var util = require('util');
@@ -34,8 +35,7 @@ vows.describe("Form jade mixins")
       <input id="TForm-field" class="c1" type="text" name="field"></input>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Text area" : function() {
@@ -50,8 +50,23 @@ vows.describe("Form jade mixins")
       <textarea id="TForm-field" class="c" name="field"></textarea>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
+      compareHelper(renderHelper(form), htmlE);
+    },
+    "Keygen" : function() {
+      var form = (new fg.Form("TForm", null, { "class" : "c" },
+                              [ "field" , "keygen", { "class" : "c1" } ])).getContent();
+      var htmlE = '\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" class="c" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel">TForm-field</label>\
+      <keygen id="TForm-field" class="c1" name="field">\
+      </keygen>\
+    </div>\
+  </form>\
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Checkboxes" : function() {
@@ -78,8 +93,7 @@ vows.describe("Form jade mixins")
       </div>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Single checkbox" : function() {
@@ -94,8 +108,7 @@ vows.describe("Form jade mixins")
       <label id="TForm-field--label" class="fgEntryLabel" for="TForm-field">TForm-field</label>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Button" : function() {
@@ -109,8 +122,7 @@ vows.describe("Form jade mixins")
       <button id="TForm-field" name="field" value="field">TForm-field</button>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Select groups" : function() {
@@ -133,8 +145,7 @@ vows.describe("Form jade mixins")
       </select>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Select options" : function() {
@@ -154,8 +165,7 @@ vows.describe("Form jade mixins")
       </select>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Radio" : function() {
@@ -182,8 +192,7 @@ vows.describe("Form jade mixins")
       </div>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Datalist" : function() {
@@ -204,8 +213,7 @@ vows.describe("Form jade mixins")
       </datalist>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Fieldset" : function() {
@@ -230,8 +238,7 @@ vows.describe("Form jade mixins")
       </div>\
     </fieldset>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Div" : function() {
@@ -255,8 +262,7 @@ vows.describe("Form jade mixins")
       </div>\
     </div>\
   </form>\
-</div>\
-';
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "HTML insert" : function() {
@@ -276,8 +282,7 @@ vows.describe("Form jade mixins")
       </div>\
     </form>\
   </div>\
-</html>\
-');
+</html>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
@@ -298,8 +303,7 @@ vows.describe("Form jade mixins")
       </div>\
     </form>\
   </div>\
-</html>\
-');
+</html>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
@@ -317,8 +321,7 @@ vows.describe("Form jade mixins")
       <input id="TForm-field" type="text" name="field"></input><span>element</span>\
     </div>\
   </form>\
-</div>\
-');
+</div>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
@@ -337,8 +340,7 @@ vows.describe("Form jade mixins")
       <input id="TForm-field" type="text" name="field"></input><span>element</span>\
     </div>\
   </form>\
-</div>\
-');
+</div>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
@@ -358,8 +360,7 @@ vows.describe("Form jade mixins")
       <input id="TForm-field" type="text" name="field" class="c2"></input>\
     </div>\
   </form>\
-</div>\
-');
+</div>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
@@ -386,8 +387,7 @@ vows.describe("Form jade mixins")
       <input id="TForm-field" type="text" name="field" class="c2"></input>\
     </div>\
   </form>\
-</div>\
-');
+</div>');
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     }

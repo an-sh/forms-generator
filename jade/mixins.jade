@@ -107,6 +107,11 @@ mixin _formButton(field, data, attrsExtender)
   +_proxy("button", field.id, field.attrs, field.type, "button", attrsExtender, data, field.inlineLabel)
   +_AE(field, data, "")
 
+mixin _formTag(field, data, attrsExtender)
+  +_BE(field, data, "")
+  +_proxy(field.type, field.id, field.attrs, field.type, field.type, attrsExtender, data)
+  +_AE(field, data, "")
+
 mixin _formField(field, data, attrsExtender)
   +_BE(field, data, "--wrapper")
   +_proxy("div", field.id + "--wrapper", field.wrapperAttrs, field.type, "fieldWrapper", attrsExtender, data)
@@ -126,6 +131,9 @@ mixin _formField(field, data, attrsExtender)
           +_formDataList(field, data, attrsExtender)
         when "button"
           +_formButton(field, data, attrsExtender)
+        when "keygen"
+        when "output"
+          +_formTag(field, data, attrsExtender)
         default
           +_formInput(field, data, attrsExtender)
   +_AE(field, data, "--wrapper")
