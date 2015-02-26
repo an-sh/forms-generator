@@ -368,9 +368,9 @@ vows.describe("Form jade mixins")
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
       var insfn = function(name, type, elem) {
-        if(name === 'input' && type === 'text' && elem === 'input') {
+        if(name === 'input' && type === 'text') {
           return { "class" : "c2" };
-        } else if(name === 'label' && type === 'text' && elem === 'fieldLabel') {
+        } else if(name === 'label' && type === 'text' && elem === 'fgFieldLabel') {
           return { "class" : "c1" };
         } else {
           return {};

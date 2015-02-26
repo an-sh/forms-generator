@@ -208,7 +208,6 @@ vows.describe("Form definitions parser")
       },
       "entries attributes" :  function (form) {
         assert.strictEqual(form.skel.fields[0].entrydata[0].attrs.type, "radio");
-        assert.strictEqual(form.skel.fields[0].entrydata[0].secondaryAttrs["for"], "TForm-field-flag1");
       },
       "expected values" : function (form) {
         assert.deepEqual(form.getExpectedValues("field"), ["flag1", "flag2"]);
