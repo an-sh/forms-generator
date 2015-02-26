@@ -1,21 +1,29 @@
 html,
 body {
-    margin: 0 auto;
-    width: 600px;
+  width: 600px;
+  margin: 0 auto;
 }
 
 body {
-    padding-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 p {
-    background-color: #EEE
+  background-color: #EEE;
 }
 
-.fgFieldWrapper {
-    margin-bottom: 15px;
+#TForm--wrapper {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #4d9255;
+  padding: 15px;
 }
 
 #TForm-errors {
-    min-height: 100px;
+  min-height: 150px;
+}
+
+.fgFieldWrapper {
+  margin-bottom: 10px;
 }

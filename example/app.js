@@ -24,60 +24,62 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 var simpleForm = new fg.Form(
   "TForm", null, null,
-  [ "userData", "fieldset", null,
-    [ "field1", "text", { placeholder: fg.__("name"), "class" : "loginField" } ],
-    [ "field2", "password", { placeholder: fg.__("pw"), "class" : "pwField" } ]
+  [ "userData", "fieldset", { "class" : "loginFields" },
+    [ "~name", "text", { placeholder: fg.__("name") } ],
+    [ "~password", "password", { placeholder: fg.__("password") } ],
+    [ "hiddenInput", "hidden" ]
+  ],
+  [ "multiInput", "fieldset", null,
+    [ "radioButtons", "radio", null,
+      "btn1",  [ "btn2",  { checked : true} ], "btn3" ],
+    [ "checkboxGroup", "checkbox", null,
+      "flag1", [ "flag2", { "class": "specialFlag" } ], "flag3" ],
+    [ "singleCheckbox", "checkbox", null ],
+    [ "fileUpload", "file", { "multiple" : true } ],
   ],
   [ "nonInput", "fieldset", null,
-    [ "field3", "select", null,
+    [ "select", "select", null,
       "sel1", "sel2" , "sel3" ],
-    [ "field4", "datalist", null,
-      "s1", "s2", "s3" ],
-    [ "field5", "select", { "class" : "someClass" },
-      "selA", "selB",
+    [ "selectGroups", "select", null,
+      "selA",
       { group : [ "grp1", null,
-                  "selC", "selD", [ "selE",  {"class": "specialSel" } ] ] },
+                  [ "selB",  { "class": "specialSel" } ] , "selC" ] },
       { group : [ "grp2", null,
-                  "selF", "selG"] },
-      "selH" ],
-    [ "field6", "textarea", { value: fg.__("txt") } ]
+                  "selD", "selE"] },
+      "selF" ],
+    [ "textarea", "textarea", { value: fg.__("txt") } ]
   ],
-  [ "inputSelect", "fieldset", null,
-    [ "field7", "radio", null,
-      "opt1",  [ "opt2",  { "class": "specialOpt", checked : true} ], "opt3" ],
-    [ "field8", "checkbox", null,
-      "flag1", "flag2" ],
-    [ "field9", "checkbox", null ],
-    [ "field10", "file", { "multiple" : true } ],
+  [ "nonInputHTML5", "fieldset", null,
+    [ "datalist", "datalist", null,
+      "s1", "s2", "s3" ],
+    [ "keygen", "keygen", null ],
   ],
-  [ "buttons", "fieldset", null,
-    [ "field11", "hidden" ],
-    [ "field12", "button", { type : "submit" } ],
-    [ "field13", "image", {alt : fg.__("img"), src : "images/image.png" } ],
+  [ "semanticHTML5Inputs", "fieldset", null,
+    [ "color", "color" ],
+    [ "date", "date" ],
+    [ "datetimeLocal", "datetime-local" ],
+    [ "email", "email" ],
+    [ "month", "month" ],
+    [ "number", "number" ],
+    [ "range", "range" ],
+    [ "search", "search" ],
+    [ "tel", "tel" ],
+    [ "time", "time" ],
+    [ "url", "url" ],
+    [ "week", "week" ],
   ],
-  [ "otherInputs", "fieldset", null,
-    [ "field14", "color" ],
-    [ "field15", "date" ],
-    [ "field16", "datetime" ],
-    [ "field17", "datetime-local" ],
-    [ "field18", "email" ],
-    [ "field19", "month" ],
-    [ "field20", "number" ],
-    [ "field21", "range" ],
-    [ "field22", "search" ],
-    [ "field23", "tel" ],
-    [ "field24", "time" ],
-    [ "field25", "url" ],
-    [ "field26", "week" ],
+  [ "customButtons", "fieldset", null,
+    [ "button", "button", { type : "submit" } ],
+    [ "imageButton", "image", { alt : fg.__("img"), src : "images/image.png" } ],
   ],
-  [ "controls", "fieldset", { "class": "control"},
+  [ "inputButtons", "fieldset", null,
     [ "reset", "reset" ],
     [ "submit", "submit" ] ],
-  [ "errors", "div", { "class" : "errorsOut"} ]
+  [ "errors", "div", { "class" : "errorsOut" } ]
 );
 
 simpleForm.setValidator(
-  "field1",
+  "name",
   function(data, i18n, cb) {
     if(!data || !validator.isLength(data[0], 4, 20)) {
       cb(i18n.__("short_name_error"));
@@ -88,10 +90,10 @@ simpleForm.setValidator(
 );
 
 simpleForm.setValidator(
-  "field2",
+  "password",
   function(data, i18n, cb) {
     if(!data || !validator.isLength(data[0], 4, 20)) {
-      cb(i18n.__("short_pw_error"));
+      cb(i18n.__("short_password_error"));
     } else {
       cb(false);
     }
@@ -100,9 +102,9 @@ simpleForm.setValidator(
 
 simpleForm.setGlobalValidator(
   function(fields, files, i18n, cb) {
-    var data = fields["field2"];
+    var data = fields.password;
     if(!data || !validator.isLength(data[0], 8, 20)) {
-      cb(i18n.__("short_pw_error"));
+      cb(i18n.__("password_length_error"));
     } else {
       cb(false);
     }
@@ -142,7 +144,8 @@ simpleForm.setFormRoute(router, function(req, res, next) {
 router.get("/", function(req, res) {
   i18n.overrideLocaleFromQuery(req);
   res.render("index", {
-    simpleForm: simpleForm.getContent(req)
+    simpleForm: simpleForm.getContent(req),
+    locale: req.getLocale()
   });
 });
 

@@ -6,22 +6,23 @@ mixin testInsert()
     +TR("Inserted HTML")
 
 mixin testInsertArgument(title)
-  h3
-    +TR(title)
+  fieldset
+    legend
+      +TR(title)
 
 extends layout
 block page
-  ul
-    li
-      a(href="?locale=en")
-        | EN
-    li
-      a(href="?locale=ru")
-        | RU
-  h1
-    +TR("Form")
+  div.pure-menu.pure-menu-horizontal
+    ul.pure-menu-list
+      -var attrs = locale === "en" ? {"class" : "pure-menu-selected"} : "";
+      li.pure-menu-item&attributes(attrs)
+        a(href="?locale=en").pure-menu-link
+          | EN
+      -var attrs = locale === "ru" ? {"class" : "pure-menu-selected"} : "";
+      li.pure-menu-item&attributes(attrs)
+        a(href="?locale=ru").pure-menu-link
+          | RU
   +Form(simpleForm, {
-    "TForm::attributes" : { "class" : "pure-form" },
-    "TForm-nonInput::before" : "<p><i><span>Literally inserted HTML</span></i></p>",
-    "TForm-userData::after" : [ "testInsert" ],
-    "TForm-errors::before" : [ "testInsertArgument", "Server response" ] } )
+          "TForm::attributes" : { "class" : "pure-form pure-form-stacked" },
+          "TForm-userData::after" : [ "testInsert" ],
+          "TForm-errors::before" : [ "testInsertArgument", "Server response" ] } )
