@@ -28,12 +28,12 @@ vows.describe("Form definitions parser")
         assert.strictEqual(form.skel.attrs.name, "TForm");
       },
       "iframe attributes" : function (form) {
-        assert.strictEqual(form.skel.secondaryAttrs.onload, "TFormOnload()");
-        assert.strictEqual(form.skel.secondaryAttrs.name, "TFormIframe");
-        assert.strictEqual(form.skel.secondaryAttrs.width, 0);
-        assert.strictEqual(form.skel.secondaryAttrs.height, 0);
-        assert.strictEqual(form.skel.secondaryAttrs.tabindex, -1);
-        assert.strictEqual(form.skel.secondaryAttrs.hidden, true);
+        assert.strictEqual(form.skel.additionalAttrs.onload, "TFormOnload()");
+        assert.strictEqual(form.skel.additionalAttrs.name, "TFormIframe");
+        assert.strictEqual(form.skel.additionalAttrs.width, 0);
+        assert.strictEqual(form.skel.additionalAttrs.height, 0);
+        assert.strictEqual(form.skel.additionalAttrs.tabindex, -1);
+        assert.strictEqual(form.skel.additionalAttrs.hidden, true);
       },
       "fields" : function (form) {
         assert.isArray(form.skel.fields);
@@ -56,7 +56,7 @@ vows.describe("Form definitions parser")
         assert.strictEqual(form.skel.fields[0].label().toString(), "TForm-field");
       },
       "field label attributes" : function (form) {
-        assert.strictEqual(form.skel.fields[0].secondaryAttrs["for"], "TForm-field");
+        assert.strictEqual(form.skel.fields[0].labelAttrs["for"], "TForm-field");
       },
       "expected fields" : function (form) {
         assert.isTrue(form.hasField("field"));
@@ -160,17 +160,13 @@ vows.describe("Form definitions parser")
       },
       "field" : function (form) {
         assert.strictEqual(form.skel.fields[0].id, "TForm-field");
-        assert.strictEqual(form.skel.fields[0].type, "checkbox");
+        assert.strictEqual(form.skel.fields[0].type, "checkboxSingle");
         assert.isFunction(form.skel.fields[0].label);
-        assert.isTrue(form.skel.fields[0].singleEntry);
       },
       "attributes" : function (form) {
         assert.strictEqual(form.skel.fields[0].attrs.type, "checkbox");
         assert.strictEqual(form.skel.fields[0].attrs.name, "field");
         assert.strictEqual(form.skel.fields[0].attrs.value, "field");
-      },
-      "label attributes" : function (form) {
-        assert.strictEqual(form.skel.fields[0].secondaryAttrs["for"], "TForm-field");
       },
       "expected values" : function (form) {
         assert.deepEqual(form.getExpectedValues("field"), ["field"]);
