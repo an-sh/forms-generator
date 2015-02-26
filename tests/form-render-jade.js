@@ -17,12 +17,11 @@ function renderHelper(form) {
 function compareHelper(htmlA, htmlE) {
   var formDOMa = jsdom(htmlA);
   var formDOMe = jsdom(htmlE);
-  console.log(htmlA);
   result = compare(formDOMe, formDOMa);
   assert.isEmpty(result.getDifferences());
 }
 
-vows.describe("Form jade mixins")
+vows.describe("Jade mixins")
   .addBatch({
     "Input" : function() {
       var form = (new fg.Form("TForm", null, [ { "class" : "formClass" },
@@ -312,7 +311,6 @@ vows.describe("Form jade mixins")
                               [ "field" , "text" ])).getContent();
       var opts = { 'form' : form, pretty : true };
       var html = jade.renderFile(path.join(__dirname, "render1.jade"), opts);
-      console.log(html);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <html>\
@@ -334,7 +332,6 @@ vows.describe("Form jade mixins")
                               [ "field" , "text" ])).getContent();
       var opts = { 'form' : form, pretty : true };
       var html = jade.renderFile(path.join(__dirname, "render2.jade"), opts);
-      console.log(html);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <html>\
@@ -355,7 +352,6 @@ vows.describe("Form jade mixins")
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
       var html = form.render(jade, {pretty : true}, null, {"TForm-field::before" : "<span>element</span>", "TForm-field::after" : "<span>element</span>"});
-      console.log(html);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <div id="TForm--wrapper">\
@@ -375,7 +371,6 @@ vows.describe("Form jade mixins")
                              [ "field" , "text" ]);
       var include = path.join(__dirname, "test.jade");
       var html = form.render(jade, {pretty : true}, null, {"TForm-field::before" : [ "tst0" ], "TForm-field::after" : [ "tst1", "element" ]}, include );
-      console.log(html);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <div id="TForm--wrapper">\
@@ -396,7 +391,6 @@ vows.describe("Form jade mixins")
       var html = form.render(jade, {pretty : true}, null,
                              { "TForm-field::attributes" :  { "class" : "c2" },
                                "TForm-field--label::attributes" :  { "class" : "c1" } } );
-      console.log(html);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <div id="TForm--wrapper">\
@@ -424,7 +418,6 @@ vows.describe("Form jade mixins")
         }
       };
       var html = form.render(jade, {pretty : true}, null, { "attrsExtender" :  insfn } );
-      console.log(html);
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <div id="TForm--wrapper">\

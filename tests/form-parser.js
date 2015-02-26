@@ -6,7 +6,7 @@ var assert = require("assert");
 var fg = require(path.join(__dirname, '../lib/forms-generator.js'));
 
 
-vows.describe("Form definitions parser")
+vows.describe("Definitions parser")
   .addBatch({
     "Input field" : {
       topic: function() {

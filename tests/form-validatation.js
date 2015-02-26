@@ -47,7 +47,7 @@ function formValidatorA(fields, files, i18n, cb) {
 }
 
 
-vows.describe("Form validation")
+vows.describe("Validation")
   .addBatch({
     "Validators setting" : {
       topic: function() {
