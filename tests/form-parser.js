@@ -255,6 +255,18 @@ vows.describe("Definitions parser")
         assert.strictEqual(form.skel.fields[0].attrs.value().toString(), "TForm-field");
       },
     },
+    "Hidden" : {
+      topic: function() {
+        return new fg.Form("TForm", null, null, [ "field" , "hidden"]);
+      },
+      "field" : function (form) {
+        assert.strictEqual(form.skel.fields[0].type, "hidden");
+      },
+      "field attributes" :  function (form) {
+        assert.isTrue(form.skel.fields[0].attrs.hidden);
+        assert.isTrue(form.skel.fields[0].wrapperAttrs.hidden);
+      }
+    },
     "Field set" : {
       topic: function() {
         return new fg.Form("TForm", null, null, [ "set" , "fieldset", null,
