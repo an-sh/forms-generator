@@ -29,23 +29,23 @@ mixin _proxy(elementTag, id, attrs, elementType, elementClass, attrsExtender, da
   -}
   -var elemSel = id + "::attributes"
   -var insertedAttrs = (data && data[elemSel]) ? data[elemSel] : {}
-    -if(content === false)
-      #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
-    -else if(content)
-      #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs) #{content}
-    -else
-      #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
-        block
+  -if(content === false)
+    #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
+  -else if(content)
+    #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs) #{content}
+  -else
+    #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
+      block
 
 mixin _insertHelper(elem, data, suffix, position)
   -var elemSel = elem.id + suffix + position
   -if(data && (elemSel in data))
     -var insertData = data[elemSel]
-      -if(insertData instanceof Array)
-        -var name = insertData[0], args = insertData.slice(1)
-          +#{name}(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9])
-      -else
-        | !{insertData}
+    -if(insertData instanceof Array)
+      -var name = insertData[0], args = insertData.slice(1)
+      +#{name}(args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9])
+    -else
+      | !{insertData}
 
 mixin _BE(elem, data, suffix)
   +_insertHelper(elem, data, suffix, "::before")
