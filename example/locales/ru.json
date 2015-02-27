@@ -1,7 +1,6 @@
 {
 	"Form": "Форма",
 	"Inserted HTML": "Вставленный HTML",
-	"Server response": "Ответ сервера",
 	"TForm-button": "Послать",
 	"TForm-checkboxGroup": "Группа чекбоксов",
 	"TForm-checkboxGroup-flag1": "Флаг 1",
@@ -45,6 +44,7 @@
 	"TForm-selectGroups-selE": "Выбор E",
 	"TForm-selectGroups-selF": "Выбор F",
 	"TForm-semanticHTML5Inputs": "Семантические HTML5 поля",
+	"TForm-serverResponse": "Ответ сервера",
 	"TForm-singleCheckbox": "Одиночный чекбокс",
 	"TForm-submit": "Отправить",
 	"TForm-tel": "Телефон",

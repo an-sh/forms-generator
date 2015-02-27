@@ -1,7 +1,6 @@
 {
 	"Form": "Form",
 	"Inserted HTML": "Inserted HTML",
-	"Server response": "Server response",
 	"TForm-button": "Send",
 	"TForm-checkboxGroup": "Checkbox group",
 	"TForm-checkboxGroup-flag1": "Flag 1",
@@ -45,6 +44,7 @@
 	"TForm-selectGroups-selE": "Select E",
 	"TForm-selectGroups-selF": "Select F",
 	"TForm-semanticHTML5Inputs": "Semantic HTML5 inputs",
+	"TForm-serverResponse": "Server response",
 	"TForm-singleCheckbox": "Single checkbox",
 	"TForm-submit": "Submit",
 	"TForm-tel": "Telephone",

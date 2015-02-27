@@ -1,27 +1,30 @@
 
+// require
 var path = require('path');
 var util = require('util');
 var express = require('express');
 var router = express.Router();
 var i18n = require('i18n');
-var fg = require(path.join(__dirname, '../lib/forms-generator.js'));
 var validator = require('validator');
 var url = require('url');
+var fg = require(path.join(__dirname, '../lib/forms-generator.js'));
 
-
+// seting Express and Jade
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.locals.pretty = true;
+app.use(express.static(path.join(__dirname, 'public')));
+
+// configureing i18n
 i18n.configure({
   locales: ['en', 'ru'],
   directory: path.join(__dirname, './locales'),
   defaultLocale: 'en'
 });
 app.use(i18n.init);
-app.use(express.static(path.join(__dirname, 'public')));
 
-
+// form definition
 var simpleForm = new fg.Form(
   "TForm", null, null,
   [ "userData", "fieldset", { "class" : "loginFields" },
@@ -75,9 +78,11 @@ var simpleForm = new fg.Form(
   [ "inputButtons", "fieldset", null,
     [ "reset", "reset" ],
     [ "submit", "submit" ] ],
-  [ "errors", "div", { "class" : "errorsOut" } ]
+  [ "serverResponse", "fieldset", null,
+    [ "errors", "div" ] ]
 );
 
+// adding some field validators
 simpleForm.setValidator(
   "name",
   function(data, i18n, cb) {
@@ -88,7 +93,6 @@ simpleForm.setValidator(
     }
   }
 );
-
 simpleForm.setValidator(
   "password",
   function(data, i18n, cb) {
@@ -100,6 +104,7 @@ simpleForm.setValidator(
   }
 );
 
+// global validator, just for demonstration purposes
 simpleForm.setGlobalValidator(
   function(fields, files, i18n, cb) {
     var data = fields.password;
@@ -111,29 +116,32 @@ simpleForm.setGlobalValidator(
   }
 );
 
+// Adding the form sending route to the router.
 simpleForm.setFormRoute(router, function(req, res, next) {
 
-  var cbFAIL = function(fieldErrors, formError) {
+  // callbacks to run after validation
+  var cbFAIL = function(errors) {
     res.setHeader('Content-Type', 'text/html');
-    if(fieldErrors) {
-      res.send(JSON.stringify(fieldErrors));
-    } else {
-      res.send(JSON.stringify(formError));
-    }
+    res.send(JSON.stringify(errors));
   };
-
   var cbOK = function(fields, files) {
     res.send(JSON.stringify(null));
   };
 
+  // use refer to set a POST request locale
   var urlParts = url.parse(req.headers.referer, true);
   var query = urlParts.query;
   req.setLocale(query.locale);
 
+  // mutipart-data parser
   var parser = new fg.FormParser();
+
+  // data transmission error
   parser.on("error", function(err) {
     next(err);
   });
+
+  // callback to run after all the data has been received
   parser.parse(req, function(err, fields, files) {
     console.log("Fields:\n%s\nFiles:\n%s", util.inspect(fields), util.inspect(files));
     simpleForm.validate(fields, files, req, cbOK, cbFAIL);
@@ -141,6 +149,7 @@ simpleForm.setFormRoute(router, function(req, res, next) {
 
 });
 
+// Adding index GET route
 router.get("/", function(req, res) {
   i18n.overrideLocaleFromQuery(req);
   res.render("index", {
@@ -149,16 +158,17 @@ router.get("/", function(req, res) {
   });
 });
 
-
-
+// mounting router with form and index routes
 app.use('/', router);
 
+// application 404 route
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
+// application error route
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
@@ -167,4 +177,5 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// export express application
 module.exports = app;

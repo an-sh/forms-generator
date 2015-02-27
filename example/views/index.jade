@@ -1,17 +1,13 @@
 
 include ../../jade/mixins.jade
 
-mixin testInsert()
+mixin testInsert(text)
   p
-    +TR("Inserted HTML")
-
-mixin testInsertArgument(title)
-  fieldset
-    legend
-      +TR(title)
+    +TR(text)
 
 extends layout
 block page
+  //- locale selection with some style
   div.pure-menu.pure-menu-horizontal
     ul.pure-menu-list
       -var attrs = locale === "en" ? {"class" : "pure-menu-selected"} : "";
@@ -22,7 +18,7 @@ block page
       li.pure-menu-item&attributes(attrs)
         a(href="?locale=ru").pure-menu-link
           | RU
+  //- form render with some view related HTML insertions
   +Form(simpleForm, {
           "TForm::attributes" : { "class" : "pure-form pure-form-stacked" },
-          "TForm-userData::after" : [ "testInsert" ],
-          "TForm-errors::before" : [ "testInsertArgument", "Server response" ] } )
+          "TForm-userData::after" : [ "testInsert", "Inserted HTML" ] } )
