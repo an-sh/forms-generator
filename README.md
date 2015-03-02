@@ -93,13 +93,13 @@ validation should be in the Multiparty parser (it is provided by
   __]__
 - subfields = entries | fields
 - entries = entry | entries
-- entry = ID | entry-array | entry-group-object
+- entry = ID | entry-array | group-object
 - entry-array =
   __[__ ID, _[_ __`attributes-object`__ , __`attributes-object`__ ,
   __`attributes-object`__ , __`attributes-object`__ _]_
   __]__
-- entry-group-object = __{ group :__ group-array __}__
-- entry-group-array = __[__ ID, attributes , entries __]__
+- group-object = __{ `group` :__ group-array __}__
+- group-array = __[__ ID, attributes , entries __]__
 
 Subfields can't be used with all type. Entries are allowed for
 `"checkbox"`, `"radio"`, `"select"` and `"datalist"` types. Entries
