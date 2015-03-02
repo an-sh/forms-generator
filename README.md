@@ -1,9 +1,15 @@
 
 # Forms Generator
 
-Forms Generator is a library for Node.js that helps with HTML forms,
-including simple definition, translation, data transmission and
-validation.
+Forms Generator is a library for Node.js that helps with HTML forms.
+
+
+A very simple and concise JS description is used to define forms. Form
+definitions are separate from such things like label values, label
+internationalisation, style attributes and field data validation. Such
+separations provides a way not to mix model and view related things,
+but still eliminating typical HTML forms redundancy.
+
 
 ### Features
 
@@ -11,10 +17,11 @@ validation.
 creation.
 - API for setting and running data validation functions.
 - Separate definition of fields variables and labels with a build-in
-internationalization support.
-- Easy to define fields HTML attributes (internationalization is also
+internationalisation support.
+- Easy to define fields HTML attributes (internationalisation is also
 supported).
-- API for inserting custom HTML into generated forms.
+- API for inserting element attributes or even custom HTML elements
+  into generated forms.
 
 
 # Description
@@ -27,33 +34,33 @@ be rendered as a part of Jade template.
 
 ___Note:___ Neither `i18n` nor `jade` are included in the production
 dependencies, but rather they are expected by some methods as
-arguments. `Jade` should be compatible with version `1.8.0` and `i18n`
+arguments. `Jade` should be compatible with version `1.9.0` and `i18n`
 with version `0.5.0`.
 
 ### Identifiers or IDs
 
-Each form field should have an id that is used for several
-purposes. All ids should match `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
-expression. `~` prefix is stripped from actual ids.
+Each form field should have an ID that is used for several
+purposes. All IDs should match `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
+expression. `~` prefix is stripped from actual IDs.
 
-The first one is generating HTML id attributes. All fields ids are
-prefixed with a form id. Also field entries (they are used for some
-field types like radio buttons) are prefixed with a field id. So
-generated HTML id attributes will look like
+The first one is generating HTML ID attributes. All fields IDs are
+prefixed with a form ID. Also field entries (they are used for some
+field types like radio buttons) are prefixed with a field ID. So
+generated HTML ID attributes will look like
 _`FormID-FieldID-EntryID`_. Single `-` is used as a nesting separator,
-`--` is used to separate id suffixes for additional elements like
+`--` is used to separate ID suffixes for additional elements like
 labels or wrappers.
 
 The second one is generating translation labels for fields. By default
-translation ids generation algorithm is the same as the HTML one, but
-using non-prefixed ids is allowed. `noPrefix` option globally disables
+translation IDs generation algorithm is the same as the HTML one, but
+using non-prefixed IDs is allowed. `noPrefix` option globally disables
 prefixes for an entire form. `nTP` function disables prefixing for a
-single id. HTML id attributes are not affected by these options. Also
-prefixing id with `~` is simular to using `nTP` function.
+single ID. HTML ID attributes are not affected by these options. Also
+prefixing ID with `~` is similar to using `nTP` function.
 
 The last one is form data format. Forms field names will be the same
-as ids. Also radio, select and checkbox field values will contain
-values matching theirs entries ids.
+as IDs. Also radio, select and checkbox field values will contain
+values matching theirs entries IDs.
 
 ### Form parsing and validation
 
@@ -70,50 +77,68 @@ validation should be in the Multiparty parser (it is provided by
 
 ### Fields definitions
 
-- fields = field | fields
-- field(`array`) =  id , type , [ attributes , ( entries | fields ) ]
-- id = `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
+- fields = field-array | fields
+- field-array =  __[__ ID , type , _[_ attributes , subfields _]_ __]__
+- ID = `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/`
 - type = `"div"` | `"fieldset"` | `"textarea"` | `"select"` |
-  `"datalist"` | `"text"` | `"password"` | `"radio"` | `"checkbox"` |
-  `"file"` | `"hidden"` | `"button"` | `"image"` | `"reset"` |
-  `"submit"` | `"color"` | `"date"` | `"datetime"` |
-  `"datetime-local"` | `"email"` | `"month"` | `"number"` | `"range"` |
-  `"search"` | `"tel"` | `"time"` | `"url"` | `"week"`
-- attributes = `object`
+  `"button"` | `"datalist"` | `"keygen"` | `"output"` | `"text"` |
+  `"password"` | `"radio"` | `"checkbox"` | `"file"` | `"hidden"` |
+  `"image"` | `"reset"` | `"submit"` | `"color"` | `"date"` |
+  `"datetime-local"` | `"email"` | `"month"` | `"number"` | `"range"`
+  | `"search"` | `"tel"` | `"time"` | `"url"` | `"week"`
+- attributes = __`attributes-object`__ | `null` | attributes-array
+- attributes-array =
+  __[__ __`attributes-object`__ , _[_ __`attributes-object`__ ,
+  __`attributes-object`__ , __`attributes-object`__ _]_
+  __]__
+- subfields = entries | fields
 - entries = entry | entries
-- entry = id | group | `object`
-- group(`array`) =  id , attributes , entries
+- entry = ID | entry-array | entry-group-object
+- entry-array =
+  __[__ ID, _[_ __`attributes-object`__ , __`attributes-object`__ ,
+  __`attributes-object`__ , __`attributes-object`__ _]_
+  __]__
+- entry-group-object = __{ group :__ group-array __}__
+- entry-group-array = __[__ ID, attributes , entries __]__
 
-Entries are allowed for `"checkbox"`, `"radio"`, `"select"` and
-`"datalist"` types. Entries nesting is only allowed for `"select"`,
-the depth must be only of one level (it makes possible to define HTML
-select optgroups). `"radio"` and `"select"` fields must contain one or
-more entries.
+Subfields can't be used with all type. Entries are allowed for
+`"checkbox"`, `"radio"`, `"select"` and `"datalist"` types. Entries
+groups are only allowed for `"select"`, the depth must be only of one
+level (it makes possible to define HTML select optgroups). `"radio"`
+and `"select"` fields must contain one or more entries. Fields nesting
+is only allowed for `"div"` and `"fieldset"` types, nested fields are
+wrapped with respective tags.  `"fieldset"` must contain one or more
+fields, but `"div"` can be empty.
 
-Fields nesting is only allowed for `"div"` and `"fieldset"` types,
-nested fields are wrapped with respective tags.  `"fieldset"` must
-contain one or more fields, but `"div"` can be empty or have a `null`
-id.
-
-Attributes objects with `attribute : value` pairs are used to set
-input html elements attributes. ___Note:___ `style` and `class`
-attributes are applied to a field wrapper div element, so both input
-and label can be styled. `"radio"` and `"checkbox"` entries styles are
-applied to a div wrapper too.
+__`attributes-object`__ with _`attribute : value`_ pairs is used to
+set input HTML elements attributes. `attributes-array` is used to set
+attributes to the following elements: `attributes-array[0]` - actual
+form input attributes, `attributes-array[1]` - wrapper attributes,
+`attributes-array[2]` - label attributes, `attributes-array[3]` -
+attributes for an additional element.
 
 ### HTML insertions
 
-It is possible to insert html elements into generated forms with an
-object. Object key are the following selectors prefixed by an element
-HTML id: `::before` and `::after`, for insertion before and after an
-element respectively. Values can be either HTML strings or arrays with
-mixin name and arguments. ___Note:___ Arguments are passed to a mixin
-as a single array argument. Also mixins should be defined on a global
-scope.
+It is possible to insert attributes and HTML elements into generated
+forms with an object. Object key are the following selectors prefixed
+by an element HTML ID:
 
-### Example
+- `::before` insertion before an element
+- `::after` insertion after an element
+- `::attributes` insertion of element attributes
 
-Complete Express 4 application is in an `example` directory.
+For `::before` and `::after` selectors values can be either HTML
+strings or arrays with mixin name and arguments (up to 9 mixin
+arguments are supported). Or attribute objects for `::attributes`
+selector.
+
+
+
+
+# Example
+
+Express 4 example application with some pure-form CSS is in an
+`example` directory.
 
 
 
@@ -132,11 +157,12 @@ __Throws:__
 __Arguments:__
 
 - `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
-expression, or a result of `nTP` function.
-- `options` - `object` with form options or `null`. ___Fields:___
+expression, __or__ a result of `nTP` function.
+- `options` - `object` with form options __or__ `null`. ___Fields:___
   - `noPrefix` - `boolean` option to turn off prefixes for translation
 ids, `false` by default.
-- `attributes` - `object` for form tag attributes or `null`.
+- `attributes` - `object` __or__ `array` for form tag attributes __or__
+  `null`.
 - `...fields` - Rest arguments are interpreted as field definitions.
 
 ---
@@ -167,8 +193,8 @@ validation stage.
 
 __Arguments:__
 
-- `fields` - `object` with Multiparty fields data or `null`.
-- `files` - `object` with Multiparty files data or `null`.
+- `fields` - `object` with Multiparty fields data __or__ `null`.
+- `files` - `object` with Multiparty files data __or__ `null`.
 - `i18n` - `i18n` translation library.
 - `callbackPass` - `Function` called on successful form
   validation. ___Arguments:___
@@ -176,9 +202,9 @@ __Arguments:__
   - `files` -  `object` with Multiparty files data.
 - `callbackFail` - `function` called when form validation
   fails. ___Arguments:___
-  - `errors` - `object` with validation errors or `null`. It contains
-    either `field : error` pairs for field validation errors, or an
-    object with one `"form-error" : error` pair for a global
+  - `errors` - `object` with validation errors __or__ `null`. It
+    contains either `field : error` pairs for field validation errors,
+    or an object with one `"form-error" : error` pair for a global
     validation error.
 
 ---
@@ -191,12 +217,12 @@ Runs only a specific field validator.
 
 __Arguments:__
 
-- `fieldID` - `string` with a field id.
+- `fieldID` - `string` with a field ID.
 - `data` - `object` with Multiparty field data.
 - `i18n` - `i18n` translation library.
   - `callback` - `function` callback to run after validation. _Arguments:_
-      - `error` - `true value` with an error or `false value`.
-      - `data` - `object` with Multiparty field data or `null`.
+      - `error` - `true value` with an error __or__ `false value`.
+      - `data` - `object` with Multiparty field data __or__ `null`.
 
 ---
 
@@ -208,13 +234,13 @@ Execute only one field validator.
 
 __Arguments:__
 
-- `fields` - Multiparty fields data or `null`.
-- `files` - Multiparty fields data or `null`.
+- `fields` - Multiparty fields data __or__ `null`.
+- `files` - Multiparty fields data __or__ `null`.
 - `i18n` - `i18n` translation library.
 - `callback` - `function` callback to run after validation.
-  - `error` - `true value` with an error or `false value`.
-  - `fields` - Multiparty fields data or `null`.
-  - `files` - Multiparty fields data or `null`.
+  - `error` - `true value` with an error __or__ `false value`.
+  - `fields` - Multiparty fields data __or__ `null`.
+  - `files` - Multiparty fields data __or__ `null`.
 
 ---
 
@@ -227,7 +253,7 @@ fix set of entries.
 
 __Arguments:__
 
-- `fieldID` - `string` with a field id.
+- `fieldID` - `string` with a field ID.
 
 __Returns:__
 
@@ -241,15 +267,15 @@ __Returns:__
 
 _Method_
 
-Check whether or not a form has a field with a supplied id.
+Check whether or not a form has a field with a supplied ID.
 
 __Arguments:__
 
-- `fieldID` - `string` with a field id.
+- `fieldID` - `string` with a field ID.
 
 __Returns:__
 
-- `boolean` `true` if a form has a field with an id, `false`
+- `boolean` `true` if a form has a field with an ID, `false`
   otherwise.
 
 ---
@@ -263,12 +289,12 @@ expect `data` to be `undefined` or `null`.
 
 __Arguments:__
 
-- `fieldID` - `string` with a field id.
+- `fieldID` - `string` with a field ID.
 - `validator` - `function` validator. ___Arguments:___
   - `data` - `Array` of Multiparty file/field data.
   - `i18n` - `i18n` translation library.
   - `cb` - `function` callback to run after validation. ___Arguments:___
-      - `error` - `true value` with an error or `false value`.
+      - `error` - `true value` with an error __or__ `false value`.
 
 ---
 
@@ -283,11 +309,11 @@ some fields data.
 __Arguments:__
 
 - `globalValidator` - `function` global validator.  ___Arguments:___
-  - `fields` - Multiparty fields data or `null`.
-  - `files` - Multiparty fields data or `null`.
+  - `fields` - Multiparty fields data __or__ `null`.
+  - `files` - Multiparty fields data __or__ `null`.
   - `i18n` - `i18n` translation library.
   - `cb` - `function` callback to run after validation. ___Arguments:___
-      - `error` - `true value` with an error or `false value`.
+      - `error` - `true value` with an error __or__ `false value`.
 
 ---
 
@@ -307,7 +333,7 @@ __Returns:__
 
 ---
 
-### Form.render(jade, i18n, insertionsObject, ...includeJadeFiles)
+### Form.render(jade, options, i18n, insertions, ...includeJadeFiles)
 
 _Method_
 
@@ -316,10 +342,11 @@ Renders HTML form.
 __Arguments:__
 
 - `jade` - `jade` library.
+- `options` - `jade` options __or__ `null`.
 - `i18n` - `i18n` translation library.
-- `insertionsObject` - `object` with insertions data.
+- `insertions` - `object` with HTML insertions __or__ `null`.
 - `...includeJadeFiles` - The rest arguments are treated as jade files
-  pathnames to include. All pathnames should be absolute.
+  pathnames to include.
 
 __Returns:__
 
@@ -373,15 +400,31 @@ __Returns:__
 
 _Function_
 
-Forces usage of unprefixed ids for translation.
+Forces usage of unprefixed IDs for translation.
 
 __Arguments:__
 
-- `str` - `string` id.
+- `str` - `string` ID.
 
 __Returns:__
 
-`object` that could be used as id in form definitions.
+`object` that could be used as ID in form definitions.
+
+---
+
+### setLocalesGeneration(generator, locales)
+
+_Function_ ___[module configuration]___
+
+Enables auto-adding form IDs to locale files when a form is defined
+(by default locale files are filled only when a form is expanded to a
+locale).
+
+__Arguments:__
+
+- `generator` - `i18n` translation library __or__ `null` to disable
+  generation.
+- `locales` - `array` of locales __or__ `null` to disable generation.
 
 ---
 
@@ -391,5 +434,24 @@ _Constant_
 
 Path to Jade mixins file. This file contains `Form` mixin which
 performs HTML rendering.
+
+---
+
+
+
+# Jade API
+
+---
+
+### Form(data, insertions)
+
+_Mixin_
+
+Renders form.
+
+_Arguments:_
+
+- `data` - form data (a result of js From.getContent method).
+- `insertions` - `object` with HTML insertions data __or__ `undefined`.
 
 ---
