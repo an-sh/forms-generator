@@ -16,13 +16,19 @@ app.set('view engine', 'jade');
 app.locals.pretty = true;
 app.use(express.static(path.join(__dirname, 'public')));
 
-// configureing i18n
+
+var usedLocales = ['en', 'ru'];
+// configuring i18n
 i18n.configure({
-  locales: ['en', 'ru'],
+  locales: usedLocales,
   directory: path.join(__dirname, './locales'),
   defaultLocale: 'en'
 });
 app.use(i18n.init);
+
+// configuring fg locales
+// auto adding form ids to all locales files
+fg.setLocalesGeneration(i18n, usedLocales);
 
 // form definition
 var simpleForm = new fg.Form(
@@ -87,7 +93,7 @@ simpleForm.setValidator(
   "name",
   function(data, i18n, cb) {
     if(!data || !validator.isLength(data[0], 4, 20)) {
-      cb(i18n.__("short_name_error"));
+      cb(i18n.__("short_name_error")); // standart arbitrary string translation
     } else {
       cb(false);
     }
@@ -97,7 +103,7 @@ simpleForm.setValidator(
   "password",
   function(data, i18n, cb) {
     if(!data || !validator.isLength(data[0], 4, 20)) {
-      cb(i18n.__("short_password_error"));
+      cb(i18n.__("short_password_error")); // standart arbitrary string translation
     } else {
       cb(false);
     }
@@ -109,7 +115,7 @@ simpleForm.setGlobalValidator(
   function(fields, files, i18n, cb) {
     var data = fields.password;
     if(!data || !validator.isLength(data[0], 8, 20)) {
-      cb(i18n.__("password_length_error"));
+      cb(i18n.__("password_length_error")); // standart arbitrary string translation
     } else {
       cb(false);
     }
