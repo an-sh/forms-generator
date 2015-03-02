@@ -144,7 +144,6 @@ Express 4 example application with some pure-form CSS is in an
 
 # API
 
----
 
 ### Form(id, options, attributes, ...fields)
 
@@ -165,7 +164,6 @@ ids, `false` by default.
   `null`.
 - `...fields` - Rest arguments are interpreted as field definitions.
 
----
 
 ### Form.setFormRoute(router, callback)
 
@@ -178,7 +176,6 @@ __Arguments:__
 - `router` ___mutable___ - Express router.
 - `callback` - Express route callback.
 
----
 
 ### Form.validate(fields, files, i18n, callbackPass, callbackFail)
 
@@ -207,7 +204,6 @@ __Arguments:__
     or an object with one `"form-error" : error` pair for a global
     validation error.
 
----
 
 ### Form.runValidatator(fieldID, data, i18n, callback)
 
@@ -224,7 +220,6 @@ __Arguments:__
       - `error` - `true value` with an error __or__ `false value`.
       - `data` - `object` with Multiparty field data __or__ `null`.
 
----
 
 ### Form.runGlobalValidatator(fields, files, i18n, callback)
 
@@ -242,7 +237,6 @@ __Arguments:__
   - `fields` - Multiparty fields data __or__ `null`.
   - `files` - Multiparty fields data __or__ `null`.
 
----
 
 ### Form.getExpectedValues(fieldID)
 
@@ -261,7 +255,6 @@ __Returns:__
   specific values are expected, __or__ `undefined` if a form has no
   such field.
 
----
 
 ### Form.hasField(fieldID)
 
@@ -278,7 +271,6 @@ __Returns:__
 - `boolean` `true` if a form has a field with an ID, `false`
   otherwise.
 
----
 
 ### Form.setValidator(fieldID, validator)
 
@@ -296,7 +288,6 @@ __Arguments:__
   - `cb` - `function` callback to run after validation. ___Arguments:___
       - `error` - `true value` with an error __or__ `false value`.
 
----
 
 ### Form.setGlobalValidator(globalValidator)
 
@@ -315,7 +306,6 @@ __Arguments:__
   - `cb` - `function` callback to run after validation. ___Arguments:___
       - `error` - `true value` with an error __or__ `false value`.
 
----
 
 ### Form.getContent(i18n)
 
@@ -331,7 +321,6 @@ __Returns:__
 
 - `object` for Jade form render.
 
----
 
 ### Form.render(jade, options, i18n, insertions, ...includeJadeFiles)
 
@@ -352,7 +341,6 @@ __Returns:__
 
 - `string` HTML form.
 
----
 
 ### FormParser(options)
 
@@ -361,7 +349,6 @@ _Constructor_
 Same as `multiparty.Form`. External form parser with the same results
 format could be used.
 
----
 
 ### __(str)
 
@@ -377,7 +364,6 @@ __Returns:__
 
 `object` that will be translated with a form.
 
----
 
 ### __n(str, n)
 
@@ -394,7 +380,6 @@ __Returns:__
 
 `object` that will be translated with a form.
 
----
 
 ### nTP(id)
 
@@ -410,7 +395,6 @@ __Returns:__
 
 `object` that could be used as ID in form definitions.
 
----
 
 ### setLocalesGeneration(generator, locales)
 
@@ -426,7 +410,6 @@ __Arguments:__
   generation.
 - `locales` - `array` of locales __or__ `null` to disable generation.
 
----
 
 ### includeJade
 
@@ -435,13 +418,11 @@ _Constant_
 Path to Jade mixins file. This file contains `Form` mixin which
 performs HTML rendering.
 
----
 
 
 
 # Jade API
 
----
 
 ### Form(data, insertions)
 
@@ -453,5 +434,3 @@ _Arguments:_
 
 - `data` - form data (a result of js From.getContent method).
 - `insertions` - `object` with HTML insertions data __or__ `undefined`.
-
----
