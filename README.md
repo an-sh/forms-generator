@@ -87,17 +87,15 @@ validation should be in the Multiparty parser (it is provided by
   `"image"` | `"reset"` | `"submit"` | `"color"` | `"date"` |
   `"datetime-local"` | `"email"` | `"month"` | `"number"` | `"range"`
   | `"search"` | `"tel"` | `"time"` | `"url"` | `"week"`
-- attributes = __`attributes-object`__ | `null` | attributes-array
+- attributes = `attributes-object` | `null` | attributes-array
 - attributes-array =
-  __[__ __`attributes-object`__ , _[_ __`attributes-object`__ ,
-  __`attributes-object`__ , __`attributes-object`__ _]_
+  __[__ `attributes-object` , _[_ `attributes-object` , `attributes-object` , `attributes-object` _]_
   __]__
 - subfields = entries | fields
 - entries = entry | entries
 - entry = ID | entry-array | group-object
 - entry-array =
-  __[__ ID, _[_ __`attributes-object`__ , __`attributes-object`__ ,
-  __`attributes-object`__ , __`attributes-object`__ _]_
+  __[__ ID, _[_ `attributes-object` , `attributes-object` , `attributes-object` , `attributes-object` _]_
   __]__
 - group-object = __{ `group` :__ group-array __}__
 - group-array = __[__ ID, attributes , entries __]__
@@ -111,7 +109,7 @@ is only allowed for `"div"` and `"fieldset"` types, nested fields are
 wrapped with respective tags.  `"fieldset"` must contain one or more
 fields, but `"div"` can be empty.
 
-__`attributes-object`__ with _`attribute : value`_ pairs is used to
+`attributes-object` with _`attribute : value`_ pairs is used to
 set input HTML elements attributes. `attributes-array` is used to set
 attributes to the following elements: `attributes-array[0]` - actual
 form input attributes, `attributes-array[1]` - wrapper attributes,
