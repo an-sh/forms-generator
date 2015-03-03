@@ -80,7 +80,7 @@ mixin _formInput(field, data, attrsExtender)
     +_proxy("div", field.id, field.attrs, field.type, "fgMultiEntry", attrsExtender, data)
       for entry in field.entrydata
         +_BE(entry, data, "--wrapper")
-        +_formInputEntry(entry, data, entry.content, field.type, attrsExtender)
+        +_formInputEntry(entry, data, entry.label, field.type, attrsExtender)
         +_AE(entry, data, "--wrapper")
     +_AE(field, data, "")
   else
@@ -92,7 +92,7 @@ mixin _formSelectRec(field, data, type, attrsExtender)
       +_proxy("optgroup", entry.id, entry.attrs, type, null, attrsExtender, data)
         +_formSelectRec(entry, data, type, attrsExtender)
     else
-      +_proxy("option", entry.id, entry.attrs, type, null, attrsExtender, data, entry.content)
+      +_proxy("option", entry.id, entry.attrs, type, null, attrsExtender, data, entry.label)
 
 mixin _formSelect(field, data, attrsExtender)
   +_BE(field, data, "")

@@ -53,10 +53,11 @@ labels or wrappers.
 
 The second one is generating translation labels for fields. By default
 translation IDs generation algorithm is the same as the HTML one, but
-using non-prefixed IDs is allowed. `noPrefix` option globally disables
-prefixes for an entire form. `nTP` function disables prefixing for a
-single ID. HTML ID attributes are not affected by these options. Also
-prefixing ID with `~` is similar to using `nTP` function.
+using non-prefixed IDs is allowed. `nTP` function disables prefixing
+for a single ID. HTML ID attributes are not affected by these
+options. Prefixing ID with `~` is similar to using `nTP`
+function. Also from class constructor options allow customisation of
+form translation IDs generation.
 
 The last one is form data format. Forms field names will be the same
 as IDs. Also radio, select and checkbox field values will contain
@@ -158,8 +159,12 @@ __Arguments:__
 - `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
 expression, __or__ a result of `nTP` function.
 - `options` - `object` with form options __or__ `null`. ___Fields:___
-  - `noPrefix` - `boolean` option to turn off prefixes for translation
-ids, `false` by default.
+  - `i18nNoPrefix` - `boolean` option to turn off all prefixes for
+  translation ids, `false` by default.
+  - `i18nFormID` - `string` with a form ID, overrides a default form
+  ID in translations.
+  - `i18nNoEntryPrefix` - `boolean` option to turn off entries
+    prefixing with field IDs, `false` by default.
 - `attributes` - `object` __or__ `array` for form tag attributes __or__
   `null`.
 - `...fields` - Rest arguments are interpreted as field definitions.

@@ -99,12 +99,12 @@ vows.describe("Definitions parser")
         assert.strictEqual(form.skel.fields[0].entrydata[1].attrs.value, "sel2");
       },
       "entries content type" :  function (form) {
-        assert.isFunction(form.skel.fields[0].entrydata[0].content);
-        assert.isFunction(form.skel.fields[0].entrydata[1].content);
+        assert.isFunction(form.skel.fields[0].entrydata[0].label);
+        assert.isFunction(form.skel.fields[0].entrydata[1].label);
       },
       "entries content value" :  function (form) {
-        assert.strictEqual(form.skel.fields[0].entrydata[0].content().toString(), "TForm-field-sel1");
-        assert.strictEqual(form.skel.fields[0].entrydata[1].content().toString(), "TForm-field-sel2");
+        assert.strictEqual(form.skel.fields[0].entrydata[0].label().toString(), "TForm-field-sel1");
+        assert.strictEqual(form.skel.fields[0].entrydata[1].label().toString(), "TForm-field-sel2");
       },
       "expected values" : function (form) {
         assert.deepEqual(form.getExpectedValues("field"), ["sel1", "sel2"]);
@@ -332,7 +332,7 @@ vows.describe("Definitions parser")
     },
     "Global translation IDs" : {
       topic: function() {
-        return new fg.Form("TForm", { noPrefix : true }, null,
+        return new fg.Form("TForm", { i18nNoPrefix : true }, null,
                            [ "field1", "text" ],
                            [ "set", "fieldset", null,
                              [ "field2", "text" ],
@@ -351,10 +351,41 @@ vows.describe("Definitions parser")
         assert.strictEqual(form.skel.fields[2].label().toString(), "field4");
       }
     },
+    "Changed form translation IDs" : {
+      topic: function() {
+        return new fg.Form("TForm", { i18nFormID : "Forms" }, null,
+                           [ "field1", "text" ],
+                           [ "set", "fieldset", null,
+                             [ "field2", "text" ],
+                             [ "field3", "text" ] ],
+                           [ "field4", "text" ] );
+      },
+      "fields length" : function (form) {
+        assert.lengthOf(form.skel.fields, 3);
+        assert.lengthOf(form.skel.fields[1].fields, 2);
+      },
+      "fields ids" : function (form) {
+        assert.strictEqual(form.skel.fields[0].label().toString(), "Forms-field1");
+        assert.strictEqual(form.skel.fields[1].label().toString(), "Forms-set");
+        assert.strictEqual(form.skel.fields[1].fields[0].label().toString(), "Forms-field2");
+        assert.strictEqual(form.skel.fields[1].fields[1].label().toString(), "Forms-field3");
+        assert.strictEqual(form.skel.fields[2].label().toString(), "Forms-field4");
+      }
+    },
+    "No entries prefix" : {
+      topic: function() {
+        return new fg.Form("TForm", { i18nNoEntryPrefix : true } , null,
+                           [ "field" , "checkbox", null, "flag1", "flag2" ]);
+      },
+      "entries ids" : function (form) {
+        assert.strictEqual(form.skel.fields[0].entrydata[0].label().toString(), "TForm-flag1");
+        assert.strictEqual(form.skel.fields[0].entrydata[1].label().toString(), "TForm-flag2");
+      }
+    },
     "Translation IDs escaping" : {
       topic: function() {
         return new fg.Form("TForm", null ,null,
-                           [ fg.nTP("field") , "text" ]);
+                           [ "~field" , "text" ]);
       },
       "field label" : function (form) {
         assert.isFunction(form.skel.fields[0].label);
