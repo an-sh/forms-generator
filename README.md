@@ -76,7 +76,7 @@ with `validate` method, or execute just one validator with
 validation should be in the Multiparty parser (it is provided by
 `FormParser` class) format.
 
-### Fields definitions
+### Field definitions
 
 - fields = field-array | fields
 - field-array =  __[__ ID , type , _[_ attributes , subfields _]_ __]__
@@ -100,14 +100,14 @@ validation should be in the Multiparty parser (it is provided by
 - group-object = __{ `group` :__ group-array __}__
 - group-array = __[__ ID, attributes , entries __]__
 
-Subfields can't be used with all type. Entries are allowed for
-`"checkbox"`, `"radio"`, `"select"` and `"datalist"` types. Entries
-groups are only allowed for `"select"`, the depth must be only of one
-level (it makes possible to define HTML select optgroups). `"radio"`
-and `"select"` fields must contain one or more entries. Fields nesting
-is only allowed for `"div"` and `"fieldset"` types, nested fields are
-wrapped with respective tags.  `"fieldset"` must contain one or more
-fields, but `"div"` can be empty.
+Subfields can be used only with with several field types. Entries are
+allowed for `"checkbox"`, `"radio"`, `"select"` and `"datalist"`
+types. Entries groups are only allowed for `"select"`, the depth must
+be only of one level (it makes possible to define HTML select
+optgroups). `"radio"` and `"select"` fields must contain one or more
+entries. Fields nesting is only allowed for `"div"` and `"fieldset"`
+types, nested fields are wrapped with respective tags.  `"fieldset"`
+must contain one or more fields, but `"div"` can be empty.
 
 `attributes-object` with _`attribute : value`_ pairs is used to
 set input HTML elements attributes. `attributes-array` is used to set
@@ -116,7 +116,10 @@ form input attributes, `attributes-array[1]` - wrapper attributes,
 `attributes-array[2]` - label attributes, `attributes-array[3]` -
 attributes for an additional element.
 
-### HTML insertions
+### HTML and attributes insertion
+
+This operations doesn't alter a form definition, separating view style
+operations. As a result a form can have several custom views.
 
 It is possible to insert attributes and HTML elements into generated
 forms with an object. Object key are the following selectors prefixed
@@ -129,7 +132,18 @@ by an element HTML ID:
 For `::before` and `::after` selectors values can be either HTML
 strings or arrays with mixin name and arguments (up to 9 mixin
 arguments are supported). Or attribute objects for `::attributes`
-selector.
+selector. Class attributes are concatenated, preserving classes
+defined in a form constructor.
+
+Another way to insert attributes, based on tag/type combination, is a
+user supplied `attrsExtender` function. It should return an
+`attributes-object` and it recieves the following arguments:
+
+- `tag` - `string` HTML tag name.
+- `type` - `string` almost the same as field type, with the exeption
+of `"checkboxSingle"`type, that is used for single checkboxes.
+- `class` - `string` with a class that is added to some form elements
+  by default __or__ `null`.
 
 
 
@@ -334,7 +348,8 @@ Renders HTML form.
 __Arguments:__
 
 - `jade` - `jade` library.
-- `options` - `jade` options __or__ `null`.
+- `options` - `jade` and render options __or__ `null`. Render options:
+  - `attrsExtender` - `function` that extends HTML tags attributes.
 - `i18n` - `i18n` translation library.
 - `insertions` - `object` with HTML insertions __or__ `null`.
 - `...includeJadeFiles` - The rest arguments are treated as jade files
@@ -427,7 +442,7 @@ performs HTML rendering.
 # Jade API
 
 
-### Form(data, insertions)
+### Form(data, insertions, attrsExtender)
 
 _Mixin_
 
@@ -437,3 +452,5 @@ _Arguments:_
 
 - `data` - form data (a result of js From.getContent method).
 - `insertions` - `object` with HTML insertions data __or__ `undefined`.
+- `attrsExtender` - `function` that extends HTML tags
+  attributes. __or__ `undefined`.
