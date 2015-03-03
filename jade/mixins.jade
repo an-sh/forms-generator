@@ -189,7 +189,3 @@ mixin Form(formData, data, attrsExtender)
     +_proxy("form", formData.id, formData.attrs, "form", null, attrsExtender, data)
       +_fieldRec(formData.fields, data, attrsExtender)
     +_AE(formData, data, "")
-
-//- translation helper
-mixin TR(str)
-  span #{__(str)}

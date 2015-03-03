@@ -2,8 +2,7 @@
 include ../../jade/mixins.jade
 
 mixin testInsert(text)
-  p
-    +TR(text)
+  p #{__(text)}
 
 extends layout
 block page
