@@ -54,10 +54,10 @@ labels or wrappers.
 The second one is generating translation labels for fields. By default
 translation IDs generation algorithm is the same as the HTML one, but
 using non-prefixed IDs is allowed. `nTP` function disables prefixing
-for a single ID. HTML ID attributes are not affected by these
-options. Prefixing ID with `~` is similar to using `nTP`
+for a single ID. Prefixing ID with `~` is similar to using `nTP`
 function. Also from class constructor options allow customisation of
-form translation IDs generation.
+form translation IDs generation. HTML ID attributes are not affected
+by any of these options.
 
 The last one is form data format. Forms field names will be the same
 as IDs. Also radio, select and checkbox field values will contain
@@ -119,7 +119,7 @@ attributes for an additional element.
 ### HTML and attributes insertion
 
 This operations doesn't alter a form definition, separating view style
-operations. As a result a form can have several custom views.
+operations. As a result a form can have several custom view renders.
 
 It is possible to insert attributes and HTML elements into generated
 forms with an object. Object key are the following selectors prefixed
@@ -150,7 +150,7 @@ of `"checkboxSingle"`type, that is used for single checkboxes.
 
 # Example
 
-Express 4 example application with some pure-form CSS is in an
+Express 4 example application with pure-form CSS style is in an
 `example` directory.
 
 
