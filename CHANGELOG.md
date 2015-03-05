@@ -1,4 +1,8 @@
 
+### v0.8.1 (2015/03/05)
+
+- Fix render function null insertions object.
+
 ### v0.8.0 (2015/03/03)
 
 - Multiple HTML render output changes.
