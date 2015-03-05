@@ -5,20 +5,8 @@
 
 mixin _proxy(elementTag, id, attrs, elementType, elementClass, attrsExtender, data, content)
   -function defaultExtender() {
-  -  if(elementClass === "fgFieldWrapper") {
-  -    return { "class" : "fgFieldWrapper" };
-  -  } else if(elementClass === "fgFieldLabel") {
-  -    return { "class" : "fgFieldLabel" };
-  -  } else if(elementClass === "fgMultiEntry") {
-  -    return { "class" : "fgMultiEntry" };
-  -  } else if(elementClass === "fgEntryLabel") {
-  -    return { "class" : "fgEntryLabel" };
-  -  } else if(elementClass === "fgEntryName") {
-  -    return { "class" : "fgEntryName" };
-  -  } else if(elementClass === "fgField") {
-  -    return { "class" : "fgField" };
-  -  } else if(elementClass === "fgEntry") {
-  -    return { "class" : "fgEntry" };
+  -  if(elementClass) {
+  -    return { "class" : elementClass };
   -  } else {
   -    return {};
   -  }
