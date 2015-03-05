@@ -95,7 +95,7 @@ validation should be in the Multiparty parser (it is provided by
 - entries = entry | entries
 - entry = ID | entry-array | group-object
 - entry-array =
-  __[__ ID, _[_ `attributes-object` , `attributes-object` , `attributes-object` , `attributes-object` _]_
+  __[__ ID, `attributes-object` , _[_ `attributes-object` , `attributes-object` , `attributes-object` _]_
   __]__
 - group-object = __{ `group` :__ group-array __}__
 - group-array = __[__ ID, attributes , entries __]__
@@ -217,9 +217,9 @@ __Arguments:__
 - `callbackFail` - `function` called when form validation
   fails. ___Arguments:___
   - `errors` - `object` with validation errors __or__ `null`. It
-    contains either `field : error` pairs for field validation errors,
-    or an object with one `"form-error" : error` pair for a global
-    validation error.
+    contains either _`field : error`_ pairs for field validation
+    errors, or an object with one `"form-error" : error` pair for a
+    global validation error.
 
 
 ### Form.runValidatator(fieldID, data, i18n, callback)
@@ -351,9 +351,10 @@ __Arguments:__
 - `options` - `jade` and render options __or__ `null`. Render options:
   - `attrsExtender` - `function` that extends HTML tags attributes.
 - `i18n` - `i18n` translation library.
-- `insertions` - `object` with HTML insertions __or__ `null`.
-- `...includeJadeFiles` - The rest arguments are treated as jade files
-  pathnames to include.
+- `insertions` _optional_ - `object` with HTML insertions __or__
+  `null`.
+- `...includeJadeFiles` _optional_ - The rest arguments are treated as
+  jade files pathnames to include.
 
 __Returns:__
 
@@ -451,6 +452,6 @@ Renders form.
 _Arguments:_
 
 - `data` - form data (a result of js From.getContent method).
-- `insertions` - `object` with HTML insertions data __or__ `undefined`.
-- `attrsExtender` - `function` that extends HTML tags
-  attributes. __or__ `undefined`.
+- `insertions` _optional_ - `object` with HTML insertions data __or__ `null`.
+- `attrsExtender` _optional_ - `function` that extends HTML tags
+  attributes. __or__ `null`.
