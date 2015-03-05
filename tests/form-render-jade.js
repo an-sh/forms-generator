@@ -40,7 +40,8 @@ vows.describe("Jade mixins")
       <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel" for="TForm-field">TForm-field</label>\
       <input id="TForm-field" class="inputClass fgField" type="text" name="field"></input>\
     </div>\
-  </form>';
+  </form>\
+</div>';
       compareHelper(renderHelper(form), htmlE);
     },
     "Text area" : function() {
