@@ -456,7 +456,7 @@ vows.describe("Jade mixins")
           return {};
         }
       };
-      var html = form.render(jade, {pretty : true}, null, { "attrsExtender" :  insfn } );
+      var html = form.render(jade, {pretty : true, "attrsExtender" :  insfn});
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <div id="TForm--wrapper">\
