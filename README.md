@@ -149,6 +149,8 @@ IDs can be abbreviated with the help of `@` syntax, so selectors will
 look like _`@-FieldID-EntryID::Selector`_.
 
 
+
+
 # Example
 
 Express 4 example application with pure-form CSS style is in an
@@ -409,7 +411,8 @@ Forces usage of unprefixed IDs for translation.
 
 __Arguments:__
 
-- `str` - `string` ID.
+- `id` - `string` matching `/^~?[a-zA-Z_][a-zA-Z0-9_]*$/` regular
+expression.
 
 __Returns:__
 
