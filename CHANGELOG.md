@@ -1,4 +1,9 @@
 
+### v0.8.2 (2015/03/06)
+
+- Fix attrsExtender render option.
+- Allow @ usage as a form ID in insertions.
+
 ### v0.8.1 (2015/03/05)
 
 - Fix render function null insertions object.

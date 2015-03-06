@@ -455,4 +455,4 @@ _Arguments:_
 - `data` - form data (a result of js From.getContent method).
 - `insertions` _optional_ - `object` with HTML insertions data __or__ `null`.
 - `attrsExtender` _optional_ - `function` that extends HTML tags
-  attributes. __or__ `null`.
+  attributes __or__ `null`.
