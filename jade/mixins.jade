@@ -171,9 +171,21 @@ mixin _fieldRec(fields, data, attrsExtender)
 
 //- form generation interface mixin
 mixin Form(formData, data, attrsExtender)
-  +_proxy("div", formData.id + "--wrapper", formData.wrapperAttrs, "form", null, attrsExtender, data)
-    +_proxy("iframe", formData.attrs.target, formData.additionalAttrs, "form", null, attrsExtender, data, false)
-    +_BE(formData, data, "")
-    +_proxy("form", formData.id, formData.attrs, "form", null, attrsExtender, data)
-      +_fieldRec(formData.fields, data, attrsExtender)
-    +_AE(formData, data, "")
+  -function normalise(name) {
+  -  if(name[0] === "@") {
+  -    return formData.id + name.slice(1);
+  -  }
+  -  return name;
+  -}
+  -var nData = {}
+  -for(var selector in data) {
+  -  if(data.hasOwnProperty(selector)) {
+  -    nData[normalise(selector)] = data[selector]
+  -  }
+  -}
+  +_proxy("div", formData.id + "--wrapper", formData.wrapperAttrs, "form", null, attrsExtender, nData)
+    +_proxy("iframe", formData.attrs.target, formData.additionalAttrs, "form", null, attrsExtender, nData, false)
+    +_BE(formData, nData, "")
+    +_proxy("form", formData.id, formData.attrs, "form", null, attrsExtender, nData)
+      +_fieldRec(formData.fields, nData, attrsExtender)
+    +_AE(formData, nData, "")

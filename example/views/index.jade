@@ -19,5 +19,5 @@ block page
           | RU
   //- form render with some view related HTML insertions
   +Form(simpleForm, {
-          "TForm::attributes" : { "class" : "pure-form pure-form-stacked" },
-          "TForm-userData::after" : [ "testInsert", "Inserted HTML" ] } )
+          "@::attributes" : { "class" : "pure-form pure-form-stacked" },
+          "@-userData::after" : [ "testInsert", "Inserted HTML" ] } )

@@ -145,7 +145,8 @@ of `"checkboxSingle"`type, that is used for single checkboxes.
 - `class` - `string` with a class that is added to some form elements
   by default __or__ `null`.
 
-
+IDs can be abbreviated with the help of `@` syntax, so selectors will
+look like _`@-FieldID-EntryID::Selector`_.
 
 
 # Example

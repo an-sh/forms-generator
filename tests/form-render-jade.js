@@ -367,6 +367,24 @@ vows.describe("Jade mixins")
       result = compare(formDOMe, formDOMa);
       assert.isEmpty(result.getDifferences());
     },
+    "Render @ syntax" : function() {
+      var form = new fg.Form("TForm", null, null,
+                             [ "field" , "text" ]);
+      var html = form.render(jade, {pretty : true}, null, {"@-field::before" : "<span>element</span>", "@-field::after" : "<span>element</span>"});
+      var formDOMa = jsdom(html);
+      var formDOMe = jsdom('\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel">TForm-field</label><span>element</span>\
+      <input id="TForm-field" type="text" name="field" class="fgField"></input><span>element</span>\
+    </div>\
+  </form>\
+</div>');
+      result = compare(formDOMe, formDOMa);
+      assert.isEmpty(result.getDifferences());
+    },
     "Render with mixin" : function() {
       var form = new fg.Form("TForm", null, null,
                              [ "field" , "text" ]);
@@ -392,6 +410,26 @@ vows.describe("Jade mixins")
       var html = form.render(jade, {pretty : true}, null,
                              { "TForm-field::attributes" :  { "class" : "c2" },
                                "TForm-field--label::attributes" :  { "class" : "c1" } } );
+      var formDOMa = jsdom(html);
+      var formDOMe = jsdom('\
+<div id="TForm--wrapper">\
+  <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
+  <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
+    <div id="TForm-field--wrapper" class="fgFieldWrapper">\
+      <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel c1">TForm-field</label>\
+      <input id="TForm-field" type="text" name="field" class="fgField c2"></input>\
+    </div>\
+  </form>\
+</div>');
+      result = compare(formDOMe, formDOMa);
+      assert.isEmpty(result.getDifferences());
+    },
+    "Insert attributes @ syntax" : function() {
+      var form = new fg.Form("TForm", null, null,
+                             [ "field" , "text" ]);
+      var html = form.render(jade, {pretty : true}, null,
+                             { "@-field::attributes" :  { "class" : "c2" },
+                               "@-field--label::attributes" :  { "class" : "c1" } } );
       var formDOMa = jsdom(html);
       var formDOMe = jsdom('\
 <div id="TForm--wrapper">\
