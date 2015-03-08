@@ -224,7 +224,7 @@ vows.describe("Definitions parser")
       },
       "field" : function (form) {
         assert.strictEqual(form.skel.fields[0].type, "hidden");
-        assert.isNull(form.skel.fields[0].label);
+        assert.isUndefined(form.skel.fields[0].label);
       }
     },
     "Button" : {
@@ -233,7 +233,7 @@ vows.describe("Definitions parser")
       },
       "field" : function (form) {
         assert.strictEqual(form.skel.fields[0].type, "button");
-        assert.isNull(form.skel.fields[0].label);
+        assert.isUndefined(form.skel.fields[0].label);
         assert.strictEqual(form.skel.fields[0].attrs.value, "field");
         assert.isFunction(form.skel.fields[0].inlineLabel);
       },
