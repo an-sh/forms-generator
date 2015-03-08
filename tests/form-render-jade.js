@@ -98,7 +98,7 @@ vows.describe("Jade mixins")
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
       <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel" for="TForm-field">TForm-field</label>\
-      <div id="TForm-field" class="inputClass fgMultiEntry" type="checkbox" name="field">\
+      <div id="TForm-field" class="inputClass fgMultiEntry" type="checkbox">\
         <label id="TForm-field-sel1--label" class="fgEntryLabel">\
           <input id="TForm-field-sel1" name="field" value="sel1" type="checkbox" class="fgEntry">\
             <span id="TForm-field-sel1--name" class="fgEntryName">TForm-field-sel1</span>\
@@ -216,7 +216,7 @@ vows.describe("Jade mixins")
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
       <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel" for="TForm-field">TForm-field</label>\
-      <div id="TForm-field" class="selClass fgMultiEntry" type="radio" name="field">\
+      <div id="TForm-field" class="selClass fgMultiEntry" type="radio">\
         <label id="TForm-field-sel1--label" class="fgEntryLabel">\
           <input id="TForm-field-sel1" name="field" value="sel1" type="radio" class="fgEntry">\
             <span id="TForm-field-sel1--name" class="fgEntryName">TForm-field-sel1</span>\
