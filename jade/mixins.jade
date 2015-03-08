@@ -17,7 +17,11 @@ mixin _proxy(elementTag, id, attrs, elementType, elementClass, attrsExtender, da
   -}
   -var elemSel = id + "::attributes"
   -var insertedAttrs = (data && data[elemSel]) ? data[elemSel] : {}
-  -if(content === false)
+  -if(elementTag === "input")
+    input/(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
+  -else if(elementTag === "keygen")
+    keygen/(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
+  -else if(content === false)
     #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs)
   -else if(content)
     #{elementTag}(id=id)&attributes(attrs, defaultExtender(), extAttrs(), insertedAttrs) #{content}
@@ -52,14 +56,14 @@ mixin _formInputEntry(entry, data, label, type, attrsExtender, isSingleEntry)
     +_proxy("label", id=entry.id + "--label", entry.labelAttrs, type, "fgEntryLabel", attrsExtender, data)
       +_BE(entry, data, "")
       +_proxy("input", entry.id, entry.attrs, type, "fgEntry", attrsExtender, data)
-        +_BE(entry, data, "--name")
-        +_proxy("span", entry.id + "--name", entry.additionalAttrs, type, "fgEntryName", attrsExtender, data, label)
-        +_AE(entry, data, "--name")
+      +_BE(entry, data, "--name")
+      +_proxy("span", entry.id + "--name", entry.additionalAttrs, type, "fgEntryName", attrsExtender, data, label)
+      +_AE(entry, data, "--name")
       +_AE(entry, data, "")
     +_AE(entry, data, "--label")
   else
     +_BE(entry, data, "")
-    +_proxy("input", entry.id, entry.attrs, type, "fgField", attrsExtender, data, false)
+    +_proxy("input", entry.id, entry.attrs, type, "fgField", attrsExtender, data)
     +_AE(entry, data, "")
 
 mixin _formInput(field, data, attrsExtender)
