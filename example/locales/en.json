@@ -59,5 +59,6 @@
 	"password_length_error": "Short password",
 	"short_name_error": "Short Name",
 	"short_password_error": "Short password",
-	"txt": "Text"
+	"txt": "Text",
+	"Example": "Example"
 }

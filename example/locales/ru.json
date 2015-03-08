@@ -59,5 +59,6 @@
 	"password_length_error": "Короткий пароль",
 	"short_name_error": "Короткое имя",
 	"short_password_error": "Короткий пароль",
-	"txt": "Текст"
+	"txt": "Текст",
+	"Example": "Пример"
 }
