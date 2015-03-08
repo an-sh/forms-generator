@@ -1,4 +1,9 @@
 
+### v0.9.0 (2015/03/08)
+
+- Valid HTML5 generation for all field types.
+- Image type now sends/expects only x and y fields.
+
 ### v0.8.2 (2015/03/06)
 
 - Fix attrsExtender render option.
