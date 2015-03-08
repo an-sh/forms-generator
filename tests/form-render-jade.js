@@ -74,7 +74,7 @@ vows.describe("Jade mixins")
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
       <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel" for="TForm-field">TForm-field</label>\
-      <keygen id="TForm-field" class="inputClass fgField" name="field"></keygen>\
+      <keygen id="TForm-field" class="inputClass fgField" name="field"/>\
     </div>\
   </form>\
 </div>';
@@ -97,22 +97,19 @@ vows.describe("Jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
-      <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel" for="TForm-field">TForm-field</label>\
-      <div id="TForm-field" class="inputClass fgMultiEntry" type="checkbox">\
+      <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel">TForm-field</label>\
+      <div id="TForm-field" class="inputClass fgMultiEntry">\
         <label id="TForm-field-sel1--label" class="fgEntryLabel">\
-          <input id="TForm-field-sel1" name="field" value="sel1" type="checkbox" class="fgEntry">\
-            <span id="TForm-field-sel1--name" class="fgEntryName">TForm-field-sel1</span>\
-          </input>\
+          <input id="TForm-field-sel1" value="sel1" type="checkbox" name="field" class="fgEntry"/>\
+          <span id="TForm-field-sel1--name" class="fgEntryName">TForm-field-sel1</span>\
         </label>\
         <label id="TForm-field-sel2--label" class="entryLabelClass fgEntryLabel">\
-          <input id="TForm-field-sel2" class="entryInputClass fgEntry" name="field" value="sel2" type="checkbox">\
-            <span id="TForm-field-sel2--name" class="spanLabelClass fgEntryName">TForm-field-sel2</span>\
-          </input>\
+          <input id="TForm-field-sel2" class="entryInputClass fgEntry" value="sel2" type="checkbox" name="field"/>\
+          <span id="TForm-field-sel2--name" class="spanLabelClass fgEntryName">TForm-field-sel2</span>\
         </label>\
         <label id="TForm-field-sel3--label" class="fgEntryLabel">\
-          <input id="TForm-field-sel3" name="field" value="sel3" type="checkbox" class="fgEntry">\
-            <span id="TForm-field-sel3--name" class="fgEntryName">TForm-field-sel3</span>\
-          </input>\
+          <input id="TForm-field-sel3" value="sel3" type="checkbox" name="field" class="fgEntry"/>\
+          <span id="TForm-field-sel3--name" class="fgEntryName">TForm-field-sel3</span>\
         </label>\
       </div>\
     </div>\
@@ -132,9 +129,8 @@ vows.describe("Jade mixins")
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
       <label id="TForm-field--label" class="fieldLabelClass fgEntryLabel">\
-        <input id="TForm-field" class="inputClass fgEntry" type="checkbox" name="field" value="field">\
-          <span id="TForm-field--name" class="fgEntryName">TForm-field</span>\
-        </input>\
+        <input id="TForm-field" class="inputClass fgEntry" type="checkbox" name="field" value="field"/>\
+        <span id="TForm-field--name" class="fgEntryName">TForm-field</span>\
       </label>\
     </div>\
   </form>\
@@ -215,22 +211,19 @@ vows.describe("Jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
-      <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel" for="TForm-field">TForm-field</label>\
-      <div id="TForm-field" class="selClass fgMultiEntry" type="radio">\
+      <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel"">TForm-field</label>\
+      <div id="TForm-field" class="selClass fgMultiEntry">\
         <label id="TForm-field-sel1--label" class="fgEntryLabel">\
-          <input id="TForm-field-sel1" name="field" value="sel1" type="radio" class="fgEntry">\
-            <span id="TForm-field-sel1--name" class="fgEntryName">TForm-field-sel1</span>\
-          </input>\
+          <input id="TForm-field-sel1" value="sel1" type="radio" name="field" class="fgEntry"/>\
+          <span id="TForm-field-sel1--name" class="fgEntryName">TForm-field-sel1</span>\
         </label>\
         <label id="TForm-field-sel2--label" class="fgEntryLabel">\
-          <input id="TForm-field-sel2" class="specialSelect fgEntry" name="field" value="sel2" type="radio">\
-            <span id="TForm-field-sel2--name" class="fgEntryName">TForm-field-sel2</span>\
-          </input>\
+          <input id="TForm-field-sel2" class="specialSelect fgEntry" value="sel2" type="radio" name="field"/>\
+          <span id="TForm-field-sel2--name" class="fgEntryName">TForm-field-sel2</span>\
         </label>\
         <label id="TForm-field-sel3--label" class="fgEntryLabel">\
-          <input id="TForm-field-sel3" name="field" value="sel3" type="radio" class="fgEntry">\
-            <span id="TForm-field-sel3--name" class="fgEntryName">TForm-field-sel3</span>\
-          </input>\
+          <input id="TForm-field-sel3" value="sel3" type="radio" name="field" class="fgEntry"/>\
+          <span id="TForm-field-sel3--name" class="fgEntryName">TForm-field-sel3</span>\
         </label>\
       </div>\
     </div>\
@@ -249,9 +242,9 @@ vows.describe("Jade mixins")
       <label id="TForm-field--label" for="TForm-field" class="fgFieldLabel">TForm-field</label>\
       <input id="TForm-field" name="field" list="TForm-field--datalist" class="fgField"></input>\
       <datalist id="TForm-field--datalist">\
-        <option value="TForm-field-s1"></option>\
-        <option value="TForm-field-s2"></option>\
-        <option value="TForm-field-s3"></option>\
+        <option value="TForm-field-s1" label="TForm-field-s1"></option>\
+        <option value="TForm-field-s2" label="TForm-field-s2"></option>\
+        <option value="TForm-field-s3" label="TForm-field-s3"></option>\
       </datalist>\
     </div>\
   </form>\
