@@ -244,6 +244,23 @@ vows.describe("Definitions parser")
         assert.deepEqual(form.getExpectedValues("field"), ["field"]);
       }
     },
+    "Image" : {
+      topic: function() {
+        return new fg.Form("TForm", null, null, [ "field" , "image"]);
+      },
+      "field" : function (form) {
+        assert.strictEqual(form.skel.fields[0].type, "image");
+        assert.isUndefined(form.skel.fields[0].label);
+        assert.isUndefined(form.skel.fields[0].attrs.value);
+      },
+      "expected fields" :  function (form) {
+        assert.isTrue(form.hasField("field.x"));
+        assert.isTrue(form.hasField("field.y"));
+      },
+      "expected values" : function (form) {
+        assert.isUndefined(form.getExpectedValues("field"));
+      }
+    },
     "Submit" : {
       topic: function() {
         return new fg.Form("TForm", null, null, [ "field" , "submit"]);
