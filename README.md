@@ -327,7 +327,7 @@ __Arguments:__
       - `error` - `true value` with an error __or__ `false value`.
 
 
-### Form.getContent(i18n)
+### Form.getContent(i18n, skipCache)
 
 _Method_ ___[caches results]___
 
@@ -336,6 +336,7 @@ Expands form for `i18n` locale and caches results.
 __Arguments:__
 
 - `i18n` - `i18n` translation library.
+- `skipCache` _optional_ - Ignore the current cache and re-expand content.
 
 __Returns:__
 
@@ -353,6 +354,7 @@ __Arguments:__
 - `jade` - `jade` library.
 - `options` - `jade` and render options __or__ `null`. Render options:
   - `attrsExtender` - `function` that extends HTML tags attributes.
+  - `skipFormCache` - Ignore the current cache and re-expand content.
 - `i18n` - `i18n` translation library.
 - `insertions` _optional_ - `object` with HTML insertions __or__
   `null`.
