@@ -1,4 +1,9 @@
 
+### v1.0.0 (2015/03/17)
+
+- Fix input based multientry elements insertion.
+- Skip content cache options.
+
 ### v0.9.0 (2015/03/08)
 
 - Valid HTML5 generation for all field types.
