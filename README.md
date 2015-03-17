@@ -109,12 +109,14 @@ entries. Fields nesting is only allowed for `"div"` and `"fieldset"`
 types, nested fields are wrapped with respective tags.  `"fieldset"`
 must contain one or more fields, but `"div"` can be empty.
 
-`attributes-object` with _`attribute : value`_ pairs is used to
-set input HTML elements attributes. `attributes-array` is used to set
+`attributes-object` with _`attribute : value`_ pairs is used to set
+input HTML elements attributes. `attributes-array` is used to set
 attributes to the following elements: `attributes-array[0]` - actual
 form input attributes, `attributes-array[1]` - wrapper attributes,
 `attributes-array[2]` - label attributes, `attributes-array[3]` -
-attributes for an additional element.
+attributes for an additional element (it is used for datalist,
+checkbox/radio field names and form iframe elements). If there is no
+such element, then its attributes are ignored.
 
 ### HTML and attributes insertion
 
