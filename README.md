@@ -356,7 +356,7 @@ __Arguments:__
 - `jade` - `jade` library.
 - `options` - `jade` and render options __or__ `null`. Render options:
   - `attrsExtender` - `function` that extends HTML tags attributes.
-  - `skipFormCache` - Ignore the current cache and re-expand content.
+  - `skipCache` - Ignore the current cache and re-expand content.
 - `i18n` - `i18n` translation library.
 - `insertions` _optional_ - `object` with HTML insertions __or__
   `null`.
