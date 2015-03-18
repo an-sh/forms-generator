@@ -40,7 +40,7 @@ var regForm = new Form(
   [ "register", "button"]);
 ```
 This will create the form definition, with the custom action route (by
-default a generated action for this form is "regFormSend").
+default a generated action for this form is `"regFormSend"`).
 
 Then lets assign a data validator for the `name` field:
 ```javascript
@@ -93,8 +93,8 @@ will populate and cache labels for the request locale (or the default
 locale, if the request one is not enabled).
 
 The procces of creating field labels is separated and depends on
-language settings. Here is our en.json file with a labels mapping for
-"en" locale:
+language settings. Here is our en.json file with the labels mapping
+for "en" locale:
 ```javascript
 {
 	"regForm-name": "Username",
@@ -113,7 +113,7 @@ language settings. Here is our en.json file with a labels mapping for
 }
 ```
 
-Another separate operation is form styling. Here is index.jade file:
+Another separate operation is form styling. Here is `index.jade` file:
 ```jade
 mixin link(name, url)
   a(href=url) #{name}
@@ -130,14 +130,14 @@ html
     hr
     div#response
 ```
-From mixin call renders an actual HTML form. The second argument is
+`From` mixin call renders an actual HTML form. The second argument is
 additional information that is inserted into rendered forms. Here we
-are adding class attributes to the form tag and appending results of a
-link mixin to the acceptTerms label element. So elements that are used
-only in styling are not affecting server form parsing are kept
+are adding class attributes to the form tag and appending results of
+link mixin to the acceptTerms label element. So elements, that are
+used only in styling and not affecting server form parsing, are kept
 separate.
 
-And the last thing is a browser res.js code.
+And the last thing is `res.js` browser code.
 ```javascript
 function regFormOnload() {
   var response = $("#regFormIframe").contents().find("body").text();
@@ -150,13 +150,14 @@ object is a simple name to object store, so displaying errors in a
 pretty way is rather trivial.
 
 Note that no any browser code is provided with the library and no any
-assumptions about client side stack are made. But integration with the
+assumptions about client side stack are made. But integration with
 existing solutions for client side validation, live
-validation/completion is possible. For example HTML5 data- attributes
-in a form definition can be used for mapping client side functions.
+validation/completion is possible. For example HTML5 `data-`
+attributes in a form definition can be used for mapping client side
+functions.
 
 The full application code is in a `tutorial` directory. For more
-information look at Description, Example and API sections.
+information look at __Description__, __Example__ and __API__ sections.
 
 
 
