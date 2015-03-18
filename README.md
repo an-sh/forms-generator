@@ -3,11 +3,10 @@
 
 Forms Generator is a library for Node.js that helps with HTML forms.
 
-
 A very simple and concise JS description is used to define forms. Form
-definitions are separate from such things like label values, label
+definitions are separate from things like label values, label
 internationalisation, style attributes and field data validation. Such
-separations provides a way not to mix model and view related things,
+separation provides a way not to mix model and view related things,
 but still eliminating typical HTML forms redundancy.
 
 
@@ -21,7 +20,145 @@ internationalisation support.
 - Easy to define fields HTML attributes (internationalisation is also
 supported).
 - API for inserting element attributes or even custom HTML elements
-  into generated forms.
+into generated forms.
+
+
+### Tutorial
+
+This demonstration will show the basic workflow for express with jade
+and i18n integration.
+
+So lets create a simple singup form:
+```javascript
+var regForm = new Form(
+  "regForm", null, { action : "forms/regForm" },
+  [ "name", "text" ],
+  [ "pass", "password" ],
+  [ "mail", "email"],
+  [ "mailVisibility", "radio", null, "none", "friends", ["all" , {checked : true}]],
+  [ "acceptTerms", "checkbox"],
+  [ "register", "button"]);
+```
+This will create the form definition, with the custom action route (by
+default a generated action for this form is "regFormSend").
+
+Then lets assign a data validator for the `name` field:
+```javascript
+function validateName(data, i18n, cb) {
+  process.nextTick(
+    function() {
+      if(!data || !validator.isLength(data[0], 4, 20)) {
+        cb(i18n.__("error_short_name"));
+      } else {
+        cb(false);
+      }});
+}
+regForm.setValidator("name", validateName);
+```
+It will emulate some DB based login checking, which is an
+asynchronous operation. Note that error data can be an arbitrary
+non-false object, using i18n is optional here.
+
+
+The form send route with parsing, validation and response will be:
+```javascript
+regForm.setFormRoute(app, function(req, res, next) {
+  var cbFAIL = function(errors) {
+    res.setHeader('Content-Type', 'text/html');
+    res.send(JSON.stringify(errors));
+  };
+  var cbOK = function(fields, files) {
+    res.send(JSON.stringify(null));
+  };
+  var parser = new fg.FormParser();
+  parser.parse(req, function(err, fields, files) {
+    console.log("Fields:\n%s\nFiles:\n%s", util.inspect(fields), util.inspect(files));
+    regForm.validate(fields, files, req, cbOK, cbFAIL);
+  });
+});
+```
+`setFormRoute` method will add a route to an application/router
+according to forms action and method attributes.
+
+Form get route is simple:
+```javascript
+app.use('/', function(req, res) {
+  res.render("index", {
+    regForm: regForm.getContent(req)
+  });
+});
+```
+It will pass regForm object to the index template. `getContent` method
+will populate and cache labels for the request locale (or the default
+locale, if the request one is not enabled).
+
+The procces of creating field labels is separated and depends on
+language settings. Here is our en.json file with a labels mapping for
+"en" locale:
+```javascript
+{
+	"regForm-name": "Username",
+	"regForm-pass": "Password",
+	"regForm-mail": "Mail",
+	"regForm-mailVisibility-none": "None",
+	"regForm-mailVisibility-friends": "Friends only",
+	"regForm-mailVisibility-all": "Everyone",
+	"regForm-mailVisibility": "Show mail to:",
+	"regForm-acceptTerms": "I accept the Terms of Service",
+	"regForm-register": "Submit",
+	"error_short_password": "Short password",
+	"error_malformed_mail": "Malformed mail",
+	"error_terms": "You have to agree with the Terms of Service",
+	"error_short_name": "Short name"
+}
+```
+
+Another separate operation is form styling. Here is index.jade file:
+```jade
+mixin link(name, url)
+  a(href=url) #{name}
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js')
+    script(src='/res.js')
+  body
+    +Form( regForm, { "@::attributes" : { "class" : "pure-form pure-form-stacked" },
+                      "@-acceptTerms--name::after" : [ "link", "(?)", "/terms.txt" ] } )
+    hr
+    div#response
+```
+From mixin call renders an actual HTML form. The second argument is
+additional information that is inserted into rendered forms. Here we
+are adding class attributes to the form tag and appending results of a
+link mixin to the acceptTerms label element. So elements that are used
+only in styling are not affecting server form parsing are kept
+separate.
+
+And the last thing is a browser res.js code.
+```javascript
+function regFormOnload() {
+  var response = $("#regFormIframe").contents().find("body").text();
+  $("#response").text(response);
+}
+```
+`regFormOnload` function name and `regFormIframe` are generated from
+the form definition. It will just output a server response, but errors
+object is a simple name to object store, so displaying errors in a
+pretty way is rather trivial.
+
+Note that no any browser code is provided with the library and no any
+assumptions about client side stack are made. But integration with the
+existing solutions for client side validation, live
+validation/completion is possible. For example HTML5 data- attributes
+in a form definition can be used for mapping client side functions.
+
+The full application code is in a `tutorial` directory. For more
+information look at Description, Example and API sections.
+
+
 
 
 # Description
@@ -247,7 +384,7 @@ __Arguments:__
 
 _Method_ ___[async]___
 
-Execute only one field validator.
+Execute only a global validator.
 
 __Arguments:__
 
