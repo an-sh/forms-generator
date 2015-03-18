@@ -1,4 +1,8 @@
 
+### v1.0.2 (2015/03/18)
+
+- Documentation: tutorial.
+
 ### v1.0.0 (2015/03/17)
 
 - Fix input based multientry elements insertion.
