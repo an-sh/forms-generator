@@ -47,7 +47,7 @@ vows.describe("Translation")
         assert.strictEqual(exp.fields[1].attrs["class"], "Name");
       }
     },
-    "AutoFill ids" :{
+    "AutoFill IDs" :{
       topic: function() {
         i18stub = {};
         i18stub.locale = "";
