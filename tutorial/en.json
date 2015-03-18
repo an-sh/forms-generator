@@ -1,0 +1,15 @@
+{
+	"regForm-name": "Username",
+	"regForm-pass": "Password",
+	"regForm-mail": "Mail",
+	"regForm-mailVisibility-none": "None",
+	"regForm-mailVisibility-friends": "Friends only",
+	"regForm-mailVisibility-all": "Everyone",
+	"regForm-mailVisibility": "Show mail to:",
+	"regForm-acceptTerms": "I accept the Terms of Service",
+	"regForm-register": "Submit",
+	"error_short_password": "Short password",
+	"error_malformed_mail": "Malformed mail",
+	"error_terms": "You have to agree with the Terms of Service",
+	"error_short_name": "Short name"
+}
