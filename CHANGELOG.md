@@ -1,4 +1,14 @@
 
+### v1.0.4 (2015/08/17)
+
+- Dependencies update.
+- Coverage report.
+- Repo badges.
+
+### v1.0.3 (2015/05/05)
+
+- Cleanup.
+
 ### v1.0.2 (2015/03/18)
 
 - Documentation: tutorial.
