@@ -1,6 +1,8 @@
 
 # Forms Generator
 
+[![Build Status](https://travis-ci.org/an-sh/forms-generator.svg?branch=master)](https://github.com/an-sh/forms-generator)
+
 Forms Generator is a library for Node.js that helps with HTML forms.
 
 A very simple and concise JS description is used to define forms. Form
