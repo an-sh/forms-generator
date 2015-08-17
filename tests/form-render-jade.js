@@ -211,7 +211,7 @@ vows.describe("Jade mixins")
   <iframe id="TFormIframe" onload="TFormOnload()" name="TFormIframe" width="0" height="0" tabindex="-1" hidden="hidden"></iframe>\
   <form id="TForm" target="TFormIframe" action="TFormSend" enctype="multipart/form-data" method="post" name="TForm">\
     <div id="TForm-field--wrapper" class="fieldWrapperClass fgFieldWrapper">\
-      <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel"">TForm-field</label>\
+      <label id="TForm-field--label" class="fieldLabelClass fgFieldLabel">TForm-field</label>\
       <div id="TForm-field" class="selClass fgMultiEntry">\
         <label id="TForm-field-sel1--label" class="fgEntryLabel">\
           <input id="TForm-field-sel1" value="sel1" type="radio" name="field" class="fgEntry"/>\
