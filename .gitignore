@@ -1,5 +1,6 @@
 
 node_modules/
+coverage/
 example/node_modules/
 tutorial/node_modules/
 *.log

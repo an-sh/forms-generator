@@ -20,7 +20,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "vows --spec tests/*.js"
+    "test": "istanbul cover --print both ./vows -- --spec tests/*.js",
+    "pipe-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose"
   },
   "keywords": [
     "form",
@@ -30,11 +31,13 @@
     "jade"
   ],
   "devDependencies": {
-    "vows": ">0.8.0",
+    "coveralls": "^2.11.4",
+    "dom-compare": "0.2.0",
     "i18n": "~0.5.0",
+    "istanbul": "^0.3.17",
     "jade": "^1.8.0",
     "jsdom": "^2.0.0",
-    "dom-compare": "0.2.0"
+    "vows": ">0.8.0"
   },
   "license": "MIT"
 }
