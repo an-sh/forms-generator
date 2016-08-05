@@ -14,13 +14,13 @@
   "main": "lib/forms-generator.js",
   "dependencies": {
     "multiparty": "^4.1.0",
-    "async": "^1.4.0"
+    "async": "^2.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "istanbul cover --print both ./vows -- --spec tests/*.js",
+    "test": "nyc vows --spec tests/*.js",
     "pipe-coverage": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js --verbose"
   },
   "keywords": [
@@ -33,11 +33,20 @@
   "devDependencies": {
     "coveralls": "^2.11.4",
     "dom-compare": "~0.2.0",
-    "i18n": "~0.5.0",
-    "istanbul": "^0.3.17",
+    "i18n": "~0.8.0",
     "jade": "^1.8.0",
     "jsdom": "^3.0.0",
+    "nyc": "^7.1.0",
     "vows": ">0.8.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "nyc": {
+    "include": [
+      "lib/**/*.js"
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
+  }
 }

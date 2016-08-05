@@ -22,7 +22,8 @@ var usedLocales = ['en', 'ru'];
 i18n.configure({
   locales: usedLocales,
   directory: path.join(__dirname, './locales'),
-  defaultLocale: 'en'
+  defaultLocale: 'en',
+  queryParameter: 'locale'
 });
 app.use(i18n.init);
 
@@ -157,7 +158,6 @@ simpleForm.setFormRoute(router, function(req, res, next) {
 
 // Adding index GET route
 router.get("/", function(req, res) {
-  i18n.overrideLocaleFromQuery(req);
   res.render("index", {
     simpleForm: simpleForm.getContent(req),
     locale: req.getLocale()

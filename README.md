@@ -1,6 +1,7 @@
 
 # Forms Generator
 
+[![NPM Version](https://badge.fury.io/js/forms-generator.svg)](https://badge.fury.io/js/forms-generator)
 [![Build Status](https://travis-ci.org/an-sh/forms-generator.svg?branch=master)](https://travis-ci.org/an-sh/forms-generator)
 [![Coverage Status](https://coveralls.io/repos/an-sh/forms-generator/badge.svg?branch=master&service=github)](https://coveralls.io/github/an-sh/forms-generator?branch=master)
 [![Dependency Status](https://david-dm.org/an-sh/forms-generator.svg)](https://david-dm.org/an-sh/forms-generator)
@@ -29,7 +30,7 @@ into generated forms.
 
 ### Tutorial
 
-This demonstration will show the basic workflow for express with jade
+This demonstration will show the basic workflow for express with Jade
 and i18n integration.
 
 So lets create a simple singup form:
@@ -176,8 +177,8 @@ be rendered as a part of Jade template.
 
 ___Note:___ Neither `i18n` nor `jade` are included in the production
 dependencies, but rather they are expected by some methods as
-arguments. `Jade` should be compatible with version `1.9.0` and `i18n`
-with version `0.5.0`.
+arguments. `Jade` should be compatible with version `^1.9.0` (also
+`pug 1.x` may be used) and `i18n` with version `~0.5.0` or `~0.8.0`.
 
 ### Identifiers or IDs
 
@@ -352,6 +353,9 @@ global validator set by `setGlobalValidator` is executed. Local,
 global or both validators can be undefined, meaning that any data pass
 validation stage.
 
+__NOTE:__ For legacy reasons this method does __not__ follow node
+style callbacks convention.
+
 __Arguments:__
 
 - `fields` - `object` with Multiparty fields data __or__ `null`.
@@ -389,17 +393,17 @@ __Arguments:__
 
 _Method_ ___[async]___
 
-Execute only a global validator.
+Runs only a global validator.
 
 __Arguments:__
 
 - `fields` - Multiparty fields data __or__ `null`.
-- `files` - Multiparty fields data __or__ `null`.
+- `files` - Multiparty files data __or__ `null`.
 - `i18n` - `i18n` translation library.
 - `callback` - `function` callback to run after validation.
   - `error` - `true value` with an error __or__ `false value`.
   - `fields` - Multiparty fields data __or__ `null`.
-  - `files` - Multiparty fields data __or__ `null`.
+  - `files` - Multiparty files data __or__ `null`.
 
 
 ### Form.getExpectedValues(fieldID)
@@ -495,7 +499,7 @@ Renders HTML form.
 
 __Arguments:__
 
-- `jade` - `jade` library.
+- `jade` - `jade` library (also `pug 1.x` may be used).
 - `options` - `jade` and render options __or__ `null`. Render options:
   - `attrsExtender` - `function` that extends HTML tags attributes.
   - `skipCache` - Ignore the current cache and re-expand content.

@@ -7,7 +7,7 @@
   "dependencies": {
     "express": "^4.10.0",
     "jade": "^1.8.0",
-    "i18n": "~0.5.0",
-    "validator": "^3.22.0"
+    "i18n": "~0.8.0",
+    "validator": "^5.5.0"
   }
 }
