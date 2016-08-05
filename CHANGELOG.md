@@ -1,4 +1,9 @@
 
+### v1.1.0 (2016/08/06)
+
+- Dependencies update.
+- Ensure i18n 0.8 compatibility.
+
 ### v1.0.4 (2015/08/17)
 
 - Dependencies update.
